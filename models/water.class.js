@@ -1,0 +1,3 @@
+class water extends MovableObject {
+    
+}

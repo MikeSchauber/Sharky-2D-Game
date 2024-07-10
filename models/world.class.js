@@ -1,9 +1,9 @@
 class World {
     character = new Character();
     enemies = [
-        new JellyFish(),
-        new JellyFish(),
-        new JellyFish()
+        new JellyFish(400, 100),
+        new JellyFish(500, 250),
+        new JellyFish(600, 150)
     ];
     ctx;
     canvas;
