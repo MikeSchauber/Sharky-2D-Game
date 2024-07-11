@@ -1,10 +1,10 @@
-class Light extends MovableObject() {
-    width = 500;
-    height = 300;
+class Light extends MovableObject {
+    width = 600;
+    height = 380;
+    y = 0
 
     constructor(imagePath) {
         super().loadImage(imagePath);
-        this.x = 0 + this.width;
-        this.y = 0 + this.height;
+        this.x = 720 - this.width;
     }
 }
