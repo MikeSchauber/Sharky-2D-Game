@@ -5,13 +5,15 @@ class World {
         new JellyFish(500, 250),
         new JellyFish(600, 150)
     ];
-    layers = [
-        new Water(),
-        new Light(),
-        new Layer2(),
-        new Layer1(),
-        new Floor()
-    ]
+    backgrounds = [
+        new BackgroundObject("img/3. Background/Layers/5. Water/D1.png", 0, 720, 480),
+        new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D1.png", 0, 720, 350),
+        new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D1.png", 0, 720, 400),
+        new BackgroundObject("img/3. Background/Layers/2. Floor/D1.png", 0, 720, 390),
+    ];
+    lights = [
+        
+    ];
     ctx;
     canvas;
 
@@ -23,16 +25,23 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.layers.forEach(layer => {
-            this.ctx.drawImage(layer.img, layer.x, layer.y, layer.width, layer.height);
-        });
-        this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
-        this.enemies.forEach(enemy => {
-            this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
-        });
+        this.addObjectsToMap(this.backgrounds);
+        this.addObjectsToMap(this.lights);
+        this.addObjectsToMap(this.enemies);
+        this.addToMap(this.character);
         let self = this;
-        requestAnimationFrame(function() {
+        requestAnimationFrame(function () {
             self.draw();
         });
+    }
+
+    addObjectsToMap(objects) {
+        objects.forEach(object => {
+            this.addToMap(object);
+        })
+    }
+
+    addToMap(mo) {
+        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
     }
 }
