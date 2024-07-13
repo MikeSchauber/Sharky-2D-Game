@@ -45,7 +45,7 @@ class Character extends MovableObject {
             this.y += this.speed;
         }
         this.world.camera_x = -this.x
-        this.world.expandDynamicWorld();
+        // this.world.expandDynamicWorld();
     }
 
     spriteAnimation() {

@@ -15,7 +15,6 @@ class JellyFish extends MovableObject {
         this.speed = 0.5 + Math.random() * 1;
         this.loadImages(this.IMAGES_PURPLE);
         this.animate();
-        console.log(this.speed)
     }
 
     animate() {

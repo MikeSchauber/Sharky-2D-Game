@@ -1,30 +1,10 @@
 class World {
     character = new Character();
-    enemies = [
-        new JellyFish(400, 100),
-        new JellyFish(500, 250),
-        new JellyFish(600, 150),
-    ];
+    enemies = level1.enemies;
     backgroundX1 = 0;
     backgroundX2 = 720;
-    backgroundObjects = [
-        new BackgroundObject("img/3. Background/Layers/5. Water/D2.png", this.backgroundX2, 720, 480),
-        new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D2.png", this.backgroundX2, 720, 400),
-        new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D2.png", this.backgroundX2, 720, 400),
-        new BackgroundObject("img/3. Background/Layers/2. Floor/D2.png", this.backgroundX2, 720, 350),
-        new BackgroundObject("img/3. Background/Layers/5. Water/D1.png", this.backgroundX1, 720, 480),
-        new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D1.png", this.backgroundX1, 720, 400),
-        new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D1.png", this.backgroundX1, 720, 400),
-        new BackgroundObject("img/3. Background/Layers/2. Floor/D1.png", this.backgroundX1, 720, 350),
-        new BackgroundObject("img/3. Background/Layers/5. Water/D2.png", this.backgroundX2, 720, 480),
-        new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D2.png", this.backgroundX2, 720, 400),
-        new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D2.png", this.backgroundX2, 720, 400),
-        new BackgroundObject("img/3. Background/Layers/2. Floor/D2.png", this.backgroundX2, 720, 350),
-    ];
-    lights = [
-        new Light("img/3. Background/Layers/1. Light/1.png", 0),
-        new Light("img/3. Background/Layers/1. Light/2.png", 720),
-    ];
+    backgroundObjects = level1.backgroundObjects;
+    lights = level1.lights;
     ctx;
     canvas;
     keyboard;
@@ -36,7 +16,6 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-
     }
 
     draw() {
@@ -57,23 +36,22 @@ class World {
         this.character.world = this;
     };
 
-    expandDynamicWorld() {
-        if (this.camera_x == -718 || this.camera_x == -1436 || this.camera_x == -2154 || this.camera_x == -2872) {
-            this.backgroundX1 = this.backgroundX1 + 1440;
-            this.backgroundX2 = this.backgroundX2 + 1440;
-            console.log(this.backgroundX1, this.backgroundX2);
-            this.backgrounds.push(
-                new BackgroundObject("img/3. Background/Layers/5. Water/D1.png", this.backgroundX1, 720, 480),
-                new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D1.png", this.backgroundX1, 720, 400),
-                new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D1.png", this.backgroundX1, 720, 400),
-                new BackgroundObject("img/3. Background/Layers/2. Floor/D1.png", this.backgroundX1, 720, 350),
-                new BackgroundObject("img/3. Background/Layers/5. Water/D2.png", this.backgroundX2, 720, 480),
-                new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D2.png", this.backgroundX2, 720, 400),
-                new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D2.png", this.backgroundX2, 720, 400),
-                new BackgroundObject("img/3. Background/Layers/2. Floor/D2.png", this.backgroundX2, 720, 350),
-            );
-        }
-    }
+    // expandDynamicWorld() {
+    //     if (this.camera_x == -718 || this.camera_x == -1436 || this.camera_x == -2154 || this.camera_x == -2872) {
+    //         this.backgroundX1 = this.backgroundX1 + 1440;
+    //         this.backgroundX2 = this.backgroundX2 + 1440;
+    //         this.backgrounds.push(
+    //             new BackgroundObject("img/3. Background/Layers/5. Water/D1.png", this.backgroundX1, 720, 480),
+    //             new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D1.png", this.backgroundX1, 720, 400),
+    //             new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D1.png", this.backgroundX1, 720, 400),
+    //             new BackgroundObject("img/3. Background/Layers/2. Floor/D1.png", this.backgroundX1, 720, 350),
+    //             new BackgroundObject("img/3. Background/Layers/5. Water/D2.png", this.backgroundX2, 720, 480),
+    //             new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D2.png", this.backgroundX2, 720, 400),
+    //             new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D2.png", this.backgroundX2, 720, 400),
+    //             new BackgroundObject("img/3. Background/Layers/2. Floor/D2.png", this.backgroundX2, 720, 350),
+    //         );
+    //     }
+    // }
 
     addObjectsToMap(objects) {
         objects.forEach(object => {
