@@ -27,6 +27,13 @@ class MovableObject {
         this.img.src = path;
     }
 
+    animationPlay(IMAGE_ARRAY) {
+        let i = this.currentImage % IMAGE_ARRAY.length
+        let path = IMAGE_ARRAY[i];
+        this.img = this.imageCache[path];
+        this.currentImage++
+    }
+
     moveRight() {
         setInterval(() => {
             this.x += this.speed

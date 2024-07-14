@@ -32,23 +32,6 @@ class World {
         this.character.world = this;
     };
 
-    // expandDynamicWorld() {
-    //     if (this.camera_x == -718 || this.camera_x == -1436 || this.camera_x == -2154 || this.camera_x == -2872) {
-    //         this.backgroundX1 = this.backgroundX1 + 1440;
-    //         this.backgroundX2 = this.backgroundX2 + 1440;
-    //         this.backgrounds.push(
-    //             new BackgroundObject("img/3. Background/Layers/5. Water/D1.png", this.backgroundX1, 720, 480),
-    //             new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D1.png", this.backgroundX1, 720, 400),
-    //             new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D1.png", this.backgroundX1, 720, 400),
-    //             new BackgroundObject("img/3. Background/Layers/2. Floor/D1.png", this.backgroundX1, 720, 350),
-    //             new BackgroundObject("img/3. Background/Layers/5. Water/D2.png", this.backgroundX2, 720, 480),
-    //             new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D2.png", this.backgroundX2, 720, 400),
-    //             new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D2.png", this.backgroundX2, 720, 400),
-    //             new BackgroundObject("img/3. Background/Layers/2. Floor/D2.png", this.backgroundX2, 720, 350),
-    //         );
-    //     }
-    // }
-
     addObjectsToMap(objects) {
         objects.forEach(object => {
             this.addToMap(object);
