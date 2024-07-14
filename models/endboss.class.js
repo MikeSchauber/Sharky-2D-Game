@@ -1,7 +1,7 @@
 class Endboss extends MovableObject {
 
-    height = 300;
-    width = 300;
+    height = 400;
+    width = 400;
 
     IMAGES_STAY = [
         "img/2.Enemy/3 Final Enemy/2.floating/1.png",
@@ -22,7 +22,7 @@ class Endboss extends MovableObject {
     constructor() {
         super().loadImage("img/2.Enemy/3 Final Enemy/2.floating/1.png");
         this.loadImages(this.IMAGES_STAY);
-        this.x = 700;
+        this.x = 2100;
         this.animate();
     }
 
