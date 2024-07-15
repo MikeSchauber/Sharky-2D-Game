@@ -56,8 +56,10 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 96;
         }
         if (this.cameraRange === 188) {
-            this.world.camera_x = -this.x + this.cameraRange + 100;
+            this.world.camera_x = -this.x + this.cameraRange + 96;
+            console.log("HIIIIER", this.x);
         }
+
     }
 
     move() {

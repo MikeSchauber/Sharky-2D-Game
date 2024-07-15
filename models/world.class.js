@@ -43,6 +43,7 @@ class World {
     }
 
     addToMap(mo) {
+
         if (mo.leftDirection) {
             this.ctx.save();
             this.ctx.translate(mo.width, 0);
