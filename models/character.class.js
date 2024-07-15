@@ -1,9 +1,9 @@
 class Character extends MovableObject {
-    x = 50;
-    y = 200;
+    x = 150;
+    y = 250;
     height = 160;
     width = 140;
-    speed = 4;
+    speed = 2;
     cameraRange = 0;
     cameraMovement = false;
     IMAGES_SWIM = [
@@ -24,34 +24,39 @@ class Character extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        this.animationFrame = () => {
             this.move();
-        }, 1000 / this.fps)
+            requestAnimationFrame(this.animationFrame);
+        };
+
+        requestAnimationFrame(this.animationFrame);
+
         setInterval(() => {
             this.moveAnimation();
-        }, 1000 / 8);
+        }, 1000 / 5);
     }
+
 
     setRightCameraRange() {
         if (this.cameraRange < 188 && this.cameraRange >= 0) {
-            this.cameraRange += 4;
+            this.cameraRange += 2;
         }
         this.movingCamera();
     }
 
     setLeftCameraRange() {
         if (this.cameraRange <= 188 && this.cameraRange > 0) {
-            this.cameraRange -= 4;
+            this.cameraRange -= 2;
         }
         this.movingCamera();
     }
 
     movingCamera() {
         if (this.cameraRange === 0) {
-            this.world.camera_x = -this.x + 46;
+            this.world.camera_x = -this.x + 96;
         }
         if (this.cameraRange === 188) {
-            this.world.camera_x = -this.x + this.cameraRange + 50;
+            this.world.camera_x = -this.x + this.cameraRange + 100;
         }
     }
 
@@ -59,13 +64,12 @@ class Character extends MovableObject {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.x += this.speed;
             this.setRightCameraRange();
+            this.leftDirection = false;
         }
         if (this.world.keyboard.LEFT && this.x > -500) {
             this.x -= this.speed;
             this.setLeftCameraRange();
             this.leftDirection = true;
-        } else {
-            this.leftDirection = false;
         }
         if (this.world.keyboard.UP && this.y > -70) {
             this.y -= this.speed;
@@ -77,21 +81,11 @@ class Character extends MovableObject {
 
     moveAnimation() {
         this.walking_sound.pause();
-        if (this.world.keyboard.RIGHT) {
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
             this.animationPlay(this.IMAGES_SWIM);
             this.walking_sound.play();
-        }
-        if (this.world.keyboard.LEFT) {
-            this.animationPlay(this.IMAGES_SWIM);
-            this.walking_sound.play();
-        }
-        if (this.world.keyboard.UP) {
-            this.animationPlay(this.IMAGES_SWIM);
-            this.walking_sound.play();
-        }
-        if (this.world.keyboard.DOWN) {
-            this.animationPlay(this.IMAGES_SWIM);
-            this.walking_sound.play();
+            this.walking_sound.volume = 0.3;
         }
     }
+
 }

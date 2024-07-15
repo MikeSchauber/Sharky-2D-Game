@@ -1,6 +1,7 @@
 class World {
     character = new Character();
     level = level1;
+    soundtrack;
     ctx;
     canvas;
     keyboard;
@@ -12,6 +13,9 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.soundtrack = new Audio(this.level.levelSoundtrack);
+        // this.soundtrack.play();
+        this.soundtrack.volume = 0.5
     }
 
     draw() {
@@ -29,7 +33,7 @@ class World {
     }
 
     setWorld() {
-        this.character.world = this;
+        this.character.world = this;        
     };
 
     addObjectsToMap(objects) {
