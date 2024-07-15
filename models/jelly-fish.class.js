@@ -34,7 +34,6 @@ class JellyFish extends MovableObject {
     }
 
     setJellyfishColor(color) {
-        console.log(color);
         if (color === "yellow") {
             this.loadImages(this.IMAGES_YELLOW);
             this.animate(this.IMAGES_YELLOW)

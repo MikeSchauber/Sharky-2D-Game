@@ -14,7 +14,7 @@ class World {
         this.draw();
         this.setWorld();
         this.soundtrack = new Audio(this.level.levelSoundtrack);
-        // this.soundtrack.play();
+        this.soundtrack.play();
         this.soundtrack.volume = 0.5
     }
 

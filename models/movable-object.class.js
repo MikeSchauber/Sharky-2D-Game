@@ -20,7 +20,6 @@ class MovableObject {
             img.src = src
             this.imageCache[src] = img;
         });
-        console.log(this.imageCache);
     }
 
     loadImage(path) {

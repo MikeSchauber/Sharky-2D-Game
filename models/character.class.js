@@ -42,7 +42,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_IDLE);
         this.animate();
-        console.log(this.x);
+        this.walking_sound.volume = 0.7;
     }
 
     animate() {
@@ -107,7 +107,6 @@ class Character extends MovableObject {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
             this.animationPlay(this.IMAGES_SWIM);
             this.walking_sound.play();
-            this.walking_sound.volume = 0.3;
         }
     }
 
