@@ -2,7 +2,7 @@ class Pufferfish extends MovableObject {
     height = 70;
     width = 85;
     range = 60;
-    movementY = false;
+    transitionImage = 0;
     IMAGES_SWIM = [
         "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png",
         "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim2.png",
@@ -44,34 +44,15 @@ class Pufferfish extends MovableObject {
     }
 
     animate(position) {
-        this.timingFunction();
+        this.animationPlay(this.IMAGES_SWIM, 8);
+        setTimeout(() => {
+            this.transitionFunction(this.IMAGES_TRANSITION);
+        }, 5000);
         setInterval(() => {
             this.checkMovementEnd(position);
         }, 1000 / this.fps);
         this.moveLeft();
     }
-
-    timingFunction() {
-        let animation = setInterval(this.pufferAnimationPlay(this.IMAGES_SWIM), 1000 / 8);
-        animation;
-        setTimeout(() => {
-            clearInterval(animation);
-            animation = setInterval(this.pufferAnimationPlay(this.IMAGES_TRANSITION), 1000 / 8);
-        }, 3000);
-        setTimeout(() => {
-            clearInterval(animation);
-            animation = setInterval(this.pufferAnimationPlay(this.IMAGES_BUBBLE_SWIM), 1000 / 8);
-        }, 4000);
-        setTimeout(() => {
-            clearInterval(animation);
-            animation = setInterval(this.pufferAnimationPlay(this.IMAGES_TRANSITION_BACKWARDS), 1000 / 8);
-        }, 9000);
-        setTimeout(() => {
-            animation = setInterval(this.pufferAnimationPlay(this.IMAGES_SWIM), 1000 / 8);
-            this.timingFunction();
-        }, 10000)
-    }
-
 
     checkMovementEnd(position) {
         if (this.x < position - this.range) {
@@ -82,6 +63,18 @@ class Pufferfish extends MovableObject {
             this.speed = 1 * Math.random();
             this.leftDirection = false;
         }
+    } arr
+
+    transitionFunction(arr) {
+        setInterval(() => {
+            if (this.transitionImage < arr.length) {
+                let path = arr[this.transitionImage];
+                this.img = this.imageCache[path];
+                this.transitionImage++
+            }
+        }, 1000 / 8);
+        this.transitionImage = 0;
+        this.animationPlay(this.IMAGES_BUBBLE_SWIM, 8)
     }
 
     pufferAnimationPlay(IMAGE_ARRAY) {

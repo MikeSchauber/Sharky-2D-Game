@@ -1,4 +1,5 @@
 class Level {
+    bars
     enemies;
     backgroundObjects;
     lights;
@@ -8,7 +9,8 @@ class Level {
     levelSoundtrack;
     world;
 
-    constructor(enemies, backgroundObjects, lights,  coins, poison, levelEnd, levelSoundtrack) {
+    constructor(bars, enemies, backgroundObjects, lights,  coins, poison, levelEnd, levelSoundtrack) {
+        this.bars = bars;
         this.enemies = enemies;
         this.backgroundObjects = backgroundObjects;
         this.lights = lights;

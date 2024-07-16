@@ -20,6 +20,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.lights);
+        this.addObjectsToMap(this.level.bars);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.poison);
         this.addObjectsToMap(this.level.enemies);
