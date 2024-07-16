@@ -32,9 +32,8 @@ class Pufferfish extends Jellyfish {
     }
 
     startTimerAnimation() {
-        this.x += this.speed;
         setTimeout(() => {
-            this.moveRight();
+            this.moveLeft();
         }, 2000);
     }
 
