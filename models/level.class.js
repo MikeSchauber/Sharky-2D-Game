@@ -3,13 +3,17 @@ class Level {
     backgroundObjects;
     lights;
     level_end_x;
+    coins;
+    poison;
     levelSoundtrack;
 
-    constructor(enemies, backgroundObjects, lights, levelEnd, levelSoundtrack) {
+    constructor(enemies, backgroundObjects, lights,  coins, poison, levelEnd, levelSoundtrack) {
         this.enemies = enemies;
         this.backgroundObjects = backgroundObjects;
         this.lights = lights;
         this.level_end_x = levelEnd;
+        this.coins = coins;
+        this.poison = poison;
         this.levelSoundtrack = levelSoundtrack;
     }
 }

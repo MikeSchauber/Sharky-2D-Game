@@ -14,8 +14,8 @@ class World {
         this.draw();
         this.setWorld();
         this.soundtrack = new Audio(this.level.levelSoundtrack);
-        this.soundtrack.play();
         this.soundtrack.volume = 0.5
+        // this.soundtrack.play();
     }
 
     draw() {
@@ -23,6 +23,8 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.lights);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.poison);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
@@ -33,7 +35,7 @@ class World {
     }
 
     setWorld() {
-        this.character.world = this;        
+        this.character.world = this;
     };
 
     addObjectsToMap(objects) {
@@ -43,18 +45,26 @@ class World {
     }
 
     addToMap(mo) {
-
+        this.ctx.save();
         if (mo.leftDirection) {
-            this.ctx.save();
             this.ctx.translate(mo.width, 0);
             this.ctx.scale(-1, 1);
             mo.x = mo.x * -1;
         }
+        if (mo.upperDirection) {
+            this.ctx.translate(mo.x + mo.width / 2, mo.y + mo.height / 2);
+            this.ctx.rotate(-8 * Math.PI / 180);
+            this.ctx.translate(-(mo.x + mo.width / 2), -(mo.y + mo.height / 2));
+        }
+        if (mo.downDirection) {
+            this.ctx.translate(mo.x + mo.width / 2, mo.y + mo.height / 2);
+            this.ctx.rotate(8 * Math.PI / 180);
+            this.ctx.translate(-(mo.x + mo.width / 2), -(mo.y + mo.height / 2));
+        }
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
         if (mo.leftDirection) {
             mo.x = mo.x * -1;
-            this.ctx.restore();
-
         }
+        this.ctx.restore();
     }
 }

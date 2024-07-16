@@ -42,7 +42,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_IDLE);
         this.animate();
-        this.walking_sound.volume = 0.7;
+        this.walking_sound.volume = 0.6;
     }
 
     animate() {
@@ -50,12 +50,10 @@ class Character extends MovableObject {
             this.move();
             requestAnimationFrame(this.animationFrame);
         };
-
         requestAnimationFrame(this.animationFrame);
-
         setInterval(() => {
             this.moveAnimation();
-        }, 1000 / 5);
+        }, 1000 / 8);
     }
 
 
@@ -89,17 +87,24 @@ class Character extends MovableObject {
             this.setRightCameraRange();
             this.leftDirection = false;
         }
-        if (this.world.keyboard.LEFT && this.x > -500) {
+        if (this.world.keyboard.LEFT && this.x > this.leftEnd) {
             this.x -= this.speed;
             this.setLeftCameraRange();
             this.leftDirection = true;
         }
-        if (this.world.keyboard.UP && this.y > -70) {
+        if (this.world.keyboard.UP && this.y > this.upperEnd) {
             this.y -= this.speed;
+            this.upperDirection = true;
+        } else {
+            this.upperDirection = false;
         }
-        if (this.world.keyboard.DOWN && this.y < 320) {
+        if (this.world.keyboard.DOWN && this.y < this.downEnd) {
             this.y += this.speed;
+            this.downDirection = true;
+        } else {
+            this.downDirection = false;
         }
+
     }
 
     moveAnimation() {
@@ -107,6 +112,9 @@ class Character extends MovableObject {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
             this.animationPlay(this.IMAGES_SWIM);
             this.walking_sound.play();
+        } else {
+            this.animationPlay(this.IMAGES_IDLE);
+            this.walking_sound.pause();
         }
     }
 

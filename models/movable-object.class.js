@@ -1,6 +1,9 @@
 class MovableObject {
     x = 0;
     y = 0;
+    leftEnd = -500;
+    upperEnd = -70;
+    downEnd = 330;
     fps = 60;
     speed = 1;
     img;
@@ -9,6 +12,8 @@ class MovableObject {
     height = 480;    
     currentImage = 0;
     leftDirection = false;
+    upperDirection = false;
+    downDirection = false;
 
     /**
      * 
@@ -43,7 +48,7 @@ class MovableObject {
     moveLeft() {
         setInterval(() => {
             this.x -= this.speed
-        }, 1000 / fps)
+        }, 1000 / this.fps)
     }
 
     moveUp() {
@@ -55,6 +60,6 @@ class MovableObject {
     moveDown() {
         setInterval(() => {
             this.y += this.speed
-        }, 1000 / fps)
+        }, 1000 / this.fps)
     }
 }
