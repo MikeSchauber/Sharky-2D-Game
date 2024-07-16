@@ -1,5 +1,10 @@
 class World {
     character = new Character();
+    bars = [
+        new Bar("coin", 90),
+        new Bar("life", 45),
+        new Bar("poison", 0)
+    ];
     level = level1;
     soundtrack;
     ctx;
@@ -20,7 +25,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.lights);
-        this.addObjectsToMap(this.level.bars);
+        this.addObjectsToMap(this.bars);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.poison);
         this.addObjectsToMap(this.level.enemies);
@@ -34,7 +39,10 @@ class World {
 
     setWorld() {
         this.character.world = this;
-        this.level.world = this
+        this.level.world = this;
+        this.bars.forEach((bar) => {
+            bar.world = this;
+        })
     };
 
     addObjectsToMap(objects) {

@@ -25,10 +25,18 @@ class Bar extends MovableObject {
         "img/4. Marcadores/Purple/80_.png",
         "img/4. Marcadores/Purple/100_.png",
     ];
+    world;
 
     constructor(bar, y) {
         super().getRightBar(bar, y);
         this.x = 10;
+        this.animate();
+    }
+
+    animate() {
+        // setInterval(() => {
+        //     this.x += this.world;
+        // }, 1000 / 1);
     }
 
     getRightBar(bar, y) {

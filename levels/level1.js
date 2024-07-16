@@ -2,11 +2,6 @@ const level1Soundtrack = "audio/Shark game song.mp3"
 const level1Ending = 2250;
 const level1 = new Level(
     [
-        new Bar("coin", 90),
-        new Bar("life", 45),
-        new Bar("poison", 0),
-    ],
-    [
         new Jellyfish(500, "yellow"),
         new Jellyfish(700, "pink"),
         new Jellyfish(790, "lila"),
