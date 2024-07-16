@@ -1,4 +1,4 @@
-class Pufferfish extends Jellyfish {
+class Pufferfish extends MovableObject {
     height = 70;
     width = 85;
     movementY = false;
@@ -24,17 +24,16 @@ class Pufferfish extends Jellyfish {
         "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition5.png",
     ];
 
-    constructor(x) {
-        super().loadImages(this.IMAGES_SWIM);
+    constructor(x, y) {
+        super().loadImage("img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png");
+        this.loadImages(this.IMAGES_SWIM);
         this.animate(this.IMAGES_SWIM);
         this.x = x;
-        this.startTimerAnimation();
+        this.y = y;
+
     }
 
-    startTimerAnimation() {
-        setTimeout(() => {
-            this.moveLeft();
-        }, 2000);
+    animate() {
+        this.animationPlay(this.IMAGES_SWIM, 8);
     }
-
 }

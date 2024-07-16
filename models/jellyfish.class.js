@@ -57,9 +57,7 @@ class Jellyfish extends MovableObject {
     }
 
     animate(arr) {
-        setInterval(() => {
-            this.animationPlay(arr);
-        }, 1000 / 5)
+            this.animationPlay(arr, 5);
         if (this.movementY) {
             this.speed = 0.5 + Math.random() * 1;
             setInterval(() => {

@@ -6,8 +6,8 @@ const level1 = new Level(
         new Jellyfish(700, "pink"),
         new Jellyfish(790, "lila"),
         new Jellyfish(1150, "green"),
-        new Pufferfish(550),
-        new Endboss()
+        new Pufferfish(550, 200),
+        new Endboss(),
     ],
     [
         new BackgroundObject("img/3. Background/Layers/5. Water/D2.png", -720, 720, 480, 0.2),

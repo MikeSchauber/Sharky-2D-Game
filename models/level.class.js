@@ -6,6 +6,7 @@ class Level {
     coins;
     poison;
     levelSoundtrack;
+    world;
 
     constructor(enemies, backgroundObjects, lights,  coins, poison, levelEnd, levelSoundtrack) {
         this.enemies = enemies;

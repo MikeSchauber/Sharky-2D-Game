@@ -59,14 +59,14 @@ class Character extends MovableObject {
 
     setRightCameraRange() {
         if (this.cameraRange < 188 && this.cameraRange >= 0) {
-            this.cameraRange += 2;
+            this.cameraRange += this.speed;
         }
         this.movingCamera();
     }
 
     setLeftCameraRange() {
         if (this.cameraRange <= 188 && this.cameraRange > 0) {
-            this.cameraRange -= 2;
+            this.cameraRange -= this.speed;
         }
         this.movingCamera();
     }
@@ -79,6 +79,17 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 288;
         }
 
+    }
+
+    moveAnimation() {
+        this.walking_sound.pause();
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
+            this.characterAnimation(this.IMAGES_SWIM);
+            this.walking_sound.play();
+        } else {
+            this.characterAnimation(this.IMAGES_IDLE);
+            this.walking_sound.pause();
+        }
     }
 
     move() {
@@ -107,15 +118,11 @@ class Character extends MovableObject {
 
     }
 
-    moveAnimation() {
-        this.walking_sound.pause();
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
-            this.animationPlay(this.IMAGES_SWIM);
-            this.walking_sound.play();
-        } else {
-            this.animationPlay(this.IMAGES_IDLE);
-            this.walking_sound.pause();
-        }
+    characterAnimation(IMAGE_ARRAY) {
+        let i = this.currentImage % IMAGE_ARRAY.length;
+        let path = IMAGE_ARRAY[i];
+        this.img = this.imageCache[path];
+        this.currentImage++
     }
 
 }

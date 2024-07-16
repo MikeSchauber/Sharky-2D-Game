@@ -9,7 +9,7 @@ class MovableObject {
     img;
     imageCache = {};
     width = 720;
-    height = 480;    
+    height = 480;
     currentImage = 0;
     leftDirection = false;
     upperDirection = false;
@@ -32,11 +32,14 @@ class MovableObject {
         this.img.src = path;
     }
 
-    animationPlay(IMAGE_ARRAY) {
-        let i = this.currentImage % IMAGE_ARRAY.length
-        let path = IMAGE_ARRAY[i];
-        this.img = this.imageCache[path];
-        this.currentImage++
+    animationPlay(IMAGE_ARRAY, speed) {
+        this.speed = speed;
+        setInterval(() => {
+            let i = this.currentImage % IMAGE_ARRAY.length;
+            let path = IMAGE_ARRAY[i];
+            this.img = this.imageCache[path];
+            this.currentImage++
+        }, 1000 / this.speed);
     }
 
     moveRight() {
