@@ -6,6 +6,7 @@ class Character extends MovableObject {
     speed = 2;
     cameraRange = 0;
     cameraMovement = false;
+    idleTimer;
     IMAGES_SWIM = [
         "img/1.Sharkie/3.Swim/1.png",
         "img/1.Sharkie/3.Swim/2.png",
@@ -34,6 +35,22 @@ class Character extends MovableObject {
         "img/1.Sharkie/1.IDLE/17.png",
         "img/1.Sharkie/1.IDLE/18.png",
     ];
+    IMAGES_LONG_IDLE = [
+        "img/1.Sharkie/2.Long_IDLE/i1.png",
+        "img/1.Sharkie/2.Long_IDLE/i2.png",
+        "img/1.Sharkie/2.Long_IDLE/i3.png",
+        "img/1.Sharkie/2.Long_IDLE/i4.png",
+        "img/1.Sharkie/2.Long_IDLE/i5.png",
+        "img/1.Sharkie/2.Long_IDLE/i6.png",
+        "img/1.Sharkie/2.Long_IDLE/i7.png",
+        "img/1.Sharkie/2.Long_IDLE/i8.png",
+        "img/1.Sharkie/2.Long_IDLE/i9.png",
+        "img/1.Sharkie/2.Long_IDLE/i10.png",
+        "img/1.Sharkie/2.Long_IDLE/i11.png",
+        "img/1.Sharkie/2.Long_IDLE/i12.png",
+        "img/1.Sharkie/2.Long_IDLE/i13.png",
+        "img/1.Sharkie/2.Long_IDLE/i14.png",
+    ];
     world;
     walking_sound = new Audio("audio/swim Sound.mp3");
 
@@ -41,6 +58,7 @@ class Character extends MovableObject {
         super().loadImage("img/1.Sharkie/1.IDLE/1.png");
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_IDLE);
+        this.loadImages(this.IMAGES_LONG_IDLE);
         this.animate();
         this.walking_sound.volume = 0.6;
     }
@@ -86,10 +104,15 @@ class Character extends MovableObject {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
             this.characterAnimation(this.IMAGES_SWIM);
             this.walking_sound.play();
+        } else if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && !this.world.keyboard.DOWN) {
+            this.idleTimer = setTimeout(() => {
+                this.characterAnimation(this.IMAGES_LONG_IDLE);
+            }, 2000);
         } else {
             this.characterAnimation(this.IMAGES_IDLE);
             this.walking_sound.pause();
         }
+        clearInterval(this.idleTimer);
     }
 
     move() {
