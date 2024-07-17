@@ -69,6 +69,11 @@ class World {
             this.ctx.translate(-(mo.x + mo.width / 2), -(mo.y + mo.height / 2));
         }
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        this.ctx.beginPath();
+        this.ctx.lineWidth = '2';
+        this.ctx.strokeStyle = "blue";
+        this.ctx.rect(mo.x, mo.y, mo.height, mo.width);
+        this.ctx.stroke();
         if (mo.leftDirection) {
             mo.x = mo.x * -1;
         }
