@@ -54,6 +54,11 @@ class Character extends MovableObject {
         "img/1.Sharkie/2.Long_IDLE/i13.png",
         "img/1.Sharkie/2.Long_IDLE/i14.png",
     ];
+    IMAGES_SLEEP = [
+        "img/1.Sharkie/2.Long_IDLE/i11.png",
+        "img/1.Sharkie/2.Long_IDLE/i12.png",
+        "img/1.Sharkie/2.Long_IDLE/i13.png",
+    ];
     world;
     walking_sound = new Audio("audio/swim Sound.mp3");
 
@@ -106,7 +111,7 @@ class Character extends MovableObject {
     startIdleTimer() {
         this.timeoutId = setTimeout(() => {
             this.idleTimer = true;
-        }, 7000);
+        }, 3000);
     }
 
     moveAnimation() {
@@ -150,7 +155,7 @@ class Character extends MovableObject {
             this.speedY = 0;
         } else if (this.y > this.downEnd) {
             this.speedY = 0;
-        } else if ( this.world.keyboard.UP && this.speedY < 0) {
+        } else if (this.world.keyboard.UP && this.speedY < 0) {
             this.speedY = 0;
         } else {
             this.upperDirection = false;
@@ -161,12 +166,6 @@ class Character extends MovableObject {
         let i = this.idleImage;
         let path = arr[i];
         this.img = this.imageCache[path];
-        if (this.idleImage < 12) {
-            this.idleImage++;
-        }
-        if (this.idleImage === 12) {
-            this.img = this.imageCache[path];
-        }
     }
 
     characterAnimation(IMAGE_ARRAY) {
