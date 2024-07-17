@@ -58,6 +58,7 @@ class Character extends MovableObject {
         "img/1.Sharkie/2.Long_IDLE/i11.png",
         "img/1.Sharkie/2.Long_IDLE/i12.png",
         "img/1.Sharkie/2.Long_IDLE/i13.png",
+        "img/1.Sharkie/2.Long_IDLE/i14.png",
     ];
     world;
     walking_sound = new Audio("audio/swim Sound.mp3");
