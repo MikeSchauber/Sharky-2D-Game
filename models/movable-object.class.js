@@ -15,7 +15,7 @@ class MovableObject {
     upperDirection = false;
     downDirection = false;
     speedY = 0;
-    acceleration = 0.02;
+    acceleration = 0.03;
 
     applyGraviy() {
         setInterval(() => {
