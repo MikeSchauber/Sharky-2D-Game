@@ -8,7 +8,7 @@ function init() {
 };
 
 document.addEventListener('keydown', (e) => {
-    if (e.keyCode === 38) {
+    if (e.keyCode === 32) {
         keyboard.UP = true;
     }
     if (e.keyCode === 39) {
@@ -23,7 +23,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('keyup', (e) => {
-    if (e.keyCode === 38) {
+    if (e.keyCode === 32) {
         keyboard.UP = false;
     }
     if (e.keyCode === 39) {
