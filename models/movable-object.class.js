@@ -3,7 +3,7 @@ class MovableObject {
     y = 0;
     leftEnd = -500;
     upperEnd = -70;
-    downEnd = 330;
+    downEnd = 325;
     fps = 60;
     speed = 1;
     img;
@@ -14,55 +14,70 @@ class MovableObject {
     leftDirection = false;
     upperDirection = false;
     downDirection = false;
+    speedY = 0;
+    acceleration = 0.02;
 
-    /**
-     * 
-     * @param {Array} arr = ["img/image1.png", "img/image2.png", ...];
-     */
-    loadImages(arr) {
-        arr.forEach((src) => {
-            let img = new Image();
-            img.src = src
-            this.imageCache[src] = img;
-        });
-    }
-
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-    animationPlay(IMAGE_ARRAY, speed) {
-        this.speed = speed;
+    applyGraviy() {
         setInterval(() => {
-            let i = this.currentImage % IMAGE_ARRAY.length;
-            let path = IMAGE_ARRAY[i];
-            this.img = this.imageCache[path];
-            this.currentImage++
-        }, 1000 / this.speed);
+            if (this.isAboveGround() && this.speedY < 5) { 
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+        }
+        }, 1000 / 60)
     }
 
-    moveRight() {
-        setInterval(() => {
-            this.x += this.speed
-        }, 1000 / this.fps)
+    isAboveGround() {
+        return this.y < this.downEnd;
     }
 
-    moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed
-        }, 1000 / this.fps)
-    }
+/**
+ * 
+ * @param {Array} arr = ["img/image1.png", "img/image2.png", ...];
+ */
+loadImages(arr) {
+    arr.forEach((src) => {
+        let img = new Image();
+        img.src = src
+        this.imageCache[src] = img;
+    });
+}
 
-    moveUp() {
-        setInterval(() => {
-            this.y -= this.speed
-        }, 1000 / this.fps)
-    }
+loadImage(path) {
+    this.img = new Image();
+    this.img.src = path;
+}
 
-    moveDown() {
-        setInterval(() => {
-            this.y += this.speed
-        }, 1000 / this.fps)
-    }
+animationPlay(IMAGE_ARRAY, speed) {
+    this.speed = speed;
+    setInterval(() => {
+        let i = this.currentImage % IMAGE_ARRAY.length;
+        let path = IMAGE_ARRAY[i];
+        this.img = this.imageCache[path];
+        this.currentImage++
+    }, 1000 / this.speed);
+}
+
+moveRight() {
+    setInterval(() => {
+        this.x += this.speed
+    }, 1000 / this.fps)
+}
+
+moveLeft() {
+    setInterval(() => {
+        this.x -= this.speed
+    }, 1000 / this.fps)
+}
+
+moveUp() {
+    setInterval(() => {
+        this.y -= this.speed
+    }, 1000 / this.fps)
+}
+
+moveDown() {
+    setInterval(() => {
+        this.y += this.speed
+    }, 1000 / this.fps)
+}
 }

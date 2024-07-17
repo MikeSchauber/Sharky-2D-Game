@@ -44,7 +44,7 @@ class Pufferfish extends MovableObject {
     }
 
     animate(position) {
-        this.animationPlay(this.IMAGES_SWIM, 8);
+        // this.animationPlay(this.IMAGES_SWIM, 8);
         setTimeout(() => {
             this.transitionFunction(this.IMAGES_TRANSITION);
         }, 5000);

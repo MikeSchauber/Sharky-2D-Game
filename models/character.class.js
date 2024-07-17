@@ -6,7 +6,10 @@ class Character extends MovableObject {
     speed = 2;
     cameraRange = 0;
     cameraMovement = false;
-    idleTimer;
+    idleTimer = false;
+    idleImage = 0;
+    timeoutId;
+    timeoutStarted = false;
     IMAGES_SWIM = [
         "img/1.Sharkie/3.Swim/1.png",
         "img/1.Sharkie/3.Swim/2.png",
@@ -60,6 +63,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.animate();
+        this.applyGraviy();
         this.walking_sound.volume = 0.6;
     }
 
@@ -99,20 +103,32 @@ class Character extends MovableObject {
 
     }
 
+    startIdleTimer() {
+        this.timeoutId = setTimeout(() => {
+            this.idleTimer = true;
+        }, 7000);
+    }
+
     moveAnimation() {
         this.walking_sound.pause();
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
+            clearTimeout(this.timeoutId);
             this.characterAnimation(this.IMAGES_SWIM);
             this.walking_sound.play();
-        } else if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && !this.world.keyboard.DOWN) {
-            this.idleTimer = setTimeout(() => {
-                this.characterAnimation(this.IMAGES_LONG_IDLE);
-            }, 2000);
-        } else {
+            this.idleTimer = false;
+            this.idleImage = 0;
+            this.timeoutStarted = false;
+        } else if (!this.isAboveGround() && !this.idleTimer) {
             this.characterAnimation(this.IMAGES_IDLE);
             this.walking_sound.pause();
+            if (!this.timeoutStarted) {
+                this.startIdleTimer();
+                this.timeoutStarted = true;
+            }
         }
-        clearInterval(this.idleTimer);
+        if (!this.isAboveGround() && this.idleTimer) {
+            this.idleAnimation(this.IMAGES_LONG_IDLE);
+        }
     }
 
     move() {
@@ -138,7 +154,18 @@ class Character extends MovableObject {
         } else {
             this.downDirection = false;
         }
+    }
 
+    idleAnimation(arr) {
+        let i = this.idleImage;
+        let path = arr[i];
+        this.img = this.imageCache[path];
+        if (this.idleImage < 12) {
+            this.idleImage++;
+        }
+        if (this.idleImage === 12) {
+            this.img = this.imageCache[path];
+        }
     }
 
     characterAnimation(IMAGE_ARRAY) {
