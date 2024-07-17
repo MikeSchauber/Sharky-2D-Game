@@ -111,7 +111,7 @@ class Character extends MovableObject {
     startIdleTimer() {
         this.timeoutId = setTimeout(() => {
             this.idleTimer = true;
-        }, 3000);
+        }, 7000);
     }
 
     moveAnimation() {
@@ -163,6 +163,19 @@ class Character extends MovableObject {
     }
 
     idleAnimation(arr) {
+        let i = this.idleImage;
+        let path = arr[i];
+        this.img = this.imageCache[path];
+        if (this.idleImage < arr.length - 1) {
+            this.idleImage++;
+        }
+        if (this.idleImage === arr.length - 1) {
+            this.characterAnimation(this.IMAGES_SLEEP);
+        }
+
+    }
+
+    sleepAnimation(arr) {
         let i = this.idleImage;
         let path = arr[i];
         this.img = this.imageCache[path];
