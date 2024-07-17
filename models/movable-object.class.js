@@ -19,7 +19,7 @@ class MovableObject {
 
     applyGraviy() {
         setInterval(() => {
-            if (this.isAboveGround() && this.speedY < 5) { 
+            if (this.isAboveGround() || this.speedY > 0) { 
             this.y -= this.speedY;
             this.speedY -= this.acceleration;
         }
@@ -57,12 +57,6 @@ animationPlay(IMAGE_ARRAY, speed) {
     }, 1000 / this.speed);
 }
 
-moveRight() {
-    setInterval(() => {
-        this.x += this.speed
-    }, 1000 / this.fps)
-}
-
 moveLeft() {
     setInterval(() => {
         this.x -= this.speed
@@ -75,9 +69,4 @@ moveUp() {
     }, 1000 / this.fps)
 }
 
-moveDown() {
-    setInterval(() => {
-        this.y += this.speed
-    }, 1000 / this.fps)
-}
 }
