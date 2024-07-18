@@ -97,7 +97,7 @@ class MovableObject {
     hit() {
         this.isHurt = true;
         if (this.energy > 0) {
-            this.energy -= 1;
+            this.energy -= 0.5;
             this.world.bars[0] = new Bar("life", 0, this.getRightBarIndex(this.energy, "life"));
             this.world.setWorld();
         }
@@ -106,14 +106,15 @@ class MovableObject {
     isntHit() {
         if (this.energy <= 99.9) {
             if (this.energy > 0.1) {
-                this.energy += 0.05;
+                this.energy += 0.005;
+                console.log(this.energy);
                 this.world.bars[0] = new Bar("life", 0, this.getRightBarIndex(this.energy, "life"));
                 this.world.setWorld();
             }
         }
         setTimeout(() => {
             this.isHurt = false;
-        }, 2970);
+        }, 1);
     }
 
     isHit() {

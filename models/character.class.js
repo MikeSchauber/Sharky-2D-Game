@@ -107,7 +107,6 @@ class Character extends MovableObject {
         };
         requestAnimationFrame(this.animationFrame);
         setInterval(() => {
-            console.log(this.isHit());
             if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP) && !this.isDead()) {
                 clearTimeout(this.timeoutId);
                 this.animationPlay(this.IMAGES_SWIM);
@@ -131,9 +130,7 @@ class Character extends MovableObject {
             if (this.isHit() && !this.isDead()) {
                 this.animationPlay(this.IMAGES_HURT);
                 this.hit_sound.play();
-            } else {
-                this.hit_sound.pause();
-            }
+            } 
             if (this.isDead()) {
                 this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
             }
