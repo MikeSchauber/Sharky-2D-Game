@@ -17,6 +17,7 @@ class MovableObject {
     speedY = 0;
     acceleration = 0.03;
     energy = 100;
+    alive = true;
 
     applyGraviy() {
         setInterval(() => {
@@ -64,30 +65,85 @@ class MovableObject {
         }
     }
 
-    // Bessere Formel zur Kollisionsberechnung (Genauer)
-    // isColliding(obj) {
-    //     console.log(obj);
-    //     return (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) &&
-    //         (this.y + this.offsetY + this.height) >= obj.y &&
-    //         (this.y + this.offsetY) <= (obj.y + obj.height) &&
-    //         obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-    // }
+    isColliding(obj) {
+        if (this.offset) {
+            return this.x + this.offset.x + this.width + this.offset.w >= obj.x &&
+                this.x + this.offset.x <= obj.x + obj.width &&
+                this.y + this.offset.y + this.height + this.offset.h >= obj.y &&
+                this.y + this.offset.y <= obj.y + obj.height;
+        }
+    }
 
-    isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height;
+    getRightBarIndex(energy, bar) {
+        if (bar === "life") {
+            if (energy <= 100 && energy >= 95) {
+                return 5;
+            } else if (energy <= 95 && energy >= 80) {
+                return 4;
+            } else if (energy <= 80 && energy >= 60) {
+                return 3;
+            } else if (energy <= 60 && energy >= 40) {
+                return 2;
+            } else if (energy <= 40 && energy >= 10) {
+                return 1;
+            } else if (energy <= 10 && energy >= 0 || energy < 0) {
+                return 0;
+            }
+        }
+    }
+
+    isDead() {
+        return this.energy <= 0;
+    }
+
+    isHit() {
+        return this.isHurt;
+    }
+
+    isntHit() {
+        this.isHurt = false;
+        if (this.energy <= 99.9 && this.isHurt === false) {
+            if (this.energy > 0.1) {
+                this.energy += 0.1;
+            }
+            this.world.bars[0] = new Bar("life", 0, this.getRightBarIndex(this.energy, "life"));
+            this.world.setWorld();
+        }
     }
 
     animationPlay(IMAGE_ARRAY, speed) {
-        this.speed = speed;
-        setInterval(() => {
+        if (speed) {
+            this.speed = speed;
+            setInterval(() => {
+                let i = this.currentImage % IMAGE_ARRAY.length;
+                let path = IMAGE_ARRAY[i];
+                this.img = this.imageCache[path];
+                this.currentImage++
+            }, 1000 / this.speed);
+        } else {
             let i = this.currentImage % IMAGE_ARRAY.length;
             let path = IMAGE_ARRAY[i];
             this.img = this.imageCache[path];
             this.currentImage++
-        }, 1000 / this.speed);
+        }
+    }
+
+    transitionAnimation(arr, arr2, deathcontrol) {
+        let i = this.idleImage;
+        let path = arr[i];
+        this.img = this.imageCache[path];
+        if (this.idleImage < arr.length - 1) {
+            this.idleImage++;
+        }
+        if (this.idleImage === arr.length - 1 && typeof arr2 != "string") {
+            this.animationPlay(arr2);
+        }
+        if (typeof arr2 === "string" && this.idleImage === arr.length) {
+            this.loadImage(arr2);
+        }
+        if (deathcontrol) {
+            this.alive = true;
+        }
     }
 
     moveLeft() {

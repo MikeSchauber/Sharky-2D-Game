@@ -63,7 +63,7 @@ class Pufferfish extends MovableObject {
             this.speed = 1 * Math.random();
             this.leftDirection = false;
         }
-    } arr
+    }
 
     transitionFunction(arr) {
         setInterval(() => {

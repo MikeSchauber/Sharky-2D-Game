@@ -27,11 +27,11 @@ class World {
                 if (this.character.isColliding(enemy)) {
                     console.log("enemy is colliding, energy is =", this.character.energy);
                     this.character.hit();
-                } else if (this.character.timeoutStarted === false) {
-                    this.character.loadImage(this.character.IMAGES_IDLE[0]);
+                } else if (!this.character.isColliding(enemy)) {
+                    this.character.isntHit();
                 }
             })
-        }, 1000);
+        }, 500);
     }
 
     setWorld() {
