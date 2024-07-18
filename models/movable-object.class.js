@@ -115,12 +115,12 @@ class MovableObject {
     }
 
     hit() {
-        this.isHurt = true;
         if (this.energy > 0) {
             this.energy -= 0.5;
             this.world.bars[0] = new Bar("life", 0, this.getLifeBarIndex(this.energy, "life"));
             this.world.setWorld();
-        }
+        } 
+        this.lastHit = new Date().getTime();
     }
 
     isntHit() {
@@ -129,15 +129,15 @@ class MovableObject {
                 this.energy += 0.005;
                 this.world.bars[0] = new Bar("life", 0, this.getLifeBarIndex(this.energy, "life"));
                 this.world.setWorld();
+            } else {
+                this.energy = 0;
             }
         }
-        setTimeout(() => {
-            this.isHurt = false;
-        }, 1000);
     }
 
     isHit() {
-        return this.isHurt;
+        let timepassed = new Date().getTime() - this.lastHit;
+        return timepassed < 300;
     }
 
     isDead() {

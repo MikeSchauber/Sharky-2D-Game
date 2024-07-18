@@ -10,7 +10,7 @@ class Character extends MovableObject {
     transitionImage = 0;
     timeoutId;
     timeoutStarted = false;
-    isHurt = false;
+    lastHit = 0;
     offset = {
         "x": 35,
         "y": 70,
@@ -98,7 +98,7 @@ class Character extends MovableObject {
         this.animate();
         this.applyGraviy();
         this.walking_sound.volume = 0.6;
-        this.hit_sound.volume = 0.5;
+        this.hit_sound.volume = 0.4;
     }
 
     animate() {
@@ -125,6 +125,7 @@ class Character extends MovableObject {
                     }
                 } else {
                     this.walking_sound.pause();
+                    this.loadImage(this.IMAGES_IDLE[0]);
                 }
                 if (!this.isAboveGround() && this.idleTimer) {
                     this.transitionAnimation(this.IMAGES_LONG_IDLE, this.IMAGES_SLEEP);
