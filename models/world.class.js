@@ -22,7 +22,6 @@ class World {
     }
 
     checkCollision() {
-        console.log(this.level.enemies);
         setInterval(() => {
             this.level.enemies.forEach(enemy => {
                 if (this.character.isColliding(enemy)) {
