@@ -10,13 +10,16 @@ class Character extends MovableObject {
     transitionImage = 0;
     timeoutId;
     timeoutStarted = false;
+    isHurt = false;
     offset = {
         "x": 35,
-        "y": 75,
+        "y": 70,
         "w": -64,
-        "h": -115,
+        "h": -105,
     };
-    isHurt = false;
+    world;
+    walking_sound = new Audio("audio/swim Sound.mp3");
+    hit_sound = new Audio("audio/hit.mp3");
     IMAGES_SWIM = [
         "img/1.Sharkie/3.Swim/1.png",
         "img/1.Sharkie/3.Swim/2.png",
@@ -83,8 +86,6 @@ class Character extends MovableObject {
         "img/1.Sharkie/6.dead/2.Electro_shock/9.png",
         "img/1.Sharkie/6.dead/2.Electro_shock/10.png",
     ];
-    world;
-    walking_sound = new Audio("audio/swim Sound.mp3");
 
     constructor() {
         super().loadImage("img/1.Sharkie/1.IDLE/1.png");
@@ -96,6 +97,7 @@ class Character extends MovableObject {
         this.animate();
         this.applyGraviy();
         this.walking_sound.volume = 0.6;
+        this.hit_sound.volume = 0.6;
     }
 
     animate() {
@@ -105,6 +107,7 @@ class Character extends MovableObject {
         };
         requestAnimationFrame(this.animationFrame);
         setInterval(() => {
+            console.log(this.isHit());
             if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP) && !this.isDead()) {
                 clearTimeout(this.timeoutId);
                 this.animationPlay(this.IMAGES_SWIM);
@@ -127,20 +130,14 @@ class Character extends MovableObject {
             }
             if (this.isHit() && !this.isDead()) {
                 this.animationPlay(this.IMAGES_HURT);
+                this.hit_sound.play();
+            } else {
+                this.hit_sound.pause();
             }
-            if (this.isDead() && this.alive) {
-                this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9], this.alive);
+            if (this.isDead()) {
+                this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
             }
         }, 1000 / 8);
-    }
-
-    hit() {
-        this.isHurt = true;
-        if (this.energy > 0) {
-            this.energy -= 5;
-            this.world.bars[0] = new Bar("life", 0, this.getRightBarIndex(this.energy, "life"));
-            this.world.setWorld();
-        }
     }
 
     startIdleTimer() {
@@ -150,28 +147,30 @@ class Character extends MovableObject {
     }
 
     move() {
-        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.isDead()) {
-            this.x += this.speed;
-            this.setRightCameraRange();
-            this.leftDirection = false;
-        }
-        if (this.world.keyboard.LEFT && this.x > this.leftEnd && !this.isDead()) {
-            this.x -= this.speed;
-            this.setLeftCameraRange();
-            this.leftDirection = true;
-        }
-        if (this.world.keyboard.UP && this.y > this.upperEnd && !this.isDead()) {
-            this.speedY += this.acceleration * 2;
-            this.upperDirection = true;
-        } else if (this.y < this.upperEnd) {
-            this.y = this.upperEnd
-            this.speedY = 0;
-        } else if (this.y > this.downEnd) {
-            this.speedY = 0;
-        } else if (this.world.keyboard.UP && this.speedY < 0) {
-            this.speedY = 0;
-        } else {
-            this.upperDirection = false;
+        if (!this.isDead()) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                this.x += this.speed;
+                this.setRightCameraRange();
+                this.leftDirection = false;
+            }
+            if (this.world.keyboard.LEFT && this.x > this.leftEnd) {
+                this.x -= this.speed;
+                this.setLeftCameraRange();
+                this.leftDirection = true;
+            }
+            if (this.world.keyboard.UP && this.y > this.upperEnd) {
+                this.speedY += this.accelerationY * 2;
+                this.upperDirection = true;
+            } else if (this.y < this.upperEnd) {
+                this.y = this.upperEnd
+                this.speedY = 0;
+            } else if (this.y > this.downEnd) {
+                this.speedY = 0;
+            } else if (this.world.keyboard.UP && this.speedY < 0) {
+                this.speedY = 0;
+            } else {
+                this.upperDirection = false;
+            }
         }
     }
 

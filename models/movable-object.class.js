@@ -15,7 +15,9 @@ class MovableObject {
     upperDirection = false;
     downDirection = false;
     speedY = 0;
-    acceleration = 0.03;
+    speedX = 0;
+    accelerationX = 0.03;
+    accelerationY = 0.03;
     energy = 100;
     alive = true;
 
@@ -23,7 +25,7 @@ class MovableObject {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
-                this.speedY -= this.acceleration;
+                this.speedY -= this.accelerationY;
             }
         }, 1000 / 60)
     }
@@ -76,15 +78,15 @@ class MovableObject {
 
     getRightBarIndex(energy, bar) {
         if (bar === "life") {
-            if (energy <= 100 && energy >= 95) {
+            if (energy <= 100 && energy >= 85) {
                 return 5;
-            } else if (energy <= 95 && energy >= 80) {
+            } else if (energy <= 85 && energy >= 65) {
                 return 4;
-            } else if (energy <= 80 && energy >= 60) {
+            } else if (energy <= 65 && energy >= 40) {
                 return 3;
-            } else if (energy <= 60 && energy >= 40) {
+            } else if (energy <= 40 && energy >= 20) {
                 return 2;
-            } else if (energy <= 40 && energy >= 10) {
+            } else if (energy <= 20 && energy >= 10) {
                 return 1;
             } else if (energy <= 10 && energy >= 0 || energy < 0) {
                 return 0;
@@ -92,23 +94,34 @@ class MovableObject {
         }
     }
 
-    isDead() {
-        return this.energy <= 0;
+    hit() {
+        this.isHurt = true;
+        if (this.energy > 0) {
+            this.energy -= 1;
+            this.world.bars[0] = new Bar("life", 0, this.getRightBarIndex(this.energy, "life"));
+            this.world.setWorld();
+        }
+    }
+
+    isntHit() {
+        if (this.energy <= 99.9) {
+            if (this.energy > 0.1) {
+                this.energy += 0.05;
+                this.world.bars[0] = new Bar("life", 0, this.getRightBarIndex(this.energy, "life"));
+                this.world.setWorld();
+            }
+        }
+        setTimeout(() => {
+            this.isHurt = false;
+        }, 2970);
     }
 
     isHit() {
         return this.isHurt;
     }
 
-    isntHit() {
-        this.isHurt = false;
-        if (this.energy <= 99.9 && this.isHurt === false) {
-            if (this.energy > 0.1) {
-                this.energy += 0.1;
-            }
-            this.world.bars[0] = new Bar("life", 0, this.getRightBarIndex(this.energy, "life"));
-            this.world.setWorld();
-        }
+    isDead() {
+        return this.energy <= 0;
     }
 
     animationPlay(IMAGE_ARRAY, speed) {
@@ -128,21 +141,18 @@ class MovableObject {
         }
     }
 
-    transitionAnimation(arr, arr2, deathcontrol) {
+    transitionAnimation(arr, arr2) {
         let i = this.transitionImage;
         let path = arr[i];
         this.img = this.imageCache[path];
         if (this.transitionImage < arr.length - 1) {
             this.transitionImage++;
         }
-        if (this.transitionImage === arr.length - 1 && typeof arr2 !== "string") {
+        if (this.transitionImage === arr.length - 1 && typeof arr2 != "string") {
             this.animationPlay(arr2);
         }
-        if (typeof arr2 === "string" && this.transitionImage === arr.length) {
+        if (this.transitionImage === arr.length && typeof arr2 == "string") {
             this.loadImage(arr2);
-        }
-        if (deathcontrol) {
-            this.alive = true;
         }
     }
 

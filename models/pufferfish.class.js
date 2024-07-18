@@ -59,7 +59,6 @@ class Pufferfish extends MovableObject {
 
     startAnimationLoop() {
         this.animationInterval = setInterval(() => {
-            console.log(this.animationState);
             if (this.animationState === 'swim') {
                 this.animationPlay(this.IMAGES_SWIM);
                 this.offsetNormal();

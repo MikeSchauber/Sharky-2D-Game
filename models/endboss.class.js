@@ -1,8 +1,6 @@
 class Endboss extends MovableObject {
-
     height = 400;
     width = 400;
-
     IMAGES_STAY = [
         "img/2.Enemy/3 Final Enemy/2.floating/1.png",
         "img/2.Enemy/3 Final Enemy/2.floating/2.png",
@@ -18,6 +16,12 @@ class Endboss extends MovableObject {
         "img/2.Enemy/3 Final Enemy/2.floating/12.png",
         "img/2.Enemy/3 Final Enemy/2.floating/13.png",
     ];
+    offset = {
+        "x": 25,
+        "y": 185,
+        "w": -64,
+        "h": -255,
+    }; 
 
     constructor() {
         super().loadImage("img/2.Enemy/3 Final Enemy/2.floating/1.png");

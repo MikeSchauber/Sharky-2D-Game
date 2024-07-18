@@ -25,13 +25,12 @@ class World {
         setInterval(() => {
             this.level.enemies.forEach(enemy => {
                 if (this.character.isColliding(enemy)) {
-                    console.log("enemy is colliding, energy is =", this.character.energy);
                     this.character.hit();
                 } else if (!this.character.isColliding(enemy)) {
                     this.character.isntHit();
                 }
             })
-        }, 500);
+        }, 100);
     }
 
     setWorld() {
@@ -39,7 +38,7 @@ class World {
         this.level.world = this;
         this.bars.forEach((bar) => {
             bar.world = this;
-        })
+        });
     };
 
     draw() {
