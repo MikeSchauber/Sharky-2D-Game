@@ -68,7 +68,7 @@ class MovableObject {
     }
 
     isColliding(obj) {
-        if (this.offset) {
+        if (this.offset && obj.offset) {
             return this.x + this.offset.x + this.width + this.offset.w >= obj.x &&
                 this.x + this.offset.x <= obj.x + obj.width &&
                 this.y + this.offset.y + this.height + this.offset.h >= obj.y &&
@@ -133,7 +133,7 @@ class MovableObject {
         }
         setTimeout(() => {
             this.isHurt = false;
-        }, 1);
+        }, 1000);
     }
 
     isHit() {
