@@ -105,7 +105,7 @@ class Character extends MovableObject {
         };
         requestAnimationFrame(this.animationFrame);
         setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP && !this.isDead()) {
+            if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP) && !this.isDead()) {
                 clearTimeout(this.timeoutId);
                 this.animationPlay(this.IMAGES_SWIM);
                 this.walking_sound.play();
@@ -128,7 +128,6 @@ class Character extends MovableObject {
             if (this.isHit() && !this.isDead()) {
                 this.animationPlay(this.IMAGES_HURT);
             }
-            // isDead() wird auch noch nach dem tot erneut gesartet
             if (this.isDead() && this.alive) {
                 this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9], this.alive);
             }
