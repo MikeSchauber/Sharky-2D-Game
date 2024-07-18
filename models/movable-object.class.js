@@ -127,7 +127,6 @@ class MovableObject {
         if (this.energy <= 99.9) {
             if (this.energy > 0.1) {
                 this.energy += 0.005;
-                console.log(this.energy);
                 this.world.bars[0] = new Bar("life", 0, this.getLifeBarIndex(this.energy, "life"));
                 this.world.setWorld();
             }

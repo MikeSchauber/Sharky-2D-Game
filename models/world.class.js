@@ -31,11 +31,11 @@ class World {
                     this.character.isntHit();
                 }
             });
-            this.level.coins.forEach(coin => {
-                if (this.character.isColliding(coin)) {
-                    this.character.collect();
-                }
-            });
+            // this.level.coins.forEach(coin => {
+            //     if (this.character.isColliding(coin)) {
+            //         this.character.collect();
+            //     }
+            // });
         }, 50);
     }
 
