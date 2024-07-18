@@ -43,11 +43,13 @@ class Jellyfish extends MovableObject {
             this.loadImages(this.JELLY_YELLOW);
             this.animate(this.JELLY_YELLOW);
             this.moveUp();
+            this.moveLeft();
         }
         if (color === "lila") {
             this.loadImages(this.JELLY_PURPLE);
             this.animate(this.JELLY_PURPLE);
             this.moveUp();
+            this.moveRight();
         }
         if (color === "green") {
             this.loadImages(this.JELLY_GREEN);

@@ -182,6 +182,12 @@ class MovableObject {
         }, 1000 / this.fps)
     }
 
+    moveRight() {
+        setInterval(() => {
+            this.x += this.speed
+        }, 1000 / this.fps)
+    }
+
     moveUp() {
         setInterval(() => {
             this.y -= this.speed

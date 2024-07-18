@@ -110,18 +110,14 @@ class Character extends MovableObject {
         setInterval(() => {
             if (!this.isDead()) {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP) {
-                    clearTimeout(this.timeoutId);
                     this.animationPlay(this.IMAGES_SWIM);
                     this.walking_sound.play();
-                    this.idleTimer = false;
-                    this.idleImage = 0;
-                    this.timeoutStarted = false;
+                    this.resetIdleTimer();
                 } else if (!this.isAboveGround() && !this.idleTimer) {
                     this.animationPlay(this.IMAGES_IDLE);
                     this.walking_sound.pause();
                     if (!this.timeoutStarted) {
                         this.startIdleTimer();
-                        this.timeoutStarted = true;
                     }
                 } else {
                     this.walking_sound.pause();
@@ -133,6 +129,7 @@ class Character extends MovableObject {
                 if (this.isHit()) {
                     this.animationPlay(this.IMAGES_HURT);
                     this.hit_sound.play();
+                    this.resetIdleTimer();
                 }
             } else {
                 this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
@@ -140,7 +137,14 @@ class Character extends MovableObject {
         }, 1000 / 8);
     }
 
+    resetIdleTimer() {
+        clearTimeout(this.timeoutId);
+        this.idleTimer = false;
+        this.timeoutStarted = false;
+    }
+
     startIdleTimer() {
+        this.timeoutStarted = true;
         this.timeoutId = setTimeout(() => {
             this.idleTimer = true;
         }, 7000);
