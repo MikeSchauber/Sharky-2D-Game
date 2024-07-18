@@ -31,6 +31,12 @@ class Pufferfish extends MovableObject {
         "img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/2.bubbleswim4.png",
         "img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/2.bubbleswim5.png",
     ];
+    offset = {
+        "x": 0,
+        "y": 4,
+        "h": -20,
+        "w": -10,
+    }
 
     constructor(x, y) {
         super().loadImage("img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png");
@@ -46,7 +52,7 @@ class Pufferfish extends MovableObject {
     animate(position) {
         // this.animationPlay(this.IMAGES_SWIM, 8);
         setTimeout(() => {
-            this.transitionFunction(this.IMAGES_TRANSITION);
+            this.transitionAnimation(this.IMAGES_TRANSITION, this.IMAGES_BUBBLE_SWIM);
         }, 5000);
         setInterval(() => {
             this.checkMovementEnd(position);
