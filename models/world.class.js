@@ -1,9 +1,9 @@
 class World {
     character = new Character();
     bars = [
-        new Bar("coin", 90),
-        new Bar("life", 45),
-        new Bar("poison", 0)
+        new Bar("life", 0, 5),
+        new Bar("coin", 50, 0),
+        new Bar("poison", 100, 0)
     ];
     level = level1;
     soundtrack;
@@ -25,7 +25,10 @@ class World {
         setInterval(() => {
             this.level.enemies.forEach(enemy => {
                 if (this.character.isColliding(enemy)) {
-                    console.log("enemy is colliding", enemy);
+                    console.log("enemy is colliding, energy is =", this.character.energy);
+                    this.character.hit();
+                } else if (this.character.timeoutStarted === false) {
+                    this.character.loadImage(this.character.IMAGES_IDLE[0]);
                 }
             })
         }, 1000);
@@ -73,7 +76,7 @@ class World {
         if (mo.downDirection) {
             this.rotateDownwards(mo);
         }
-        mo.draw(this.ctx);
+        mo.draw(this.ctx, mo);
         mo.drawBorder(this.ctx);
         if (mo.leftDirection) {
             this.flipImageBack(mo);

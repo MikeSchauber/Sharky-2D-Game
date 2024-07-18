@@ -1,5 +1,5 @@
 class Bar extends MovableObject {
-    width = 200;
+    width = 220;
     height= 60;
     IMAGES_COIN = [
         "img/4. Marcadores/Purple/0_ _1.png",
@@ -27,9 +27,9 @@ class Bar extends MovableObject {
     ];
     world;
 
-    constructor(bar, y) {
-        super().getRightBar(bar, y);
-        this.x = 10;
+    constructor(bar, y, status) {
+        super().getRightBar(bar, y, status);
+        this.x = 200;
         this.animate();
     }
 
@@ -39,17 +39,17 @@ class Bar extends MovableObject {
         // }, 1000 / 1);
     }
 
-    getRightBar(bar, y) {
+    getRightBar(bar, y, status) {
         if (bar === "coin") {
-            this.loadImage(this.IMAGES_COIN[0]);
+            this.loadImage(this.IMAGES_COIN[status]);
             this.y = y;
         }
         if (bar === "life") {
-            this.loadImage(this.IMAGES_LIFE[0]);
+            this.loadImage(this.IMAGES_LIFE[status]);
             this.y = y;
         }
         if (bar === "poison") {
-            this.loadImage(this.IMAGES_POISON[0]);
+            this.loadImage(this.IMAGES_POISON[status]);
             this.y = y;
         }
 

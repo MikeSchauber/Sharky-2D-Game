@@ -15,7 +15,8 @@ class MovableObject {
     upperDirection = false;
     downDirection = false;
     speedY = 0;
-    acceleration = 0.02;
+    acceleration = 0.03;
+    energy = 100;
 
     applyGraviy() {
         setInterval(() => {
@@ -53,11 +54,13 @@ class MovableObject {
 
     drawBorder(ctx) {
         if (this instanceof Character || this instanceof Jellyfish || this instanceof Pufferfish || this instanceof Endboss || this instanceof Poison || this instanceof Coin) {
-            ctx.beginPath();
-            ctx.lineWidth = '2';
-            ctx.strokeStyle = "blue";
-            ctx.rect(this.x, this.y, this.height, this.width);
-            ctx.stroke()
+            if (this.offset) {
+                ctx.beginPath();
+                ctx.lineWidth = '2';
+                ctx.strokeStyle = "blue";
+                ctx.rect(this.x + this.offset.x, this.y + this.offset.y, this.width + this.offset.w, this.height + this.offset.h);
+                ctx.stroke();
+            }
         }
     }
 
@@ -76,7 +79,7 @@ class MovableObject {
             this.x < mo.x &&
             this.y < mo.y + mo.height;
     }
-    
+
     animationPlay(IMAGE_ARRAY, speed) {
         this.speed = speed;
         setInterval(() => {

@@ -10,6 +10,12 @@ class Character extends MovableObject {
     idleImage = 0;
     timeoutId;
     timeoutStarted = false;
+    offset = {
+        "x": 27,
+        "y": 70,
+        "w": -54,
+        "h": -100,
+    }
     IMAGES_SWIM = [
         "img/1.Sharkie/3.Swim/1.png",
         "img/1.Sharkie/3.Swim/2.png",
@@ -60,6 +66,22 @@ class Character extends MovableObject {
         "img/1.Sharkie/2.Long_IDLE/I13.png",
         "img/1.Sharkie/2.Long_IDLE/I14.png",
     ];
+    IMAGES_HURT = [
+        "img/1.Sharkie/5.Hurt/2.Electric shock/o1.png",
+        "img/1.Sharkie/5.Hurt/2.Electric shock/o2.png",
+    ];
+    IMAGES_DEAD_ELECTRO = [
+        "img/1.Sharkie/6.dead/2.Electro_shock/1.png",
+        "img/1.Sharkie/6.dead/2.Electro_shock/2.png",
+        "img/1.Sharkie/6.dead/2.Electro_shock/3.png",
+        "img/1.Sharkie/6.dead/2.Electro_shock/4.png",
+        "img/1.Sharkie/6.dead/2.Electro_shock/5.png",
+        "img/1.Sharkie/6.dead/2.Electro_shock/6.png",
+        "img/1.Sharkie/6.dead/2.Electro_shock/7.png",
+        "img/1.Sharkie/6.dead/2.Electro_shock/8.png",
+        "img/1.Sharkie/6.dead/2.Electro_shock/9.png",
+        "img/1.Sharkie/6.dead/2.Electro_shock/10.png",
+    ];
     world;
     walking_sound = new Audio("audio/swim Sound.mp3");
 
@@ -68,6 +90,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
+        this.loadImages(this.IMAGES_HURT);
         this.animate();
         this.applyGraviy();
         this.walking_sound.volume = 0.6;
@@ -173,7 +196,6 @@ class Character extends MovableObject {
         if (this.idleImage === arr.length - 1) {
             this.characterAnimation(this.IMAGES_SLEEP);
         }
-
     }
 
     sleepAnimation(arr) {
@@ -187,6 +209,40 @@ class Character extends MovableObject {
         let path = IMAGE_ARRAY[i];
         this.img = this.imageCache[path];
         this.currentImage++
+    }
+
+    hit() {
+        if (this.energy > 0) {
+            this.energy -= 10;
+            this.world.bars[0] = new Bar("life", 0, this.getRightBarIndex(this.energy));
+            this.world.setWorld();
+            this.hurtAnimation(this.IMAGES_HURT);
+        } else if (this.energy === 0) {
+            // game over
+        }
+    }
+
+    getRightBarIndex(energy) {
+        if (energy <= 100 && energy >= 80) {
+            return 4;
+        } else if (energy <= 80 && energy >= 60) {
+            return 3;
+        } else if (energy <= 60 && energy >= 40) {
+            return 2;
+        } else if (energy <= 40 && energy >= 20) {
+            return 1;
+        } else if (energy <= 20 && energy > 0) {
+            return 1;
+        } else if (energy === 0) {
+            return 0;
+        }
+    }
+
+    hurtAnimation(arr) {
+        let i = this.idleImage % arr.length;
+        let path = arr[i];
+        this.img = this.imageCache[path];
+        this.idleImage++
     }
 
 }
