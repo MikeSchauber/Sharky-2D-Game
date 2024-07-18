@@ -72,7 +72,7 @@ class Character extends MovableObject {
     ];
     IMAGES_HURT = [
         "img/1.Sharkie/5.Hurt/2.Electric shock/1.png",
-        "img/1.Sharkie/5.Hurt/2.Electric shock/2.png", 
+        "img/1.Sharkie/5.Hurt/2.Electric shock/2.png",
         "img/1.Sharkie/5.Hurt/2.Electric shock/3.png",
     ];
     IMAGES_DEAD_ELECTRO = [
@@ -107,8 +107,8 @@ class Character extends MovableObject {
             requestAnimationFrame(this.animationFrame);
         };
         requestAnimationFrame(this.animationFrame);
-        if (!this.isDead()) {
-            setInterval(() => {
+        setInterval(() => {
+            if (!this.isDead()) {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP) {
                     clearTimeout(this.timeoutId);
                     this.animationPlay(this.IMAGES_SWIM);
@@ -133,11 +133,10 @@ class Character extends MovableObject {
                     this.animationPlay(this.IMAGES_HURT);
                     this.hit_sound.play();
                 }
-                if (this.isDead()) {
-                    this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
-                }
-            }, 1000 / 8);
-        }
+            } else {
+                this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
+            }
+        }, 1000 / 8);
     }
 
     startIdleTimer() {
