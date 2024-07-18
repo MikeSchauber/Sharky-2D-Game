@@ -31,12 +31,12 @@ class Pufferfish extends MovableObject {
         "img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/2.bubbleswim4.png",
         "img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/2.bubbleswim5.png",
     ];
-    offset = {
-        "x": 0,
-        "y": 4,
-        "h": -20,
-        "w": -10,
-    }
+    offset;
+    transitionImage = 0;
+    puffered = false;
+    normal = true;
+    animationInterval;
+    animationState = 'swim';
 
     constructor(x, y) {
         super().loadImage("img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png");
@@ -50,15 +50,81 @@ class Pufferfish extends MovableObject {
     }
 
     animate(position) {
-        // this.animationPlay(this.IMAGES_SWIM, 8);
-        setTimeout(() => {
-            this.transitionAnimation(this.IMAGES_TRANSITION, this.IMAGES_BUBBLE_SWIM);
-        }, 5000);
         setInterval(() => {
             this.checkMovementEnd(position);
         }, 1000 / this.fps);
+        this.startAnimationLoop();
         this.moveLeft();
     }
+
+    startAnimationLoop() {
+        this.animationInterval = setInterval(() => {
+            console.log(this.animationState);
+            if (this.animationState === 'swim') {
+                this.animationPlay(this.IMAGES_SWIM);
+                this.offsetNormal();
+            } else if (this.animationState === 'transition') {
+                this.transitionAnimation(this.IMAGES_TRANSITION, this.IMAGES_BUBBLE_SWIM);
+                this.offsetPuffered();
+            }
+        }, 1000 / 8);
+
+        setTimeout(() => {
+            this.animationState = 'transition';
+        }, 10000);
+
+        setTimeout(() => {
+            clearInterval(this.animationInterval);
+            this.animationState = 'swim';
+            this.startAnimationLoop();
+        }, 20000);
+    }
+
+    offsetNormal() {
+        this.offset = {
+            "x": 2,
+            "y": 4,
+            "h": -20,
+            "w": -10,
+        }
+    }
+
+    offsetPuffered() {
+        this.offset = {
+            "x": 0,
+            "y": 0,
+            "h": -0,
+            "w": -10,
+        }
+    }
+
+    // pufferIndexLoop() {
+    //     if (this.pufferIndex >= 100) {
+    //         this.pufferIndex = 0;
+    //     }
+    //     this.pufferIndex++;
+    //     console.log("puffer index =", this.pufferIndex);
+    //     if (this.pufferIndex === 100) {
+    //         this.puffered = true;
+    //         this.normal = false
+    //         pufferIndex = 0;
+    //     }
+    //     return this.puffered;
+    // }
+
+    // normalIndexLoop() {
+    //     if (this.normalIndex >= 100) {
+    //         this.normalIndex = 0;
+    //     }
+    //     this.normalIndex++;
+    //     console.log("normal index = ", this.normalIndex);
+    //     if (this.normalIndex === 100) {
+    //         this.puffered = false;
+    //         this.normal = true;
+    //         normalIndex = 0;
+    //     }
+    //     return this.puffered;
+    // }
 
     checkMovementEnd(position) {
         if (this.x < position - this.range) {

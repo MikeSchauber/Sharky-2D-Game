@@ -129,16 +129,16 @@ class MovableObject {
     }
 
     transitionAnimation(arr, arr2, deathcontrol) {
-        let i = this.idleImage;
+        let i = this.transitionImage;
         let path = arr[i];
         this.img = this.imageCache[path];
-        if (this.idleImage < arr.length - 1) {
-            this.idleImage++;
+        if (this.transitionImage < arr.length - 1) {
+            this.transitionImage++;
         }
-        if (this.idleImage === arr.length - 1 && typeof arr2 != "string") {
+        if (this.transitionImage === arr.length - 1 && typeof arr2 !== "string") {
             this.animationPlay(arr2);
         }
-        if (typeof arr2 === "string" && this.idleImage === arr.length) {
+        if (typeof arr2 === "string" && this.transitionImage === arr.length) {
             this.loadImage(arr2);
         }
         if (deathcontrol) {

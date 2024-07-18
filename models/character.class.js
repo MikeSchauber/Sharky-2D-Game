@@ -7,7 +7,7 @@ class Character extends MovableObject {
     cameraRange = 0;
     cameraMovement = false;
     idleTimer = false;
-    idleImage = 0;
+    transitionImage = 0;
     timeoutId;
     timeoutStarted = false;
     offset = {
