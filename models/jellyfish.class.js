@@ -1,6 +1,6 @@
 class Jellyfish extends MovableObject {
-    width = 65;
-    height = 80;
+    width = 50;
+    height = 60;
     JELLY_PURPLE = [
         "img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png",
         "img/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png",
