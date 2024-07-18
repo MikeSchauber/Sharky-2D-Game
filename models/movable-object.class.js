@@ -76,29 +76,49 @@ class MovableObject {
         }
     }
 
-    getRightBarIndex(energy, bar) {
-        if (bar === "life") {
-            if (energy <= 100 && energy >= 85) {
-                return 5;
-            } else if (energy <= 85 && energy >= 65) {
-                return 4;
-            } else if (energy <= 65 && energy >= 40) {
-                return 3;
-            } else if (energy <= 40 && energy >= 20) {
-                return 2;
-            } else if (energy <= 20 && energy >= 10) {
-                return 1;
-            } else if (energy <= 10 && energy >= 0 || energy < 0) {
-                return 0;
-            }
+    getLifeBarIndex(energy) {
+        if (energy <= 100 && energy >= 85) {
+            return 5;
+        } else if (energy <= 85 && energy >= 65) {
+            return 4;
+        } else if (energy <= 65 && energy >= 40) {
+            return 3;
+        } else if (energy <= 40 && energy >= 20) {
+            return 2;
+        } else if (energy <= 20 && energy >= 10) {
+            return 1;
+        } else if (energy <= 10 && energy >= 0 || energy < 0) {
+            return 0;
         }
+    }
+
+    getCoinBarIndex(coins) {
+        coins = coins / 10; 
+        if (coins <= 10 && coins >= 80) {
+            return 0;
+        } else if (coins <= 80 && coins >= 60) {
+            return 1;
+        } else if (coins <= 60 && coins >= 40) {
+            return 2;
+        } else if (coins <= 40 && coins >= 20) {
+            return 3;
+        } else if (coins <= 20 && coins >= 10) {
+            return 4;
+        } else if (coins <= 10 && coins >= 0 || coins < 0) {
+            return 5;
+        }
+    }
+
+    collect() {
+        this.world.bars[1] = new Bar("coin", 0, this.getCoinBarIndex(this.coins, "coin"));
+        this.world.setWorld();
     }
 
     hit() {
         this.isHurt = true;
         if (this.energy > 0) {
             this.energy -= 0.5;
-            this.world.bars[0] = new Bar("life", 0, this.getRightBarIndex(this.energy, "life"));
+            this.world.bars[0] = new Bar("life", 0, this.getLifeBarIndex(this.energy, "life"));
             this.world.setWorld();
         }
     }
@@ -108,7 +128,7 @@ class MovableObject {
             if (this.energy > 0.1) {
                 this.energy += 0.005;
                 console.log(this.energy);
-                this.world.bars[0] = new Bar("life", 0, this.getRightBarIndex(this.energy, "life"));
+                this.world.bars[0] = new Bar("life", 0, this.getLifeBarIndex(this.energy, "life"));
                 this.world.setWorld();
             }
         }

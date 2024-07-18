@@ -30,7 +30,12 @@ class World {
                 } else if (!this.character.isColliding(enemy)) {
                     this.character.isntHit();
                 }
-            })
+            });
+            this.level.coins.forEach(coin => {
+                if (this.character.isColliding(coin)) {
+                    this.character.collect();
+                }
+            });
         }, 50);
     }
 
