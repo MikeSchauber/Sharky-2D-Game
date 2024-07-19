@@ -82,9 +82,9 @@ class Pufferfish extends MovableObject {
     offsetNormal() {
         this.offset = {
             "x": 2,
-            "y": 4,
-            "h": -20,
-            "w": -10,
+            "y": 7,
+            "h": -30,
+            "w": -20,
         }
     }
 

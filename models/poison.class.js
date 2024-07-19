@@ -1,8 +1,13 @@
 class Poison extends MovableObject {
-
     height = 70;
     width = 60;
-    downDirection = true;
+    collected = false;
+    offset = {
+        "x": 12.5,
+        "y": 32,
+        "h": -35,
+        "w": -25,
+    }
     IMAGES_POISON = [
         "img/4. Marcadores/Posión/Animada/1.png",
         "img/4. Marcadores/Posión/Animada/2.png",

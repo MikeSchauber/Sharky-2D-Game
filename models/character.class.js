@@ -4,10 +4,10 @@ class Character extends MovableObject {
     height = 150;
     width = 150;
     offset = {
-        "x": 35,
-        "y": 70,
-        "w": -64,
-        "h": -105,
+        "x": 40,
+        "y": 80,
+        "w": -74,
+        "h": -120,
     };
     speed = 2;
     cameraRange = 0;
@@ -20,8 +20,6 @@ class Character extends MovableObject {
     coins = 0;
     poison = 0;
     world;
-    walking_sound = new Audio("audio/swim Sound.mp3");
-    hit_sound = new Audio("audio/hit.mp3");
     IMAGES_SWIM = [
         "img/1.Sharkie/3.Swim/1.png",
         "img/1.Sharkie/3.Swim/2.png",
@@ -99,8 +97,6 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD_ELECTRO);
         this.animate();
         this.applyGraviy();
-        this.walking_sound.volume = 0.6;
-        this.hit_sound.volume = 0.4;
     }
 
     animate() {
@@ -113,24 +109,27 @@ class Character extends MovableObject {
             if (!this.isDead()) {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP) {
                     this.animationPlay(this.IMAGES_SWIM);
-                    this.walking_sound.play();
+                    world.walking_sound.play();
                     this.resetIdleTimer();
                 } else if (!this.isAboveGround() && !this.idleTimer) {
                     this.animationPlay(this.IMAGES_IDLE);
-                    this.walking_sound.pause();
+                    world.walking_sound.pause();
                     if (!this.timeoutStarted) {
                         this.startIdleTimer();
                     }
                 } else {
-                    this.walking_sound.pause();
+                    world.walking_sound.pause();
                     this.loadImage(this.IMAGES_IDLE[0]);
                 }
                 if (!this.isAboveGround() && this.idleTimer) {
                     this.transitionAnimation(this.IMAGES_LONG_IDLE, this.IMAGES_SLEEP);
+                    this.offset.y = 100;
+                } else {
+                    this.offset.y = 80;
                 }
                 if (this.isHit()) {
                     this.animationPlay(this.IMAGES_HURT);
-                    this.hit_sound.play();
+                    world.electro_hitsound.play();
                     this.resetIdleTimer();
                 }
             } else {

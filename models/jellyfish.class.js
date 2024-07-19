@@ -1,6 +1,6 @@
 class Jellyfish extends MovableObject {
-    width = 50;
-    height = 60;
+    width = 80;
+    height = 100;
     JELLY_PURPLE = [
         "img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png",
         "img/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png",
@@ -26,10 +26,10 @@ class Jellyfish extends MovableObject {
         "img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 4.png",
     ];
     offset = {
-        "x": 0,
-        "y": 4,
-        "h": -10,
-        "w": 0,
+        "x": 9,
+        "y": 14,
+        "h": -30,
+        "w": -18,
     }
     constructor(x, color) {
         super().loadImage("img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png");

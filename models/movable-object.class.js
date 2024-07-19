@@ -6,7 +6,6 @@ class MovableObject extends DrawableObject{
     speed = 1;
     leftDirection = false;
     upperDirection = false;
-    downDirection = false;
     speedY = 0;
     speedX = 0;
     accelerationX = 0.03;
@@ -60,13 +59,14 @@ class MovableObject extends DrawableObject{
 
     collectCoin() { 
         if (this.coins < 100) {
-            this.coins +=  100 / world.level.coins.length;
-            world.bars[2].setPercentage(world.bars[2].IMAGES_COIN, this.coins);
+            this.coins += world.coinValue;
         }
     }
 
     collectPoison() {
-
+        if (this.poison < 100) {
+            this.poison += world.poisonValue;
+        }
     }
 
     hit() {
