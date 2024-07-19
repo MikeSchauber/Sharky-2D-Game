@@ -1,16 +1,9 @@
-class MovableObject {
-    x = 0;
-    y = 0;
+class MovableObject extends DrawableObject{
     leftEnd = -500;
     upperEnd = -70;
     downEnd = 325;
     fps = 60;
     speed = 1;
-    img;
-    imageCache = {};
-    width = 720;
-    height = 480;
-    currentImage = 0;
     leftDirection = false;
     upperDirection = false;
     downDirection = false;
@@ -34,26 +27,6 @@ class MovableObject {
         return this.y < this.downEnd;
     }
 
-    /**
-     * 
-     * @param {Array} arr = ["img/image1.png", "img/image2.png", ...];
-     */
-    loadImages(arr) {
-        arr.forEach((src) => {
-            let img = new Image();
-            img.src = src
-            this.imageCache[src] = img;
-        });
-    }
-
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
 
     drawBorder(ctx) {
         if (this instanceof Character || this instanceof Jellyfish || this instanceof Pufferfish || this instanceof Endboss || this instanceof Poison || this instanceof Coin) {
@@ -69,57 +42,37 @@ class MovableObject {
 
     isColliding(obj) {
         if (this.offset && obj.offset) {
-            return this.x + this.offset.x + this.width + this.offset.w >= obj.x &&
-                this.x + this.offset.x <= obj.x + obj.width &&
-                this.y + this.offset.y + this.height + this.offset.h >= obj.y &&
-                this.y + this.offset.y <= obj.y + obj.height;
+            const thisLeft = this.x + this.offset.x;
+            const thisRight = thisLeft + this.width + this.offset.w;
+            const thisTop = this.y + this.offset.y;
+            const thisBottom = thisTop + this.height + this.offset.h;
+            const objLeft = obj.x + obj.offset.x;
+            const objRight = objLeft + obj.width + obj.offset.w;
+            const objTop = obj.y + obj.offset.y;
+            const objBottom = objTop + obj.height + obj.offset.h;
+            return thisRight >= objLeft &&
+                thisLeft <= objRight &&
+                thisBottom >= objTop &&
+                thisTop <= objBottom;
+        }
+        return false;
+    }
+
+    collectCoin() { 
+        if (this.coins < 100) {
+            this.coins +=  100 / world.level.coins.length;
+            world.bars[2].setPercentage(world.bars[2].IMAGES_COIN, this.coins);
         }
     }
 
-    getLifeBarIndex(energy) {
-        if (energy <= 100 && energy >= 85) {
-            return 5;
-        } else if (energy <= 85 && energy >= 65) {
-            return 4;
-        } else if (energy <= 65 && energy >= 40) {
-            return 3;
-        } else if (energy <= 40 && energy >= 20) {
-            return 2;
-        } else if (energy <= 20 && energy >= 10) {
-            return 1;
-        } else if (energy <= 10 && energy >= 0 || energy < 0) {
-            return 0;
-        }
-    }
+    collectPoison() {
 
-    getCoinBarIndex(coins) {
-        coins = coins / 10; 
-        if (coins <= 10 && coins >= 80) {
-            return 0;
-        } else if (coins <= 80 && coins >= 60) {
-            return 1;
-        } else if (coins <= 60 && coins >= 40) {
-            return 2;
-        } else if (coins <= 40 && coins >= 20) {
-            return 3;
-        } else if (coins <= 20 && coins >= 10) {
-            return 4;
-        } else if (coins <= 10 && coins >= 0 || coins < 0) {
-            return 5;
-        }
-    }
-
-    collect() {
-        this.world.bars[1] = new Bar("coin", 0, this.getCoinBarIndex(this.coins, "coin"));
-        this.world.setWorld();
     }
 
     hit() {
         if (this.energy > 0) {
             this.energy -= 0.5;
-            this.world.bars[0] = new Bar("life", 0, this.getLifeBarIndex(this.energy, "life"));
-            this.world.setWorld();
-        } 
+        }
         this.lastHit = new Date().getTime();
     }
 
@@ -127,8 +80,7 @@ class MovableObject {
         if (this.energy <= 99.9) {
             if (this.energy > 0.1) {
                 this.energy += 0.005;
-                this.world.bars[0] = new Bar("life", 0, this.getLifeBarIndex(this.energy, "life"));
-                this.world.setWorld();
+                world.bars[0].setPercentage(world.bars[0].IMAGES_LIFE, this.energy);
             } else {
                 this.energy = 0;
             }

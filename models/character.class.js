@@ -3,6 +3,12 @@ class Character extends MovableObject {
     y = 150;
     height = 150;
     width = 150;
+    offset = {
+        "x": 35,
+        "y": 70,
+        "w": -64,
+        "h": -105,
+    };
     speed = 2;
     cameraRange = 0;
     cameraMovement = false;
@@ -11,12 +17,8 @@ class Character extends MovableObject {
     timeoutId;
     timeoutStarted = false;
     lastHit = 0;
-    offset = {
-        "x": 35,
-        "y": 70,
-        "w": -64,
-        "h": -105,
-    };
+    coins = 0;
+    poison = 0;
     world;
     walking_sound = new Audio("audio/swim Sound.mp3");
     hit_sound = new Audio("audio/hit.mp3");

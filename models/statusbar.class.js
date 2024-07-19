@@ -1,6 +1,6 @@
 class Bar extends MovableObject {
-    width = 220;
-    height= 60;
+    width = 160;
+    height = 50;
     IMAGES_COIN = [
         "img/4. Marcadores/Purple/0_ _1.png",
         "img/4. Marcadores/Purple/20_ .png",
@@ -26,33 +26,58 @@ class Bar extends MovableObject {
         "img/4. Marcadores/Purple/100_.png",
     ];
     world;
+    percentage = 100;
 
-    constructor(bar, y, status) {
-        super().getRightBar(bar, y, status);
-        this.x = 200;
-        this.animate();
+    constructor(bar, x, y, status) {
+        super().getRightBar(bar, x, y, status);
+        this.loadImages(this.IMAGES_COIN);
+        this.loadImages(this.IMAGES_LIFE);
+        this.loadImages(this.IMAGES_POISON);
     }
 
-    animate() {
-        // setInterval(() => {
-        //     this.x += this.world;
-        // }, 1000 / 1);
+    setPercentage(arr, percentage) {
+        this.percentage = percentage; // => 0...5
+        let path = arr[this.mapToRange(percentage)];
+        this.img = this.imageCache[path];
+
     }
 
-    getRightBar(bar, y, status) {
+    mapToRange(percentage) {
+        if (percentage > 100) {
+            return 5;
+        } else if (percentage >= 85) {
+            return 5;
+        } else if (percentage >= 65) {
+            return 4;
+        } else if (percentage >= 40) {
+            return 3;
+        } else if (percentage >= 20) {
+            return 2;
+        } else if (percentage >= 10) {
+            return 1;
+        } else if (percentage >= 0) {
+            return 0;
+        } else {
+            return 0;
+        }
+    }
+
+    getRightBar(bar, x, y, status) {
         if (bar === "coin") {
             this.loadImage(this.IMAGES_COIN[status]);
             this.y = y;
+            this.x = x;
         }
         if (bar === "life") {
             this.loadImage(this.IMAGES_LIFE[status]);
             this.y = y;
+            this.x = x;
         }
         if (bar === "poison") {
             this.loadImage(this.IMAGES_POISON[status]);
             this.y = y;
+            this.x = x;
         }
-
     }
 
 }

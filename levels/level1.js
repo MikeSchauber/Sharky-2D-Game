@@ -1,5 +1,12 @@
 const level1Soundtrack = "audio/Shark game song.mp3"
 const level1Ending = 2250;
+let coins = [
+    { x: 900, y: 100 },
+    { x: 950, y: 75 },
+    { x: 1000, y: 50 },
+    { x: 1050, y: 50 },
+    { x: 1100, y: 75 }
+]
 const level1 = new Level(
     [
         new Jellyfish(500, "yellow"),
@@ -35,13 +42,6 @@ const level1 = new Level(
     [
         new Light("img/3. Background/Layers/1. Light/1.png", 0),
         new Light("img/3. Background/Layers/1. Light/2.png", 900),
-    ],
-    [
-        new Coin(900, 100),
-        new Coin(950, 75),
-        new Coin(1000, 50),
-        new Coin(1050, 50),
-        new Coin(1100, 75),
     ],
     [
         new Poison(480, 390),

@@ -1,10 +1,10 @@
 class World {
-    character = new Character();
     bars = [
-        new Bar("life", 0, 5),
-        new Bar("coin", 50, 0),
-        new Bar("poison", 100, 0)
+        new Bar("life", 10, 0, 5,),
+        new Bar("poison", 180, 0, 0),
+        new Bar("coin", 350, 0, 0),
     ];
+    character = new Character();
     level = level1;
     soundtrack;
     ctx;
@@ -25,17 +25,21 @@ class World {
         setInterval(() => {
             this.level.enemies.forEach(enemy => {
                 if (this.character.isColliding(enemy)) {
-                    // console.log("enemy is colliding, energy is =", this.character.energy);
                     this.character.hit();
                 } else if (!this.character.isColliding(enemy)) {
                     this.character.isntHit();
                 }
             });
-            // this.level.coins.forEach(coin => {
-            //     if (this.character.isColliding(coin)) {
-            //         this.character.collect();
-            //     }
-            // });
+            this.level.coins.forEach(coin => {
+                if (this.character.isColliding(coin)) {
+                    this.character.collectCoin();
+                }
+            });
+            this.level.poison.forEach(poison => {
+                if (this.character.isColliding(poison)) {
+                    this.character.collectPoison();
+                }
+            });
         }, 50);
     }
 
@@ -52,11 +56,10 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.lights);
-        this.addObjectsToMap(this.bars);
-        this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.poison);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+        this.addObjectsToMap(this.bars);
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         requestAnimationFrame(function () {
