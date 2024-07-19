@@ -59,7 +59,10 @@ class World {
         this.addObjectsToMap(this.level.poison);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+        this.ctx.translate(-this.camera_x, 0);
+        //--------- Space for Fixed Objects
         this.addObjectsToMap(this.bars);
+        this.ctx.translate(this.camera_x, 0);
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         requestAnimationFrame(function () {

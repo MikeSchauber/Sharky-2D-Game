@@ -71,16 +71,16 @@ class MovableObject extends DrawableObject{
 
     hit() {
         if (this.energy > 0) {
-            this.energy -= 0.5;
+            this.energy -= 1;
         }
         this.lastHit = new Date().getTime();
+        world.bars[0].setLifeInStatusbar(world, this.energy);
     }
 
     isntHit() {
         if (this.energy <= 99.9) {
             if (this.energy > 0.1) {
                 this.energy += 0.005;
-                world.bars[0].setPercentage(world.bars[0].IMAGES_LIFE, this.energy);
             } else {
                 this.energy = 0;
             }
