@@ -1,7 +1,7 @@
 class Light extends MovableObject {
-    width = 900;
-    height = 380;
-    y = 0
+    width = 600;
+    height = 310;
+    y = -50;
 
     constructor(imagePath, x) {
         super().loadImage(imagePath);

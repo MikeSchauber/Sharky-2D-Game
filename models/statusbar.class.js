@@ -1,5 +1,5 @@
 class Bar extends MovableObject {
-    width = 160;
+    width = 170;
     height = 50;
     IMAGES_COIN = [
         "img/4. Marcadores/Purple/0_ _1.png",
@@ -28,8 +28,8 @@ class Bar extends MovableObject {
     world;
     percentage = 100;
 
-    constructor(bar, x, y, status) {
-        super().getRightBar(bar, x, y, status);
+    constructor(bar, status) {
+        super().getRightBar(bar, status);
         this.loadImages(this.IMAGES_COIN);
         this.loadImages(this.IMAGES_LIFE);
         this.loadImages(this.IMAGES_POISON);
@@ -65,21 +65,18 @@ class Bar extends MovableObject {
         }
     }
 
-    getRightBar(bar, x, y, status) {
+    getRightBar(bar, status) {
         if (bar === "coin") {
             this.loadImage(this.IMAGES_COIN[status]);
-            this.y = y;
-            this.x = x;
+            this.x = 350;
         }
         if (bar === "life") {
             this.loadImage(this.IMAGES_LIFE[status]);
-            this.y = y;
-            this.x = x;
+            this.x = 10;
         }
         if (bar === "poison") {
             this.loadImage(this.IMAGES_POISON[status]);
-            this.y = y;
-            this.x = x;
+            this.x = 180;
         }
     }
 

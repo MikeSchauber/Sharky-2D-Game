@@ -1,8 +1,8 @@
 class World {
     bars = [
-        new Bar("life", 10, 0, 5,),
-        new Bar("poison", 180, 0, 0),
-        new Bar("coin", 350, 0, 0),
+        new Bar("life", 5),
+        new Bar("poison", 0),
+        new Bar("coin", 0),
     ];
     character = new Character();
     level = level1;
@@ -93,17 +93,33 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
+
+        this.ctx.translate(-this.camera_x * 0.8, 0);
+        //--------- background Objects speed Camera positioning
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.ctx.translate(this.camera_x * 0.8, 0);
+
+        this.ctx.translate(-this.camera_x * 0.9, 0);
+        //--------- Light Speed Camera positioning
         this.addObjectsToMap(this.level.lights);
+        this.ctx.translate(this.camera_x * 0.9, 0);
+
+        this.ctx.translate(-this.camera_x * 0.3, 0);
+        //--------- middle Ground Objects Camera positioning
+        this.addObjectsToMap(this.level.middlegroundObjects);
+        this.ctx.translate(this.camera_x * 0.3, 0);
+
+        this.addObjectsToMap(this.level.frontgroundObjects);
         this.addObjectsToMap(this.level.poison);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+        this.addObjectsToMap(this.level.coins);
+
         this.ctx.translate(-this.camera_x, 0);
         //--------- Space for Fixed Objects
         this.addObjectsToMap(this.bars);
-        //--------- Space for Fixed Objects
         this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.coins);
+
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         requestAnimationFrame(function () {
