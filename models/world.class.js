@@ -26,7 +26,7 @@ class World {
         this.coinValue = 100 / this.level.coins.length;
         this.poisonValue = 100 / this.level.poison.length;
         this.soundtrack = new Audio("audio/Shark game song.mp3");
-        // this.soundtrack.play();
+        this.soundtrack.play();
         this.coin_sound = new Audio("audio/coin.mp3");
         this.poison_sound = new Audio("audio/poison.mp3");
         this.walking_sound = new Audio("audio/swim Sound.mp3");
