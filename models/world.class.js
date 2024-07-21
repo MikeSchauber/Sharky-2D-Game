@@ -82,10 +82,15 @@ class World {
             }
         });
     }
-
+2
     checkThrowObjects() {
         if (this.keyboard.TWO && this.bubbleAttack) {
-            let bubble = new ThrowableObject(this.character.x, this.character.y, "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
+            let bubble; 
+            if (this.character.leftDirection) {
+                bubble = new ThrowableObject(this.character.x, this.character.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
+            } else {
+                bubble = new ThrowableObject(this.character.x, this.character.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
+            }
             this.throwableObjects.push(bubble);
             this.bubbleAttack = false;
             this.attackTimeout("bubble");
