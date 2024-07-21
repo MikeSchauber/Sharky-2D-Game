@@ -82,11 +82,11 @@ class World {
             }
         });
     }
-2
+    2
     checkThrowObjects() {
         if (this.keyboard.TWO && this.bubbleAttack) {
-            let bubble; 
-            if (this.character.leftDirection) {
+            let bubble;
+            if (this.character.leftDirection && !this.character.isDead()) {
                 bubble = new ThrowableObject(this.character.x, this.character.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
             } else {
                 bubble = new ThrowableObject(this.character.x, this.character.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
@@ -96,7 +96,12 @@ class World {
             this.attackTimeout("bubble");
         }
         if (this.keyboard.THREE && this.poisonAttack && this.character.poison >= this.poisonValue) {
-            let poisonBubble = new ThrowableObject(this.character.x, this.character.y, "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png");
+            let poisonBubble;
+            if (this.character.leftDirection && !this.character.isDead()) {
+                poisonBubble = new ThrowableObject(this.character.x, this.character.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png");
+            } else {
+                poisonBubble = new ThrowableObject(this.character.x, this.character.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png");
+            }
             this.throwableObjects.push(poisonBubble);
             this.poisonAttack = false;
             this.attackTimeout("poison");
