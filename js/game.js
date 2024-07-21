@@ -2,8 +2,9 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-function init() {
+async function init() {
     canvas = document.getElementById('canvas');
+    await initLevel();
     world = new World(canvas, keyboard);
 };
 

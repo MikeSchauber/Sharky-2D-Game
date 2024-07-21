@@ -47,6 +47,7 @@ class Pufferfish extends MovableObject {
         this.x = x + Math.random() * this.range + this.range;
         this.y = y;
         this.speed = 1;
+        this.damage = "poison";
     }
 
     animate(position) {

@@ -54,6 +54,7 @@ class World {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
+                this.character.damagedBy = enemy.damage;
             } else if (!this.character.isColliding(enemy)) {
                 this.character.isntHit();
             }

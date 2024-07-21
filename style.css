@@ -8,11 +8,12 @@ body {
     flex-direction: column;
     align-items: center;
     font-family: "luckiestGuy";
-    background: linear-gradient(90deg, #4690a1 0%, #5dbed4 100%);
+    background: linear-gradient(135deg, #4690a1 0%, #5dbed4 50%, rgb(160, 223, 248) 100%);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
+    overflow-x: hidden;
     height: 100vh;
-    overflow: hidden
 }
 
 h1 {
@@ -28,5 +29,18 @@ h1 {
 
 canvas {
     background-color: black;
+    display: block;
     box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.096), -10px -10px 10px #00c3ff1c;
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    canvas {
+       height: 100vh;
+    }
 }

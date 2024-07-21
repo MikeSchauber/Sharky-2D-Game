@@ -70,10 +70,16 @@ class Character extends MovableObject {
         "img/1.Sharkie/2.Long_IDLE/I13.png",
         "img/1.Sharkie/2.Long_IDLE/I14.png",
     ];
-    IMAGES_HURT = [
+    IMAGES_ELECTRIC_DAMAGE = [
         "img/1.Sharkie/5.Hurt/2.Electric shock/1.png",
         "img/1.Sharkie/5.Hurt/2.Electric shock/2.png",
         "img/1.Sharkie/5.Hurt/2.Electric shock/3.png",
+    ];
+    IMAGES_POISON_DAMAGE = [
+        "img/1.Sharkie/5.Hurt/1.Poisoned/1.png",
+        "img/1.Sharkie/5.Hurt/1.Poisoned/2.png",
+        "img/1.Sharkie/5.Hurt/1.Poisoned/3.png",
+        "img/1.Sharkie/5.Hurt/1.Poisoned/4.png",
     ];
     IMAGES_DEAD_ELECTRO = [
         "img/1.Sharkie/6.dead/2.Electro_shock/1.png",
@@ -87,14 +93,31 @@ class Character extends MovableObject {
         "img/1.Sharkie/6.dead/2.Electro_shock/9.png",
         "img/1.Sharkie/6.dead/2.Electro_shock/10.png",
     ];
+    IMAGES_DEAD_POISON = [
+        "img/1.Sharkie/6.dead/1.Poisoned/1.png",
+        "img/1.Sharkie/6.dead/1.Poisoned/2.png",
+        "img/1.Sharkie/6.dead/1.Poisoned/3.png",
+        "img/1.Sharkie/6.dead/1.Poisoned/4.png",
+        "img/1.Sharkie/6.dead/1.Poisoned/5.png",
+        "img/1.Sharkie/6.dead/1.Poisoned/6.png",
+        "img/1.Sharkie/6.dead/1.Poisoned/7.png",
+        "img/1.Sharkie/6.dead/1.Poisoned/8.png",
+        "img/1.Sharkie/6.dead/1.Poisoned/9.png",
+        "img/1.Sharkie/6.dead/1.Poisoned/10.png",
+        "img/1.Sharkie/6.dead/1.Poisoned/11.png",
+        "img/1.Sharkie/6.dead/1.Poisoned/12.png",
+    ];
+    damagedBy;
 
     constructor() {
         super().loadImage("img/1.Sharkie/1.IDLE/1.png");
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
-        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_ELECTRIC_DAMAGE);
+        this.loadImages(this.IMAGES_POISON_DAMAGE);
         this.loadImages(this.IMAGES_DEAD_ELECTRO);
+        this.loadImages(this.IMAGES_DEAD_POISON);
         this.animate();
         this.applyGraviy();
     }
@@ -128,12 +151,22 @@ class Character extends MovableObject {
                     this.offset.y = 80;
                 }
                 if (this.isHit()) {
-                    this.animationPlay(this.IMAGES_HURT);
-                    world.electro_hitsound.play();
+                    if (this.damagedBy === "electric") {
+                        this.animationPlay(this.IMAGES_ELECTRIC_DAMAGE);
+                        world.electro_hitsound.play();
+                    } else if (this.damagedBy === "poison") {
+                        this.animationPlay(this.IMAGES_POISON_DAMAGE);
+                    }
                     this.resetIdleTimer();
                 }
             } else {
-                this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
+                if (this.damagedBy === "electric") {
+                    this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
+                }
+                if (this.damagedBy === "poison") {
+                    this.transitionAnimation(this.IMAGES_DEAD_POISON, this.IMAGES_DEAD_POISON[11]);
+                    this.y -= this.speed;
+                }
             }
         }, 1000 / 8);
     }

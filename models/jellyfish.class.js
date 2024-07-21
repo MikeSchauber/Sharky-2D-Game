@@ -31,9 +31,11 @@ class Jellyfish extends MovableObject {
         "h": -30,
         "w": -18,
     }
+
     constructor(x, color) {
         super().loadImage("img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png");
         this.x = x
+        this.damage = "electric";
         this.y = Math.random() * 360
         this.setJellyfishColor(color);
     }

@@ -12,6 +12,7 @@ class MovableObject extends DrawableObject{
     accelerationY = 0.03;
     energy = 100;
     alive = true;
+    damage;
 
     applyGraviy() {
         setInterval(() => {
@@ -117,10 +118,10 @@ class MovableObject extends DrawableObject{
         let i = this.transitionImage;
         let path = arr[i];
         this.img = this.imageCache[path];
-        if (this.transitionImage < arr.length - 1) {
+        if (this.transitionImage < arr.length) {
             this.transitionImage++;
         }
-        if (this.transitionImage === arr.length - 1 && typeof arr2 != "string") {
+        if (this.transitionImage === arr.length && typeof arr2 != "string") {
             this.animationPlay(arr2);
         }
         if (this.transitionImage === arr.length && typeof arr2 == "string") {
