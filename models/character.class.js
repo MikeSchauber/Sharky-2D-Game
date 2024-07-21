@@ -107,7 +107,7 @@ class Character extends MovableObject {
         requestAnimationFrame(this.animationFrame);
         setInterval(() => {
             if (!this.isDead()) {
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP) {
+                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE) {
                     this.animationPlay(this.IMAGES_SWIM);
                     world.walking_sound.play();
                     this.resetIdleTimer();
@@ -163,7 +163,7 @@ class Character extends MovableObject {
                 this.setLeftCameraRange();
                 this.leftDirection = true;
             }
-            if (this.world.keyboard.UP && this.y > this.upperEnd) {
+            if (this.world.keyboard.SPACE && this.y > this.upperEnd) {
                 this.speedY += this.accelerationY * 2;
                 this.upperDirection = true;
             } else if (this.y < this.upperEnd) {
@@ -171,7 +171,7 @@ class Character extends MovableObject {
                 this.speedY = 0;
             } else if (this.y > this.downEnd) {
                 this.speedY = 0;
-            } else if (this.world.keyboard.UP && this.speedY < 0) {
+            } else if (this.world.keyboard.SPACE && this.speedY < 0) {
                 this.speedY = 0;
             } else {
                 this.upperDirection = false;
