@@ -65,6 +65,8 @@ class Character extends CharacterImages {
             this.resetIdleTimer();
             this.attacking = true;
             this.attack = "special";
+        } else if (this.world.keyboard.THREE && this.poison == 0) {
+            this.world.error_sound.play();
         }
     }
 
@@ -100,9 +102,34 @@ class Character extends CharacterImages {
             }
             if (action === "special") {
                 this.world.throwSpecial();
+                this.checkPoisonDepot();
+                this.world.poison_bubbleshot_sound.play();
             }
         }
+    }
 
+    throwBubble() {
+        let bubble
+        if (this.leftDirection && !this.isDead()) {
+            bubble = new ThrowableObject(this.character.x, this.character.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
+        } else {
+            bubble = new ThrowableObject(this.character.x, this.character.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
+        }
+        this.world.throwableObjects.push(bubble);
+    }
+    throwSpecial() {
+        let poisonBubble;
+        if (this.leftDirection && !this.isDead()) {
+            poisonBubble = new ThrowableObject(this.x, this.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png");
+        } else {
+            poisonBubble = new ThrowableObject(this.x, this.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png");
+        }
+        this.world.throwableObjects.push(poisonBubble);
+    }
+
+    checkPoisonDepot() {
+        this.poison -= this.world.poisonValue;
+        this.world.bars[1].setPercentage(this.world.bars[1].IMAGES_POISON, this.poison);
     }
 
     characterHitAnimation() {
@@ -170,31 +197,43 @@ class Character extends CharacterImages {
 
     move() {
         if (!this.isDead()) {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.x += this.speed;
-                this.setRightCameraRange();
-                this.leftDirection = false;
+            this.swimRight();
+            this.swimLeft();
+            this.upAndDownPositioning();
+        }
+    }
+
+    swimRight() {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.x += this.speed;
+            this.setRightCameraRange();
+            this.leftDirection = false;
+        }
+    }
+
+    swimLeft() {
+        if (this.world.keyboard.LEFT && this.x > this.leftEnd) {
+            this.x -= this.speed;
+            this.setLeftCameraRange();
+            this.leftDirection = true;
+        }
+    }
+
+    upAndDownPositioning() {
+        if (this.world.keyboard.SPACE && this.y > this.upperEnd) {
+            if (this.speedY < 2) {
+                this.speedY += this.accelerationY * 2;
             }
-            if (this.world.keyboard.LEFT && this.x > this.leftEnd) {
-                this.x -= this.speed;
-                this.setLeftCameraRange();
-                this.leftDirection = true;
-            }
-            if (this.world.keyboard.SPACE && this.y > this.upperEnd) {
-                if (this.speedY < 2) {
-                    this.speedY += this.accelerationY * 2;
-                }
-                this.upperDirection = true;
-            } else if (this.y < this.upperEnd) {
-                this.y = this.upperEnd
-                this.speedY = 0;
-            } else if (this.y > this.downEnd) {
-                this.speedY = 0;
-            } else if (this.world.keyboard.SPACE && this.speedY < 0) {
-                this.speedY = 0;
-            } else {
-                this.upperDirection = false;
-            }
+            this.upperDirection = true;
+        } else if (this.y < this.upperEnd) {
+            this.y = this.upperEnd
+            this.speedY = 0;
+        } else if (this.y > this.downEnd) {
+            this.speedY = 0;
+        } else if (this.world.keyboard.SPACE && this.speedY < 0) {
+            this.speedY = 0;
+        } else {
+            this.upperDirection = false;
         }
     }
 
