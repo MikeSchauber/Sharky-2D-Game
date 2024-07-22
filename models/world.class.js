@@ -44,7 +44,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObjects();
+            // this.checkThrowObjects();
         }, 50);
     }
 
@@ -82,15 +82,7 @@ class World {
     }
     2
     checkThrowObjects() {
-        if (this.keyboard.TWO && !this.character.attack) {
-            setTimeout(() => {
-                this.throwBubble();
-                this.character.attacking = false;
-                this.bubble_shot.play();
-            }, 1000);
-        }
         if (this.keyboard.THREE && !this.character.attack && this.character.poison >= this.poisonValue) {
-            this.throwSpecial();
             this.character.attacking = false;
             this.checkPoisonDepot();
             this.poison_bubbleshot_sound.play();
