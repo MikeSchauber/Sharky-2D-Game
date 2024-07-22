@@ -16,9 +16,12 @@ class MovableObject extends DrawableObject {
 
     applyGraviy() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
+            if ((this.isAboveGround() || this.speedY > 0)) {
                 this.y -= this.speedY;
                 this.speedY -= this.accelerationY;
+                if (this.speedY < -1.2) {
+                    this.speedY = -1.2;
+                }
             }
         }, 1000 / 60)
     }

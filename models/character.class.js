@@ -236,7 +236,7 @@ class Character extends MovableObject {
                 this.leftDirection = true;
             }
             if (this.world.keyboard.SPACE && this.y > this.upperEnd) {
-                this.speedY += this.accelerationY * 2;
+                this.speedY += this.accelerationY * 3;
                 this.upperDirection = true;
             } else if (this.y < this.upperEnd) {
                 this.y = this.upperEnd
