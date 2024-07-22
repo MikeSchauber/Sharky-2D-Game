@@ -4,12 +4,11 @@ class ThrowableObject extends MovableObject {
 
     constructor(x, y, direction, path) {
         super().loadImage(path);
-        this.speed = 2;
+        this.speed = 4;
         this.throw(x, y, direction);
     }
 
         throw(x, y, direction) {
-            console.log(direction);
             if (direction === "right") {
                 this.x = x + 100; 
                 this.y = y + 80;

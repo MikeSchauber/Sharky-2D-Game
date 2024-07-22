@@ -154,7 +154,7 @@ class Character extends MovableObject {
                     if (this.damagedBy === "electric") {
                         this.animationPlay(this.IMAGES_ELECTRIC_DAMAGE);
                         world.electro_hitsound.play();
-                    } else if (this.damagedBy === "poison") {
+                    } else {
                         this.animationPlay(this.IMAGES_POISON_DAMAGE);
                     }
                     this.resetIdleTimer();
@@ -165,7 +165,8 @@ class Character extends MovableObject {
                 }
                 if (this.damagedBy === "poison") {
                     this.transitionAnimation(this.IMAGES_DEAD_POISON, this.IMAGES_DEAD_POISON[11]);
-                    this.y -= this.speed;
+                } else {
+                    this.transitionAnimation(this.IMAGES_DEAD_POISON, this.IMAGES_DEAD_POISON[11]);
                 }
             }
         }, 1000 / 8);

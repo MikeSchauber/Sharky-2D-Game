@@ -14,9 +14,13 @@ class World {
     poisonValue = 0;
     soundtrack;
     coin_sound;
-    poison_sound;
+    poison_collect_sound;
+    poison_bubbleshot_sound;
     walking_sound;
     electro_hitsound;
+    error_sound;
+    bubble_shot;
+    rotation = 5;
     ctx;
     canvas;
     keyboard;
@@ -29,12 +33,8 @@ class World {
         this.keyboard = keyboard;
         this.coinValue = 100 / this.level.coins.length;
         this.poisonValue = 100 / this.level.poison.length;
-        this.soundtrack = new Audio("audio/Shark game song.mp3");
+        this.setSounds();
         // this.soundtrack.play();
-        this.coin_sound = new Audio("audio/coin.mp3");
-        this.poison_sound = new Audio("audio/poison.mp3");
-        this.walking_sound = new Audio("audio/swim Sound.mp3");
-        this.electro_hitsound = new Audio("audio/electro-damage.mp3");
         this.draw();
         this.setWorld();
         this.run();
@@ -74,7 +74,7 @@ class World {
             if (this.character.isColliding(poison)) {
                 if (!poison.collected) {
                     this.character.collectPoison();
-                    this.poison_sound.play();
+                    this.poison_collect_sound.play();
                     poison.collected = true;
                     this.bars[1].setPercentage(this.bars[1].IMAGES_POISON, this.character.poison);
                     this.level.poison.splice(i, 1);
@@ -94,6 +94,7 @@ class World {
             this.throwableObjects.push(bubble);
             this.bubbleAttack = false;
             this.attackTimeout("bubble");
+            this.bubble_shot.play();
         }
         if (this.keyboard.THREE && this.poisonAttack && this.character.poison >= this.poisonValue) {
             let poisonBubble;
@@ -106,6 +107,10 @@ class World {
             this.poisonAttack = false;
             this.attackTimeout("poison");
             this.checkPoisonDepot();
+            this.poison_bubbleshot_sound.play();
+        }
+        if (this.keyboard.THREE && this.poisonAttack && this.character.poison <= 0) {
+            this.error_sound.play();
         }
     }
 
@@ -140,13 +145,28 @@ class World {
         });
     };
 
+    setSounds() {
+        this.soundtrack = new Audio("audio/Shark game song.mp3");
+        this.coin_sound = new Audio("audio/coin.mp3");
+        this.poison_collect_sound = new Audio("audio/poison.mp3");
+        this.bubble_shot = new Audio("audio/bubble-shot.mp3");
+        this.poison_bubbleshot_sound = new Audio("audio/poison-bubble.mp3");
+        this.walking_sound = new Audio("audio/swim Sound.mp3");
+        this.electro_hitsound = new Audio("audio/electro-damage.mp3");
+        this.error_sound = new Audio("audio/error.mp3");
+    }
+
     setMusicVolume() {
         this.soundtrack.volume = this.musicVolume;
     }
 
     setEffectVolume() {
+        this.coin_sound.volume = this.effectVolume;
         this.walking_sound.volume = this.effectVolume;
         this.electro_hitsound.volume = this.effectVolume;
+        this.bubble_shot.volume = this.effectVolume;
+        this.poison_bubbleshot_sound.volume = this.effectVolume;
+        this.error_sound.volume = this.effectVolume - 0.2;
     };
 
     draw() {
@@ -221,7 +241,7 @@ class World {
 
     rotateUpwards(mo) {
         this.ctx.translate(mo.x + mo.width / 2, mo.y + mo.height / 2);
-        this.ctx.rotate(-8 * Math.PI / 180);
+        this.ctx.rotate(-this.rotation * Math.PI / 180);
         this.ctx.translate(-(mo.x + mo.width / 2), -(mo.y + mo.height / 2));
     }
 }
