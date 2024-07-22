@@ -1,6 +1,12 @@
 class ThrowableObject extends MovableObject {
     height = 35;
     width = 35;
+    offset = {
+        "x": 0,
+        "y": 0,
+        "w": -0,
+        "h": -0,
+    };
 
     constructor(x, y, direction, path) {
         super().loadImage(path);

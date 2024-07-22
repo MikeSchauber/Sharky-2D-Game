@@ -72,7 +72,6 @@ class Character extends CharacterImages {
 
     startAttackAnimation() {
         if (this.attacking) {
-            console.log(this.attack);
             if (this.attack === "flipper") {
                 this.attackAnimation(this.IMAGES_FLIPPER_ATTACK);
             }

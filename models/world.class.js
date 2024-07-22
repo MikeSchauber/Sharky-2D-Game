@@ -80,6 +80,14 @@ class World {
                 }
             }
         });
+        if (this.throwableObjects.length >= 1) {
+            console.log(this.throwableObjects)
+            this.level.throwableObjects.forEach(throwableObject => {
+                if (this.enemies.isColliding(throwableObject)) {
+                    console.log("hitting enemy", enemy);
+                }
+            });
+        }
     }
 
     setWorld() {
