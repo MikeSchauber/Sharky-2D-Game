@@ -13,6 +13,7 @@ class World {
     coin_sound;
     poison_collect_sound;
     poison_bubbleshot_sound;
+    electrodeath_sound;
     walking_sound;
     electro_hitsound;
     error_sound;
@@ -50,7 +51,7 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach(enemy => {
-            if (this.character.isColliding(enemy) && !this.character.attacking) {
+            if (this.character.isColliding(enemy) && !this.character.attacking && !this.character.isDead()) {
                 this.character.hit();
                 this.character.damagedBy = enemy.damage;
             } else if (!this.character.isColliding(enemy)) {
@@ -99,6 +100,7 @@ class World {
         this.electro_hitsound = new Audio("audio/electro-damage.mp3");
         this.error_sound = new Audio("audio/error.mp3");
         this.ouch_sound = new Audio("audio/ouch.mp3");
+        this.electrodeath_sound = new Audio("audio/bones.mp3");
     }
 
     setMusicVolume() {
@@ -112,6 +114,7 @@ class World {
         this.bubble_shot.volume = this.effectVolume;
         this.poison_bubbleshot_sound.volume = this.effectVolume;
         this.ouch_sound.volume = this.effectVolume;
+        this.electrodeath_sound.volume = this.effectVolume;
         this.error_sound.volume = this.effectVolume - 0.2;
     };
 

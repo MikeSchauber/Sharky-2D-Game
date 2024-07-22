@@ -4,7 +4,7 @@ class ThrowableObject extends MovableObject {
 
     constructor(x, y, direction, path) {
         super().loadImage(path);
-        this.speed = 2;
+        this.speed = 4;
         this.throw(x, y, direction);
     }
 

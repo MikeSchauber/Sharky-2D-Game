@@ -97,11 +97,11 @@ class Character extends CharacterImages {
             this.attackImage = 0;
             this.loadImage(this.IMAGES_IDLE[0]);
             if (action === "bubble") {
-                this.world.throwBubble();
+                this.throwBubble();
                 this.world.bubble_shot.play();
             }
             if (action === "special") {
-                this.world.throwSpecial();
+                this.throwSpecial();
                 this.checkPoisonDepot();
                 this.world.poison_bubbleshot_sound.play();
             }
@@ -111,9 +111,9 @@ class Character extends CharacterImages {
     throwBubble() {
         let bubble
         if (this.leftDirection && !this.isDead()) {
-            bubble = new ThrowableObject(this.character.x, this.character.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
+            bubble = new ThrowableObject(this.x, this.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
         } else {
-            bubble = new ThrowableObject(this.character.x, this.character.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
+            bubble = new ThrowableObject(this.x, this.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
         }
         this.world.throwableObjects.push(bubble);
     }
@@ -189,8 +189,6 @@ class Character extends CharacterImages {
             this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
         }
         if (this.damagedBy === "poison") {
-            this.transitionAnimation(this.IMAGES_DEAD_POISON, this.IMAGES_DEAD_POISON[11]);
-        } else {
             this.transitionAnimation(this.IMAGES_DEAD_POISON, this.IMAGES_DEAD_POISON[11]);
         }
     }
