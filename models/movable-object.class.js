@@ -9,7 +9,7 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     speedX = 0;
     accelerationX = 0.03;
-    accelerationY = 0.03;
+    accelerationY = 0.025;
     energy = 100;
     alive = true;
     damage;

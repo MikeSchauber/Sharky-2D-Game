@@ -31,6 +31,11 @@ class Pufferfish extends MovableObject {
         "img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/2.bubbleswim4.png",
         "img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/2.bubbleswim5.png",
     ];
+    IMAGES_DEAD = [
+        "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.png",
+        "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.3.png",
+        "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.2.png",
+    ];
     offset;
     transitionImage = 0;
     puffered = false;
@@ -67,7 +72,7 @@ class Pufferfish extends MovableObject {
                 this.transitionAnimation(this.IMAGES_TRANSITION, this.IMAGES_BUBBLE_SWIM);
                 this.offsetPuffered();
             } else if (this.animationState === 'dead') {
-                this.transitionAnimation()
+                this.transitionAnimation(this.IMAGES_DEAD, this.IMAGES_DEAD[2]);
             }
         }, 1000 / 8);
 
@@ -100,34 +105,6 @@ class Pufferfish extends MovableObject {
         }
     }
 
-    // pufferIndexLoop() {
-    //     if (this.pufferIndex >= 100) {
-    //         this.pufferIndex = 0;
-    //     }
-    //     this.pufferIndex++;
-    //     console.log("puffer index =", this.pufferIndex);
-    //     if (this.pufferIndex === 100) {
-    //         this.puffered = true;
-    //         this.normal = false
-    //         pufferIndex = 0;
-    //     }
-    //     return this.puffered;
-    // }
-
-    // normalIndexLoop() {
-    //     if (this.normalIndex >= 100) {
-    //         this.normalIndex = 0;
-    //     }
-    //     this.normalIndex++;
-    //     console.log("normal index = ", this.normalIndex);
-    //     if (this.normalIndex === 100) {
-    //         this.puffered = false;
-    //         this.normal = true;
-    //         normalIndex = 0;
-    //     }
-    //     return this.puffered;
-    // }
-
     checkMovementEnd(position) {
         if (this.x < position - this.range) {
             this.speed = -1.5 * Math.random();
@@ -137,24 +114,5 @@ class Pufferfish extends MovableObject {
             this.speed = 1 * Math.random();
             this.leftDirection = false;
         }
-    }
-
-    transitionFunction(arr) {
-        setInterval(() => {
-            if (this.transitionImage < arr.length) {
-                let path = arr[this.transitionImage];
-                this.img = this.imageCache[path];
-                this.transitionImage++
-            }
-        }, 1000 / 8);
-        this.transitionImage = 0;
-        this.animationPlay(this.IMAGES_BUBBLE_SWIM, 8)
-    }
-
-    pufferAnimationPlay(IMAGE_ARRAY) {
-        let i = this.currentImage % IMAGE_ARRAY.length;
-        let path = IMAGE_ARRAY[i];
-        this.img = this.imageCache[path];
-        this.currentImage++
     }
 }
