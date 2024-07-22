@@ -20,6 +20,7 @@ class World {
     electro_hitsound;
     error_sound;
     bubble_shot;
+    ouch_sound;
     rotation = 5;
     ctx;
     canvas;
@@ -154,6 +155,7 @@ class World {
         this.walking_sound = new Audio("audio/swim Sound.mp3");
         this.electro_hitsound = new Audio("audio/electro-damage.mp3");
         this.error_sound = new Audio("audio/error.mp3");
+        this.ouch_sound = new Audio("audio/ouch.mp3");
     }
 
     setMusicVolume() {
@@ -166,6 +168,7 @@ class World {
         this.electro_hitsound.volume = this.effectVolume;
         this.bubble_shot.volume = this.effectVolume;
         this.poison_bubbleshot_sound.volume = this.effectVolume;
+        this.ouch_sound.volume = this.effectVolume;
         this.error_sound.volume = this.effectVolume - 0.2;
     };
 

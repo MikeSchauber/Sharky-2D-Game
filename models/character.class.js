@@ -107,6 +107,16 @@ class Character extends MovableObject {
         "img/1.Sharkie/6.dead/1.Poisoned/11.png",
         "img/1.Sharkie/6.dead/1.Poisoned/12.png",
     ];
+    IMAGES_FLIPPER_ATTACK = [
+        "img/1.Sharkie/4.Attack/Fin slap/1.png",
+        "img/1.Sharkie/4.Attack/Fin slap/2.png",
+        "img/1.Sharkie/4.Attack/Fin slap/3.png",
+        "img/1.Sharkie/4.Attack/Fin slap/4.png",
+        "img/1.Sharkie/4.Attack/Fin slap/5.png",
+        "img/1.Sharkie/4.Attack/Fin slap/6.png",
+        "img/1.Sharkie/4.Attack/Fin slap/7.png",
+        "img/1.Sharkie/4.Attack/Fin slap/8.png",
+    ];
     damagedBy;
 
     constructor() {
@@ -118,6 +128,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_POISON_DAMAGE);
         this.loadImages(this.IMAGES_DEAD_ELECTRO);
         this.loadImages(this.IMAGES_DEAD_POISON);
+        this.loadImages(this.IMAGES_FLIPPER_ATTACK);
         this.animate();
         this.applyGraviy();
     }
@@ -132,17 +143,20 @@ class Character extends MovableObject {
             if (!this.isDead()) {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE) {
                     this.animationPlay(this.IMAGES_SWIM);
-                    world.walking_sound.play();
+                    this.world.walking_sound.play();
                     this.resetIdleTimer();
                 } else if (!this.isAboveGround() && !this.idleTimer) {
                     this.animationPlay(this.IMAGES_IDLE);
-                    world.walking_sound.pause();
+                    this.world.walking_sound.pause();
                     if (!this.timeoutStarted) {
                         this.startIdleTimer();
                     }
                 } else {
-                    world.walking_sound.pause();
+                    this.world.walking_sound.pause();
                     this.loadImage(this.IMAGES_IDLE[0]);
+                }
+                if (this.world.keyboard.ONE) {
+                    this.flipperAttack();
                 }
                 if (!this.isAboveGround() && this.idleTimer) {
                     this.transitionAnimation(this.IMAGES_LONG_IDLE, this.IMAGES_SLEEP);
@@ -153,9 +167,10 @@ class Character extends MovableObject {
                 if (this.isHit()) {
                     if (this.damagedBy === "electric") {
                         this.animationPlay(this.IMAGES_ELECTRIC_DAMAGE);
-                        world.electro_hitsound.play();
+                        this.world.electro_hitsound.play();
                     } else {
                         this.animationPlay(this.IMAGES_POISON_DAMAGE);
+                        this.world.ouch_sound.play();
                     }
                     this.resetIdleTimer();
                 }
@@ -170,6 +185,10 @@ class Character extends MovableObject {
                 }
             }
         }, 1000 / 8);
+    }
+    
+    flipperAttack() {
+        
     }
 
     resetIdleTimer() {
