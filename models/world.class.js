@@ -6,9 +6,6 @@ class World {
     ];
     character = new Character();
     throwableObjects = [];
-    bubbleAttack = true;
-    poisonAttack = true;
-    flipperAttack = true;
     level = level1;
     coinValue = 0;
     poisonValue = 0;
@@ -85,52 +82,41 @@ class World {
     }
     2
     checkThrowObjects() {
-        if (this.keyboard.TWO && this.bubbleAttack) {
-            let bubble;
-            if (this.character.leftDirection && !this.character.isDead()) {
-                bubble = new ThrowableObject(this.character.x, this.character.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
-            } else {
-                bubble = new ThrowableObject(this.character.x, this.character.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
-            }
-            this.throwableObjects.push(bubble);
-            this.bubbleAttack = false;
-            this.attackTimeout("bubble");
-            this.bubble_shot.play();
+        if (this.keyboard.TWO && !this.character.attack) {
+            setTimeout(() => {
+                this.throwBubble();
+                this.character.attacking = false;
+                this.bubble_shot.play();
+            }, 1000);
         }
-        if (this.keyboard.THREE && this.poisonAttack && this.character.poison >= this.poisonValue) {
-            let poisonBubble;
-            if (this.character.leftDirection && !this.character.isDead()) {
-                poisonBubble = new ThrowableObject(this.character.x, this.character.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png");
-            } else {
-                poisonBubble = new ThrowableObject(this.character.x, this.character.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png");
-            }
-            this.throwableObjects.push(poisonBubble);
-            this.poisonAttack = false;
-            this.attackTimeout("poison");
+        if (this.keyboard.THREE && !this.character.attack && this.character.poison >= this.poisonValue) {
+            this.throwSpecial();
+            this.character.attacking = false;
             this.checkPoisonDepot();
             this.poison_bubbleshot_sound.play();
         }
-        if (this.keyboard.THREE && this.poisonAttack && this.character.poison <= 0) {
+        if (this.keyboard.THREE && !this.character.attacking && this.character.poison <= 0) {
             this.error_sound.play();
         }
     }
 
-    attackTimeout(type) {
-        if (type === "bubble") {
-            setTimeout(() => {
-                this.bubbleAttack = true;
-            }, 1000);
+    throwBubble() {
+        let bubble
+        if (this.character.leftDirection && !this.character.isDead()) {
+            bubble = new ThrowableObject(this.character.x, this.character.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
+        } else {
+            bubble = new ThrowableObject(this.character.x, this.character.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
         }
-        if (type === "poison") {
-            setTimeout(() => {
-                this.poisonAttack = true;
-            }, 1000);
+        this.throwableObjects.push(bubble);
+    }
+    throwSpecial() {
+        let poisonBubble;
+        if (this.character.leftDirection && !this.character.isDead()) {
+            poisonBubble = new ThrowableObject(this.character.x, this.character.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png");
+        } else {
+            poisonBubble = new ThrowableObject(this.character.x, this.character.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png");
         }
-        if (type === "flipper") {
-            setTimeout(() => {
-                this.flipperAttack = true;
-            }, 1000);
-        }
+        this.throwableObjects.push(poisonBubble);
     }
 
     checkPoisonDepot() {
