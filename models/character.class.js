@@ -19,6 +19,7 @@ class Character extends MovableObject {
     poisonBubble = false;
     attackImage = 0;
     attacking = false;
+    attack = "";
     lastHit = 0;
     coins = 0;
     poison = 0;
@@ -183,9 +184,15 @@ class Character extends MovableObject {
                 if (this.world.keyboard.ONE && !this.attacking) {
                     this.resetIdleTimer();
                     this.attacking = true;
+                    this.attack = "flipper";
+                }
+                if (this.world.keyboard.ONE && !this.attacking) {
+
                 }
                 if (this.attacking) {
-                    this.attackAnimation(this.IMAGES_FLIPPER_ATTACK);
+                    if (this.attack = "flipper") {
+                        this.attackAnimation(this.IMAGES_FLIPPER_ATTACK);
+                    }
                 }
                 if (!this.isAboveGround() && this.idleTimer) {
                     this.transitionAnimation(this.IMAGES_LONG_IDLE, this.IMAGES_SLEEP);
