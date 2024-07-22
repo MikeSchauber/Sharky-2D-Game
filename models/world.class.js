@@ -53,7 +53,7 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach(enemy => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && !this.character.attacking) {
                 this.character.hit();
                 this.character.damagedBy = enemy.damage;
             } else if (!this.character.isColliding(enemy)) {
@@ -225,7 +225,7 @@ class World {
             this.rotateUpwards(mo);
         }
         mo.draw(this.ctx, mo);
-        // mo.drawBorder(this.ctx);
+        mo.drawBorder(this.ctx);
         if (mo.leftDirection) {
             this.flipImageBack(mo);
         }

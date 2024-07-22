@@ -16,6 +16,9 @@ class Character extends MovableObject {
     transitionImage = 0;
     timeoutId;
     timeoutStarted = false;
+    flipper = false;
+    flipperImage = 0;
+    attacking = false;
     lastHit = 0;
     coins = 0;
     poison = 0;
@@ -155,8 +158,14 @@ class Character extends MovableObject {
                     this.world.walking_sound.pause();
                     this.loadImage(this.IMAGES_IDLE[0]);
                 }
-                if (this.world.keyboard.ONE) {
+                if (this.world.keyboard.ONE && !this.flipper) {
+                    this.resetIdleTimer();
+                    this.flipper = true;
+                    this.attacking = true;
+                }
+                if (this.flipper) {
                     this.flipperAttack();
+                    console.log(this.flipper);
                 }
                 if (!this.isAboveGround() && this.idleTimer) {
                     this.transitionAnimation(this.IMAGES_LONG_IDLE, this.IMAGES_SLEEP);
@@ -186,9 +195,21 @@ class Character extends MovableObject {
             }
         }, 1000 / 8);
     }
-    
+
     flipperAttack() {
-        
+        let i = this.flipperImage;
+        let path = this.IMAGES_FLIPPER_ATTACK[i];
+        this.img = this.imageCache[path];
+        if (this.flipperImage < this.IMAGES_FLIPPER_ATTACK.length) {
+            this.flipperImage++
+        }
+        if (this.flipperImage === this.IMAGES_FLIPPER_ATTACK.length) {
+            this.flipper = false;
+            this.attacking = false;
+            this.flipperImage = 0;
+            this.loadImage(this.IMAGES_IDLE[0]);
+        }
+        console.log(this.flipperImage);
     }
 
     resetIdleTimer() {

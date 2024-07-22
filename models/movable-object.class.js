@@ -1,4 +1,4 @@
-class MovableObject extends DrawableObject{
+class MovableObject extends DrawableObject {
     leftEnd = -500;
     upperEnd = -70;
     downEnd = 325;
@@ -58,7 +58,7 @@ class MovableObject extends DrawableObject{
         return false;
     }
 
-    collectCoin() { 
+    collectCoin() {
         if (this.coins < 100) {
             this.coins += world.coinValue;
         }
