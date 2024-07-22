@@ -16,8 +16,8 @@ class Character extends MovableObject {
     transitionImage = 0;
     timeoutId;
     timeoutStarted = false;
-    flipper = false;
-    flipperImage = 0;
+    poisonBubble = false;
+    attackImage = 0;
     attacking = false;
     lastHit = 0;
     coins = 0;
@@ -120,6 +120,26 @@ class Character extends MovableObject {
         "img/1.Sharkie/4.Attack/Fin slap/7.png",
         "img/1.Sharkie/4.Attack/Fin slap/8.png",
     ];
+    IMAGES_BUBBLE_ATTACK = [
+        "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/4.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/5.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/6.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png",
+    ];
+    IMAGES_SPECIAL_ATTACK = [
+        "img/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/For Whale/3.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/For Whale/4.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/For Whale/5.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/For Whale/6.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png",
+        "img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png",
+    ];
     damagedBy;
 
     constructor() {
@@ -132,6 +152,8 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD_ELECTRO);
         this.loadImages(this.IMAGES_DEAD_POISON);
         this.loadImages(this.IMAGES_FLIPPER_ATTACK);
+        this.loadImage(this.IMAGES_BUBBLE_ATTACK);
+        this.loadImage(this.IMAGES_SPECIAL_ATTACK);
         this.animate();
         this.applyGraviy();
     }
@@ -158,13 +180,12 @@ class Character extends MovableObject {
                     this.world.walking_sound.pause();
                     this.loadImage(this.IMAGES_IDLE[0]);
                 }
-                if (this.world.keyboard.ONE && !this.flipper) {
+                if (this.world.keyboard.ONE && !this.attacking) {
                     this.resetIdleTimer();
-                    this.flipper = true;
                     this.attacking = true;
                 }
-                if (this.flipper) {
-                    this.flipperAttack();
+                if (this.attacking) {
+                    this.attackAnimation(this.IMAGES_FLIPPER_ATTACK);
                 }
                 if (!this.isAboveGround() && this.idleTimer) {
                     this.transitionAnimation(this.IMAGES_LONG_IDLE, this.IMAGES_SLEEP);
@@ -195,17 +216,16 @@ class Character extends MovableObject {
         }, 1000 / 8);
     }
 
-    flipperAttack() {
-        let i = this.flipperImage;
-        let path = this.IMAGES_FLIPPER_ATTACK[i];
+    attackAnimation(arr) {
+        let i = this.attackImage;
+        let path = arr[i];
         this.img = this.imageCache[path];
-        if (this.flipperImage < this.IMAGES_FLIPPER_ATTACK.length) {
-            this.flipperImage++
+        if (this.attackImage < arr.length) {
+            this.attackImage++
         }
-        if (this.flipperImage === this.IMAGES_FLIPPER_ATTACK.length) {
-            this.flipper = false;
+        if (this.attackImage === arr.length) {
             this.attacking = false;
-            this.flipperImage = 0;
+            this.attackImage = 0;
             this.loadImage(this.IMAGES_IDLE[0]);
         }
     }
