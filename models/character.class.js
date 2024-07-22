@@ -165,7 +165,6 @@ class Character extends MovableObject {
                 }
                 if (this.flipper) {
                     this.flipperAttack();
-                    console.log(this.flipper);
                 }
                 if (!this.isAboveGround() && this.idleTimer) {
                     this.transitionAnimation(this.IMAGES_LONG_IDLE, this.IMAGES_SLEEP);
@@ -209,7 +208,6 @@ class Character extends MovableObject {
             this.flipperImage = 0;
             this.loadImage(this.IMAGES_IDLE[0]);
         }
-        console.log(this.flipperImage);
     }
 
     resetIdleTimer() {
