@@ -219,7 +219,11 @@ class Character extends CharacterImages {
 
     deadAnimation() {
         if (this.damagedBy === "electric") {
-            this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
+            this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9], "electric");
+            this.world.electrodeath_sound.play();
+            setTimeout(() => {
+                this.world.electrodeath_sound.volume = 0;
+            }, 1500);
         }
         if (this.damagedBy === "poison") {
             this.transitionAnimation(this.IMAGES_DEAD_POISON, this.IMAGES_DEAD_POISON[11]);

@@ -118,7 +118,7 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    transitionAnimation(arr, arr2) {
+    transitionAnimation(arr, arr2, damageType) {
         let i = this.transitionImage;
         let path = arr[i];
         this.img = this.imageCache[path];
