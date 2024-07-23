@@ -8,8 +8,7 @@ class MovableObject extends DrawableObject {
     upperDirection = false;
     speedY = 0;
     speedX = 0;
-    accelerationX = 0.03;
-    accelerationY = 0.025;
+    accelerationY = 0.05;
     energy = 100;
     alive = true;
     damage;
@@ -19,7 +18,7 @@ class MovableObject extends DrawableObject {
         setInterval(() => {
             if ((this.isAboveGround() || this.speedY > 0)) {
                 this.y -= this.speedY;
-                this.speedY -= this.accelerationY;
+                this.speedY -= this.accelerationY / 2;
                 if (this.speedY < -2) {
                     this.speedY = -2;
                 }

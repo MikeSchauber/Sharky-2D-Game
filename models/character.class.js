@@ -267,8 +267,8 @@ class Character extends CharacterImages {
     }
 
     swimUp() {
-        if (this.speedY < 2) {
-            this.speedY += this.accelerationY * 2;
+        if (this.speedY < 4) {
+            this.speedY += this.accelerationY;
         }
         this.upperDirection = true;
     }
