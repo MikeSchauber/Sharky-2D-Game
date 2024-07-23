@@ -27,7 +27,9 @@ class Endboss extends MovableObject {
         this.height = 400;
         this.width = 400;
         this.x = 2250;
+        this.type = "endboss";
         this.animate();
+
     }
 
     animate() {

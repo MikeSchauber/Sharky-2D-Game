@@ -8,9 +8,10 @@ class ThrowableObject extends MovableObject {
         "h": -0,
     };
 
-    constructor(x, y, direction, path) {
+    constructor(x, y, direction, path, type) {
         super().loadImage(path);
         this.speed = 4;
+        this.type = type
         this.throw(x, y, direction);
     }
 

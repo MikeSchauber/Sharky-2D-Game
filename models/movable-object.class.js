@@ -13,6 +13,7 @@ class MovableObject extends DrawableObject {
     energy = 100;
     alive = true;
     damage;
+    type;
 
     applyGraviy() {
         setInterval(() => {

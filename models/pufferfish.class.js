@@ -53,6 +53,7 @@ class Pufferfish extends MovableObject {
         this.y = y;
         this.speed = 1;
         this.damage = "poison";
+        this.type = "pufferfish";
     }
 
     animate(position) {
