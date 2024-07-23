@@ -21,13 +21,14 @@ class World {
     bubble_shot;
     ouch_sound;
     snoring_sound;
+    punch_sound; 
     rotation = 5;
     ctx;
     canvas;
     keyboard;
     camera_x = 0;
     musicVolume = 0.7;
-    effectVolume = 0.5;
+    effectVolume = 0.1;
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -136,6 +137,7 @@ setSounds() {
     this.ouch_sound = new Audio("audio/ouch.mp3");
     this.electrodeath_sound = new Audio("audio/bones.mp3");
     this.snoring_sound = new Audio("audio/snoring.mp3");
+    this.punch_sound = new Audio("audio/punch.mp3");
 }
 
 setEffectVolume() {
@@ -149,7 +151,8 @@ setEffectVolume() {
     this.ouch_sound.volume = this.effectVolume;
     this.electrodeath_sound.volume = this.effectVolume;
     this.snoring_sound.volume = this.effectVolume;
-    this.error_sound.volume = this.effectVolume - 0.2;
+    this.error_sound.volume = this.effectVolume;
+    this.punch_sound.volume = this.effectVolume;
 };
 
 draw() {

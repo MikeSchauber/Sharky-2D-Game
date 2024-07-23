@@ -42,7 +42,7 @@ class Character extends CharacterImages {
                 this.walkingAnimation();
                 this.chooseCorrectAttack();
                 this.startAttackAnimation();
-                this.checkIdletimerPosition();
+                this.checkPositionLongidle();
                 this.characterHitAnimation();
             } else {
                 this.deadAnimation();
@@ -146,25 +146,38 @@ class Character extends CharacterImages {
 
     walkingAnimation() {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE) {
-            this.animationPlay(this.IMAGES_SWIM);
-            this.world.walking_sound.play();
-            this.resetIdleTimer();
+            this.walking();
         } else if (!this.isAboveGround() && !this.idleTimer) {
-            this.animationPlay(this.IMAGES_IDLE);
-            this.world.walking_sound.pause();
-            if (!this.timeoutStarted) {
-                this.startIdleTimer();
-            }
+            this.startLongidle();
         } else {
-            this.world.walking_sound.pause();
-            this.loadImage(this.IMAGES_IDLE[0]);
+            this.floating();
         }
     }
 
-    checkIdletimerPosition() {
+    walking() {
+        this.animationPlay(this.IMAGES_SWIM);
+        this.world.walking_sound.play();
+        this.resetIdleTimer();
+    }
+
+    startLongidle() {
+        this.animationPlay(this.IMAGES_IDLE);
+        this.world.walking_sound.pause();
+        if (!this.timeoutStarted) {
+            this.startIdleTimer();
+        }
+    }
+
+    floating() {
+        this.world.walking_sound.pause();
+        this.loadImage(this.IMAGES_IDLE[0]);
+    }
+
+    checkPositionLongidle() {
         if (!this.isAboveGround() && this.idleTimer) {
             this.transitionAnimation(this.IMAGES_LONG_IDLE, this.IMAGES_SLEEP);
             this.offset.y = 100;
+            this.world.snoring_sound.play();
         } else {
             this.offset.y = 80;
         }
@@ -218,20 +231,30 @@ class Character extends CharacterImages {
 
     upAndDownPositioning() {
         if (this.world.keyboard.SPACE && this.y > this.upperEnd) {
-            if (this.speedY < 2) {
-                this.speedY += this.accelerationY * 2;
-            }
-            this.upperDirection = true;
+            this.swimUp();
         } else if (this.y < this.upperEnd) {
-            this.y = this.upperEnd
-            this.speedY = 0;
+            this.setUpperEnd();
         } else if (this.y > this.downEnd) {
-            this.speedY = 0;
-        } else if (this.world.keyboard.SPACE && this.speedY < 0) {
-            this.speedY = 0;
+            this.layOnGround();
         } else {
             this.upperDirection = false;
         }
+    }
+
+    swimUp() {
+        if (this.speedY < 2) {
+            this.speedY += this.accelerationY * 2;
+        }
+        this.upperDirection = true;
+    }
+
+    setUpperEnd() {
+        this.y = this.upperEnd
+        this.speedY = 0;
+    }
+
+    layOnGround() {
+        this.speedY = 0;
     }
 
     setRightCameraRange() {
