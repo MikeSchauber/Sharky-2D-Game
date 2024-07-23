@@ -28,7 +28,7 @@ class World {
     keyboard;
     camera_x = 0;
     musicVolume = 0.7;
-    effectVolume = 0.1;
+    effectVolume = 0.5;
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;

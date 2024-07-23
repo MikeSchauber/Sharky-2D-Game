@@ -55,6 +55,7 @@ class Character extends CharacterImages {
             this.resetIdleTimer();
             this.attacking = true;
             this.attack = "flipper";
+            this.world.punch_sound.play();
         }
         if (this.world.keyboard.TWO && !this.attacking) {
             this.resetIdleTimer();
@@ -95,15 +96,23 @@ class Character extends CharacterImages {
             this.attacking = false;
             this.attackImage = 0;
             this.loadImage(this.IMAGES_IDLE[0]);
-            if (action === "bubble") {
-                this.throwBubble();
-                this.world.bubble_shot.play();
-            }
-            if (action === "special") {
-                this.throwSpecial();
-                this.checkPoisonDepot();
-                this.world.poison_bubbleshot_sound.play();
-            }
+            this.bubbleShot(action);
+            this.specialShot(action);
+        }
+    }
+
+    bubbleShot(action) {
+        if (action === "bubble") {
+            this.throwBubble();
+            this.world.bubble_shot.play();
+        }
+    }
+
+    specialShot(action) {
+        if (action === "special") {
+            this.throwSpecial();
+            this.checkPoisonDepot();
+            this.world.poison_bubbleshot_sound.play();
         }
     }
 
