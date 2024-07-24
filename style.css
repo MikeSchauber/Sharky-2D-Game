@@ -8,7 +8,8 @@ body {
     flex-direction: column;
     align-items: center;
     font-family: "luckiestGuy";
-    background: linear-gradient(135deg, #4690a1 0%, #5dbed4 50%, rgb(160, 223, 248) 100%);
+    font-size: 22px;
+    background: #f9f9f9;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -27,10 +28,33 @@ h1 {
 
 }
 
+p {
+    margin: 0;
+}
+
 canvas {
     background-color: black;
     display: block;
-    box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.096), -10px -10px 10px #00c3ff1c;
+    transition: all 100ms ease-in-out;
+    border-radius: 10px;
+}
+
+canvas:hover {
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.288), -10px -10px 10px #ffffff;
+}
+
+.help {
+    margin-top: 20px;
+    color: rgb(0, 95, 238);
+    background-color: linear-gradient(90deg, #4690a1 100%, #5dbed4 0%);
+    border-radius: 10px;
+    padding: 10px;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+}
+
+.help:hover {
+    box-shadow: 3px 3px 7px white, -3px -3px 5px #0000001e;
 }
 
 @media only screen and (max-width: 720px) {
