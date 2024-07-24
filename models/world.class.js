@@ -77,7 +77,7 @@ class World {
     }
 
     executeCharacterDamage(enemy, i) {
-        if (this.character.isColliding(enemy) && !this.character.attacking && !this.character.isDead() && !enemy.dead) {
+        if (this.character.isColliding(enemy) && !this.character.isDead() && !enemy.dead) {
             this.character.hit();
             this.character.damagedBy = enemy.damage;
             this.character.checkForFlipperDamage(enemy.type);
@@ -86,7 +86,6 @@ class World {
         }
         if (this.character.isColliding(enemy) && enemy.type === "pufferfish" && this.character.attacking && this.character.attack === "flipper" && !enemy.dead) {
             enemy.dead = true;
-            console.log(enemy.dead);
             setTimeout(() => {
                 this.level.enemies.splice(i, 1);
             }, 3000);
