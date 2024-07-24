@@ -53,7 +53,7 @@ class Endboss extends MovableObject {
         "w": -64,
         "h": -255,
     };
-    status = "wait";
+    status = "intro";
     entered = false;
 
     constructor() {
@@ -65,7 +65,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.height = 400;
         this.width = 400;
-        this.x = 2250;
+        this.x = 250;
         this.type = "endboss";
         this.animate();
     }
@@ -77,12 +77,11 @@ class Endboss extends MovableObject {
             }
             if (this.status === "intro") {
                 this.y = 0;
-                this.transitionAnimation(this.IMAGES_INTRO, this.IMAGES_FLOAT);
             }
-            if (this.status === "idle") {
-                this.animationPlay(this.IMAGES_FLOAT);
-                this.y = 0;
-            }
+            // if (this.status === "idle") {
+            //     this.animationPlay(this.IMAGES_FLOAT);
+            //     this.y = 0;
+            // }
             if (this.entered) {
                 // this.endboss_music.play();
             }
