@@ -17,13 +17,6 @@ class Pufferfish extends MovableObject {
         "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition4.png",
         "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition5.png",
     ];
-    IMAGES_TRANSITION_BACKWARDS = [
-        "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition5.png",
-        "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition4.png",
-        "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition3.png",
-        "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition2.png",
-        "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition1.png",
-    ];
     IMAGES_BUBBLE_SWIM = [
         "img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/2.bubbleswim1.png",
         "img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/2.bubbleswim2.png",
@@ -48,6 +41,7 @@ class Pufferfish extends MovableObject {
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_TRANSITION);
         this.loadImages(this.IMAGES_BUBBLE_SWIM);
+        this.loadImages(this.IMAGES_DEAD);
         this.animate(x);
         this.x = x + Math.random() * this.range + this.range;
         this.y = y;
@@ -57,23 +51,26 @@ class Pufferfish extends MovableObject {
     }
 
     animate(position) {
-        setInterval(() => {
-            this.checkMovementEnd(position);
-        }, 1000 / this.fps);
-        this.startAnimationLoop();
+        this.startAnimationLoop(position);
         this.moveLeft();
     }
 
-    startAnimationLoop() {
+    startAnimationLoop(position) {
         this.animationInterval = setInterval(() => {
-            if (this.animationState === 'swim') {
-                this.animationPlay(this.IMAGES_SWIM);
-                this.offsetNormal();
-            } else if (this.animationState === 'transition') {
-                this.transitionAnimation(this.IMAGES_TRANSITION, this.IMAGES_BUBBLE_SWIM);
-                this.offsetPuffered();
-            } else if (this.animationState === 'dead') {
+            this.checkMovementEnd(position);
+            if (!this.dead) {
+                if (this.animationState === 'swim') {
+                    this.animationPlay(this.IMAGES_SWIM);
+                    this.offsetNormal();
+                } else if (this.animationState === 'transition') {
+                    this.transitionAnimation(this.IMAGES_TRANSITION, this.IMAGES_BUBBLE_SWIM);
+                    this.offsetPuffered();
+                }
+            }
+            if (this.dead) {
                 this.transitionAnimation(this.IMAGES_DEAD, this.IMAGES_DEAD[2]);
+                this.speed = 1;
+                this.y -= 1;
             }
         }, 1000 / 8);
 

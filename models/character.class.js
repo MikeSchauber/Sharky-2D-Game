@@ -24,6 +24,7 @@ class Character extends CharacterImages {
     poison = 0;
     world;
     damagedBy;
+    hitAble = true;
 
     constructor() {
         super().loadImage("img/1.Sharkie/1.IDLE/1.png");
@@ -69,6 +70,14 @@ class Character extends CharacterImages {
         this.attacking = true;
         this.attack = "flipper";
         this.world.punch_sound.play();
+    }
+
+    checkForFlipperDamage(type) {
+        if (type === "pufferfish" && this.attacking) {
+            this.hitAble = false;
+        } else {
+            this.hitAble = true;
+        }
     }
 
     setBubbleAttack() {
@@ -157,7 +166,7 @@ class Character extends CharacterImages {
             if (this.damagedBy === "electric") {
                 this.animationPlay(this.IMAGES_ELECTRIC_DAMAGE);
                 this.world.electro_hitsound.play();
-            } else {
+            } else if (this.hitAble){
                 this.animationPlay(this.IMAGES_POISON_DAMAGE);
                 this.world.ouch_sound.play();
             }

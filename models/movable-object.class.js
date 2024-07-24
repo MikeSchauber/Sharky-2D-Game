@@ -13,6 +13,7 @@ class MovableObject extends DrawableObject {
     alive = true;
     damage;
     type;
+    dead = false;
 
     applyGraviy() {
         setInterval(() => {
@@ -81,6 +82,10 @@ class MovableObject extends DrawableObject {
         world.bars[0].setLifeInStatusbar(world, this.energy);
     }
 
+    eliminate() {
+        this.dead = true;
+    }
+
     isntHit() {
         if (this.energy <= 99.9) {
             if (this.energy > 0.1) {
@@ -117,7 +122,7 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    transitionAnimation(arr, arr2, damageType) {
+    transitionAnimation(arr, arr2) {
         let i = this.transitionImage;
         let path = arr[i];
         this.img = this.imageCache[path];
@@ -147,6 +152,13 @@ class MovableObject extends DrawableObject {
     moveUp() {
         setInterval(() => {
             this.y -= this.speed
+        }, 1000 / this.fps)
+    }
+
+    
+    moveDown() {
+        setInterval(() => {
+            this.y += this.speed
         }, 1000 / this.fps)
     }
 

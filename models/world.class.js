@@ -70,17 +70,24 @@ class World {
     }
 
     checkCharacterDamage() {
-        this.level.enemies.forEach(enemy => {
-            this.executeCharacterDamage(enemy);
+        this.level.enemies.forEach((enemy, i) => {
+            this.executeCharacterDamage(enemy, i);
         });
     }
 
-    executeCharacterDamage(enemy) {
+    executeCharacterDamage(enemy, i) {
         if (this.character.isColliding(enemy) && !this.character.attacking && !this.character.isDead() && !enemy.dead) {
             this.character.hit();
             this.character.damagedBy = enemy.damage;
+            this.character.checkForFlipperDamage(enemy.type);
         } else if (!this.character.isColliding(enemy)) {
             this.character.isntHit();
+        }
+        if (this.character.isColliding(enemy) && enemy.type === "pufferfish" && this.character.attacking && !enemy.dead) {
+            enemy.eliminate();
+            setTimeout(() => {
+                this.level.enemies.splice(i, 1);
+            }, 2000);
         }
     }
 

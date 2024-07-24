@@ -1,7 +1,6 @@
 class Jellyfish extends MovableObject {
     width = 80;
     height = 100;
-    dead = false;
     color;
     JELLY_PURPLE = [
         "img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png",
@@ -122,10 +121,6 @@ class Jellyfish extends MovableObject {
         } else if (this.color === "lila") {
             this.animationPlay(this.PURPLE_DEAD);
         }
-    }
-
-    eliminate() {
-        this.dead = true;
     }
 
     checkLevelEnd() {
