@@ -1,18 +1,18 @@
 
 let level1;
 const level1Soundtrack = "audio/Shark game song.mp3"
-const level1Ending = 2250;
+const level1Ending = 550;
 
 async function initLevel() {
     level1 = new Level(
         [
-            new Jellyfish(500, "yellow"),
-            new Jellyfish(700, "pink"),
+            // new Jellyfish(500, "yellow"),
+            // new Jellyfish(700, "pink"),
             new Jellyfish(790, "lila"),
             new Jellyfish(1150, "green"),
-            new Pufferfish(550, 350),
+            // new Pufferfish(550, 350),
             new Pufferfish(1050, 250),
-            new Endboss(),
+            new Endboss(level1Ending),
         ],
         [
             new BackgroundObject("img/3. Background/Layers/2. Floor/D2.png", -720, 720, 350),

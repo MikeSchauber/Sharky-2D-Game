@@ -47,16 +47,18 @@ class Endboss extends MovableObject {
         "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 9.png",
         "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png",
     ];
+    startPoint;
     offset = {
         "x": 25,
-        "y": 185,
+        "y": 220,
         "w": -64,
-        "h": -255,
+        "h": -270,
     };
-    status = "intro";
+    status = "wait";
     entered = false;
+    fightInterval;
 
-    constructor() {
+    constructor(levelEnding) {
         super().loadImage("img/2.Enemy/3 Final Enemy/2.floating/1.png");
         this.loadImages(this.IMAGES_FLOAT);
         this.loadImages(this.IMAGES_INTRO);
@@ -65,7 +67,8 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.height = 400;
         this.width = 400;
-        this.x = 250;
+        this.x = levelEnding;
+        this.startPoint = this.x;
         this.type = "endboss";
         this.animate();
     }
@@ -77,16 +80,42 @@ class Endboss extends MovableObject {
             }
             if (this.status === "intro") {
                 this.y = 0;
+                this.offset.y = -200;
+                this.intervalAnimation(this.IMAGES_INTRO);
             }
-            // if (this.status === "idle") {
-            //     this.animationPlay(this.IMAGES_FLOAT);
-            //     this.y = 0;
-            // }
+            if (this.status === "idle") {
+                this.animationPlay(this.IMAGES_FLOAT);
+                this.offset.y = 190;
+                this.fightInterval = new Date().getTime();
+            }
+            if (this.status === "attacking" && this.x > this.startPoint && this.interval()) {
+                this.animationPlay(this.IMAGES_ATTACK);
+                this.x -= 2;
+            }
             if (this.entered) {
                 // this.endboss_music.play();
             }
+            console.log(this.fightInterval);
+            this.interval();
         }, 1000 / 8);
     }
 
+    interval() {
+        let timepassed = new Date().getTime(); - this.fightInterval;
+        console.log(timepassed);
+        return timepassed < 2000; 
+    }
 
+    intervalAnimation(arr) {
+        let i = this.currentImage;
+        let path = arr[i];
+        this.img = this.imageCache[path];
+        if (this.currentImage < arr.length) {
+            this.currentImage++;
+        }
+        if (this.currentImage === arr.length) {
+            this.status = "idle";
+            this.currentImage = 0;
+        }
+    }
 }
