@@ -122,18 +122,16 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    transitionAnimation(arr, arr2) {
+    transitionAnimation(transition, nextAnimation) {
         let i = this.transitionImage;
-        let path = arr[i];
+        let path = transition[i];
         this.img = this.imageCache[path];
-        if (this.transitionImage < arr.length) {
+        if (this.transitionImage < transition.length) {
             this.transitionImage++;
-        }
-        if (this.transitionImage === arr.length && typeof arr2 != "string") {
-            this.animationPlay(arr2);
-        }
-        if (this.transitionImage === arr.length && typeof arr2 == "string") {
-            this.loadImage(arr2);
+        } else if (typeof nextAnimation !== "string") {
+            this.animationPlay(nextAnimation);
+        } else {
+            this.loadImage(nextAnimation);
         }
     }
 
@@ -155,7 +153,7 @@ class MovableObject extends DrawableObject {
         }, 1000 / this.fps)
     }
 
-    
+
     moveDown() {
         setInterval(() => {
             this.y += this.speed

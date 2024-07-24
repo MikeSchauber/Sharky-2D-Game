@@ -45,6 +45,7 @@ class Character extends CharacterImages {
                 this.startAttackAnimation();
                 this.checkPositionLongidle();
                 this.characterHitAnimation();
+                this.checkForEndboss();
             } else {
                 this.deadAnimation();
             }
@@ -201,6 +202,13 @@ class Character extends CharacterImages {
     floating() {
         this.world.walking_sound.pause();
         this.loadImage(this.IMAGES_IDLE[0]);
+    }
+
+    checkForEndboss() {
+        let endboss = this.world.level.enemies[this.world.level.enemies.length - 1];
+        if (this.x >= this.world.level.level_end_x - (endboss.width / 2)) { 
+            endboss.enterAnimation();
+        }
     }
 
     checkPositionLongidle() {

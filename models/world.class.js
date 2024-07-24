@@ -83,11 +83,11 @@ class World {
         } else if (!this.character.isColliding(enemy)) {
             this.character.isntHit();
         }
-        if (this.character.isColliding(enemy) && enemy.type === "pufferfish" && this.character.attacking && !enemy.dead) {
+        if (this.character.isColliding(enemy) && enemy.type === "pufferfish" && this.character.attacking && this.character.attack === "flipper" && !enemy.dead) {
             enemy.eliminate();
             setTimeout(() => {
                 this.level.enemies.splice(i, 1);
-            }, 2000);
+            }, 3000);
         }
     }
 
@@ -156,6 +156,9 @@ class World {
         this.level.world = this;
         this.bars.forEach((bar) => {
             bar.world = this;
+        });
+        this.level.enemies.forEach((enemy) => {
+                enemy.world = this;
         });
     };
 
