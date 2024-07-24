@@ -1,6 +1,8 @@
 class Jellyfish extends MovableObject {
     width = 80;
     height = 100;
+    dead = false;
+    color;
     JELLY_PURPLE = [
         "img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png",
         "img/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png",
@@ -25,6 +27,32 @@ class Jellyfish extends MovableObject {
         "img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 3.png",
         "img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 4.png",
     ];
+
+    PURPLE_DEAD = [
+        "img/2.Enemy/2 Jelly fish/Dead/Lila/L1.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Lila/L2.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Lila/L3.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Lila/L4.png",
+    ];
+    YELLOW_DEAD = [
+        "img/2.Enemy/2 Jelly fish/Dead/Yellow/y1.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Yellow/y2.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Yellow/y3.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Yellow/y4.png",
+    ];
+    GREEN_DEAD = [
+        "img/2.Enemy/2 Jelly fish/Dead/green/g1.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Green/g2.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Green/g3.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Green/g4.png",
+    ];
+    PINK_DEAD = [
+        "img/2.Enemy/2 Jelly fish/Dead/Pink/P1.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Pink/P2.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Pink/P3.png",
+        "img/2.Enemy/2 Jelly fish/Dead/Pink/P4.png",
+    ];
+
     offset = {
         "x": 9,
         "y": 14,
@@ -34,6 +62,15 @@ class Jellyfish extends MovableObject {
 
     constructor(x, color) {
         super().loadImage("img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png");
+        this.loadImages(this.JELLY_PURPLE);
+        this.loadImages(this.JELLY_YELLOW);
+        this.loadImages(this.JELLY_GREEN);
+        this.loadImages(this.JELLY_PINK);
+        this.loadImages(this.YELLOW_DEAD);
+        this.loadImages(this.PURPLE_DEAD);
+        this.loadImages(this.GREEN_DEAD);
+        this.loadImages(this.PINK_DEAD);
+        this.color = color;
         this.x = x
         this.damage = "electric";
         this.type = "jellyfish";
@@ -43,39 +80,58 @@ class Jellyfish extends MovableObject {
 
     setJellyfishColor(color) {
         if (color === "yellow") {
-            this.loadImages(this.JELLY_YELLOW);
             this.animate(this.JELLY_YELLOW);
             this.moveUp();
         }
         if (color === "lila") {
-            this.loadImages(this.JELLY_PURPLE);
             this.animate(this.JELLY_PURPLE);
             this.moveUp();
         }
         if (color === "green") {
-            this.loadImages(this.JELLY_GREEN);
             this.animate(this.JELLY_GREEN);
             this.moveUp();
         }
         if (color === "pink") {
-            this.loadImages(this.JELLY_PINK);
             this.animate(this.JELLY_PINK);
             this.moveUp();
         }
     }
 
     animate(arr) {
-        this.animationPlay(arr, 5);
-        this.speed = 0.5 + Math.random() * 1;
         setInterval(() => {
-            this.checkLevelEnd();
-        }, 1000 / this.fps)
+            if (!this.dead) {
+                this.animationPlay(arr);
+                this.checkLevelEnd();
+            }
+            if (this.dead) {
+                this.speed = 1;
+                this.executeDeadAnimation(); 
+             }
+
+        }, 200);
+
+    }
+
+    executeDeadAnimation() {
+        if (this.color === "yellow") {
+            this.animationPlay(this.YELLOW_DEAD);
+        } else if (this.color === "green") {
+            this.animationPlay(this.GREEN_DEAD);
+        } else if (this.color === "pink") {
+            this.animationPlay(this.PINK_DEAD);
+        } else if (this.color === "lila") {
+            this.animationPlay(this.PURPLE_DEAD);
+        }
+    }
+
+    eliminate() {
+        this.dead = true;
     }
 
     checkLevelEnd() {
         if (this.y < 12) {
             this.speed = -1 + Math.random() * 1;
-        } 
+        }
         if (this.y > 370) {
             this.speed = 0.5 + Math.random() * 1;
         }

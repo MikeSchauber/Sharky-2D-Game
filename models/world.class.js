@@ -76,7 +76,7 @@ class World {
     }
 
     executeCharacterDamage(enemy) {
-        if (this.character.isColliding(enemy) && !this.character.attacking && !this.character.isDead()) {
+        if (this.character.isColliding(enemy) && !this.character.attacking && !this.character.isDead() && !enemy.dead) {
             this.character.hit();
             this.character.damagedBy = enemy.damage;
         } else if (!this.character.isColliding(enemy)) {
@@ -123,19 +123,21 @@ class World {
     checkThrowableObjects() {
         if (this.throwableObjects.length >= 1) {
             this.level.enemies.forEach((enemy, i) => {
-                this.throwableObjects.forEach((throwableObject) => {
-                    this.executeCollidingThrowableObject(enemy, throwableObject);
+                this.throwableObjects.forEach((throwableObject, j) => {
+                    this.executeCollidingThrowableObject(enemy, throwableObject, i, j);
                 });
             });
         }
     }
 
-    executeCollidingThrowableObject(enemy, throwableObject) {
-        if (throwableObject.isColliding(enemy) && enemy.type === "jellyfish") {
-            console.log(throwableObject.type + " is colliding with " + enemy.type);
-        }
-        if (throwableObject.isColliding(enemy) && enemy.type === "pufferfish") {
-            console.log(throwableObject.type + " is colliding with " + enemy.type);
+    executeCollidingThrowableObject(enemy, throwableObject, i, j) {
+        if (throwableObject.isColliding(enemy) && enemy.type === "jellyfish" && !enemy.dead) {
+            this.throwableObjects.splice(j, 1);
+            enemy.eliminate();
+            setTimeout(() => {
+                this.level.enemies.splice(i, 1);
+                console.log("enemy to splice: " + enemy);
+            }, 2000);
         }
         if (throwableObject.isColliding(enemy) && enemy.type === "endboss" && throwableObject.type === "poison") {
             console.log(throwableObject.type + " is colliding with " + enemy.type);
