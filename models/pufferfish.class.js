@@ -45,7 +45,7 @@ class Pufferfish extends MovableObject {
         this.animate(x);
         this.x = x + Math.random() * this.range + this.range;
         this.y = y;
-        this.speed = 1;
+        this.speed = 2 * Math.random() + 0.5
         this.damage = "poison";
         this.type = "pufferfish";
     }
@@ -56,8 +56,10 @@ class Pufferfish extends MovableObject {
     }
 
     startAnimationLoop(position) {
-        this.animationInterval = setInterval(() => {
+        setInterval(() => {
             this.checkMovementEnd(position);
+        }, 1000 / 4)
+        this.animationInterval = setInterval(() => {
             if (!this.dead) {
                 if (this.animationState === 'swim') {
                     this.animationPlay(this.IMAGES_SWIM);
@@ -71,7 +73,7 @@ class Pufferfish extends MovableObject {
                 this.transitionAnimation(this.IMAGES_DEAD, this.IMAGES_DEAD[2]);
                 this.y += 3;
             }
-        }, 1000 / 8);
+        }, 1000 / 10);
 
         setTimeout(() => {
             this.animationState = 'transition';
@@ -104,11 +106,11 @@ class Pufferfish extends MovableObject {
 
     checkMovementEnd(position) {
         if (this.x < position - this.range) {
-            this.speed = -1.5 * Math.random();
+            this.speed = -2 * Math.random() + 0.5;
             this.leftDirection = true;
         }
         if (this.x > position + this.range) {
-            this.speed = 1 * Math.random();
+            this.speed = 2 * Math.random() + 0.5;
             this.leftDirection = false;
         }
     }

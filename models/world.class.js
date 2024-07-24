@@ -29,6 +29,7 @@ class World {
     camera_x = 0;
     musicVolume = 0.7;
     effectVolume = 0.5;
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -84,7 +85,8 @@ class World {
             this.character.isntHit();
         }
         if (this.character.isColliding(enemy) && enemy.type === "pufferfish" && this.character.attacking && this.character.attack === "flipper" && !enemy.dead) {
-            enemy.eliminate();
+            enemy.dead = true;
+            console.log(enemy.dead);
             setTimeout(() => {
                 this.level.enemies.splice(i, 1);
             }, 3000);
@@ -147,7 +149,7 @@ class World {
             }, 2000);
         }
         if (throwableObject.isColliding(enemy) && enemy.type === "endboss" && throwableObject.type === "poison") {
-            console.log(throwableObject.type + " is colliding with " + enemy.type);
+            
         }
     }
 

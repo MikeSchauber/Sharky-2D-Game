@@ -210,7 +210,7 @@ class Character extends CharacterImages {
             endboss.entered = true;
         }
         if (endboss.entered) {
-            endboss.enterAnimation();
+            endboss.status = "intro";
         }
     }
 

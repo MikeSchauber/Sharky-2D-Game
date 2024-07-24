@@ -15,16 +15,16 @@ class Endboss extends MovableObject {
         "img/2.Enemy/3 Final Enemy/2.floating/13.png",
     ];
     IMAGES_INTRO = [
-       "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
-       "img/2.Enemy/3 Final Enemy/1.Introduce/2.png",
-       "img/2.Enemy/3 Final Enemy/1.Introduce/3.png",
-       "img/2.Enemy/3 Final Enemy/1.Introduce/4.png",
-       "img/2.Enemy/3 Final Enemy/1.Introduce/5.png",
-       "img/2.Enemy/3 Final Enemy/1.Introduce/6.png",
-       "img/2.Enemy/3 Final Enemy/1.Introduce/7.png",
-       "img/2.Enemy/3 Final Enemy/1.Introduce/8.png",
-       "img/2.Enemy/3 Final Enemy/1.Introduce/9.png",
-       "img/2.Enemy/3 Final Enemy/1.Introduce/10.png",
+        "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
+        "img/2.Enemy/3 Final Enemy/1.Introduce/2.png",
+        "img/2.Enemy/3 Final Enemy/1.Introduce/3.png",
+        "img/2.Enemy/3 Final Enemy/1.Introduce/4.png",
+        "img/2.Enemy/3 Final Enemy/1.Introduce/5.png",
+        "img/2.Enemy/3 Final Enemy/1.Introduce/6.png",
+        "img/2.Enemy/3 Final Enemy/1.Introduce/7.png",
+        "img/2.Enemy/3 Final Enemy/1.Introduce/8.png",
+        "img/2.Enemy/3 Final Enemy/1.Introduce/9.png",
+        "img/2.Enemy/3 Final Enemy/1.Introduce/10.png",
     ];
     IMAGES_ATTACK = [
         "img/2.Enemy/3 Final Enemy/Attack/1.png",
@@ -60,28 +60,34 @@ class Endboss extends MovableObject {
         super().loadImage("img/2.Enemy/3 Final Enemy/2.floating/1.png");
         this.loadImages(this.IMAGES_FLOAT);
         this.loadImages(this.IMAGES_INTRO);
+        this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
         this.height = 400;
         this.width = 400;
         this.x = 2250;
         this.type = "endboss";
         this.animate();
-    } 
+    }
 
     animate() {
         setInterval(() => {
-            console.log(this.status);
-            if (this.status = "idle") {
+            if (this.status === "wait") {
+                this.y = -500;
+            }
+            if (this.status === "intro") {
+                this.y = 0;
+                this.transitionAnimation(this.IMAGES_INTRO, this.IMAGES_FLOAT);
+            }
+            if (this.status === "idle") {
                 this.animationPlay(this.IMAGES_FLOAT);
                 this.y = 0;
             }
-            if (this.status = "wait") {
-                this.y = -500;
+            if (this.entered) {
+                // this.endboss_music.play();
             }
         }, 1000 / 8);
     }
 
-    enterAnimation() {
-        this.status = "intro";
-        this.entered = true;
-    }
+
 }
