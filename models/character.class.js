@@ -206,7 +206,10 @@ class Character extends CharacterImages {
 
     checkForEndboss() {
         let endboss = this.world.level.enemies[this.world.level.enemies.length - 1];
-        if (this.x >= this.world.level.level_end_x - (endboss.width / 2)) { 
+        if (this.x >= this.world.level.level_end_x - (endboss.width / 2) && !endboss.entered) { 
+            endboss.entered = true;
+        }
+        if (endboss.entered) {
             endboss.enterAnimation();
         }
     }

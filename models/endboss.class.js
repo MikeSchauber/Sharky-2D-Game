@@ -54,6 +54,7 @@ class Endboss extends MovableObject {
         "h": -255,
     };
     status = "wait";
+    entered = false;
 
     constructor() {
         super().loadImage("img/2.Enemy/3 Final Enemy/2.floating/1.png");
@@ -71,6 +72,7 @@ class Endboss extends MovableObject {
             console.log(this.status);
             if (this.status = "idle") {
                 this.animationPlay(this.IMAGES_FLOAT);
+                this.y = 0;
             }
             if (this.status = "wait") {
                 this.y = -500;
@@ -79,7 +81,7 @@ class Endboss extends MovableObject {
     }
 
     enterAnimation() {
-        console.log("HELLO IM THERE");
         this.status = "intro";
+        this.entered = true;
     }
 }
