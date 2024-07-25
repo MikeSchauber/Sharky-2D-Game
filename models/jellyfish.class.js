@@ -108,7 +108,6 @@ class Jellyfish extends MovableObject {
              }
 
         }, 200);
-
     }
 
     executeDeadAnimation() {
