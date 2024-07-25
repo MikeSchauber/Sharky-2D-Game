@@ -1,5 +1,5 @@
 let level1;
-const level1Soundtrack = new Audio("audio/ambient.mp3")
+const levelSoundtrack = new Audio("audio/ambient.mp3")
 const level1Ending = 3600;
 
 async function initLevel() {
@@ -75,6 +75,6 @@ async function initLevel() {
             new Poison(2750, 130),
         ],
         level1Ending,
-        level1Soundtrack,
+        levelSoundtrack,
     );    
 }

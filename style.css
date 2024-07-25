@@ -9,11 +9,10 @@ body {
     align-items: center;
     font-family: "luckiestGuy";
     font-size: 22px;
-    background: #f9f9f9;
-    background-repeat: no-repeat;
+    background-image: url("img/Menu/background.png");
     background-size: cover;
     background-position: center;
-    overflow: hidden;
+    overflow-x: hidden;
     height: 100vh;
 }
 
@@ -37,21 +36,66 @@ canvas {
     display: block;
     transition: all 100ms ease-in-out;
     border-radius: 10px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.288), -10px -10px 10px #ffffff;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.288), -10px -10px 10px #1d246480;
 }
 
 .help {
-    margin-top: 20px;
-    color: rgb(0, 95, 238);
-    background-color: linear-gradient(90deg, #4690a1 100%, #5dbed4 0%);
+    margin-top: 16px;
+    color: rgba(255, 255, 255, 0.781);
+    background: linear-gradient(90deg, #4690a1b0 100%, #5dbed4b0 0%);
     border-radius: 10px;
     padding: 10px;
     transition: all 200ms ease-in-out;
     cursor: pointer;
 }
 
+#container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    max-width: 720px;
+    width: 100%;
+}
+
+#canvas {
+    display: block;
+    margin: 0 auto;
+    background-color: black;
+}
+
+#hud {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.panel {
+    display: flex;
+}
+
+.panel-wrapper-left, .panel-wrapper-right div {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    height: 55px;
+    width: 55px;
+    border-radius: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(127, 255, 212, 0.87);
+}
+
+
 .help:hover {
-    box-shadow: 3px 3px 7px white, -3px -3px 5px #0000001e;
+    box-shadow: 3px 3px 7px #1d246480, -3px -3px 5px #0000001e;
 }
 
 @media only screen and (max-width: 720px) {
@@ -62,6 +106,6 @@ canvas {
 
 @media only screen and (max-width: 480px) {
     canvas {
-       height: 100vh;
+        height: 100vh;
     }
 }

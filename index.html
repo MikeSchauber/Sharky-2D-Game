@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Sharky</title>
+    <script src="./models/keyboard.class.js"></script>
     <script src="./models/world-music.class.js"></script>
     <script src="./models/world.class.js"></script>
     <script src="./models/drawable-object.class.js"></script>
@@ -20,10 +21,10 @@
     <script src="./models/statusbar.class.js"></script>
     <script src="./models/light.class.js"></script>
     <script src="./models/background.class.js"></script>
-    <script src="./models/keyboard.class.js"></script>
     <script src="./models/throwable-object.class.js"></script>
     <script src="./models/level.class.js"></script>
     <script src="./levels/level1.js"></script>
+
     <script src="./js/game.js"></script>
 </head>
 
@@ -31,7 +32,32 @@
 
     <h1>Sharky</h1>
 
-    <canvas id="canvas" width="720" height="480"></canvas>
+    <div id="container">
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <div id="hud" class="hud">
+            <div class="panel">
+                <div class="panel-wrapper-left">
+                    <button id="btnLeft">Left</button>
+                    <button id="btnRight">Right</button>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-wrapper-right">
+                    <div>
+                        <button id="btnOne">Slap</button>
+                        <button id="btnTwo">Bubble</button>
+                        <button id="btnThree">Special</button>
+                    </div>
+                    <div>
+                        <button id="btnUp">Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
 
     <div class="help">
         <p>Swim: Left, Right and Space</p>

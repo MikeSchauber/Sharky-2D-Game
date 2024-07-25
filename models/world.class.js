@@ -1,4 +1,4 @@
-class World extends WorldMusic{
+class World extends WorldMusic {
     bars = [
         new Bar("life", 5),
         new Bar("poison", 0),
@@ -26,7 +26,6 @@ class World extends WorldMusic{
         this.setWorld();
         this.run();
     }
-
 
     run() {
         setInterval(() => {
@@ -74,7 +73,7 @@ class World extends WorldMusic{
         }
         if (this.character.isColliding(enemy) && enemy.type === "endboss" && enemy.dead) {
 
-        } 
+        }
     }
 
     checkCharacterCoins() {
@@ -124,26 +123,35 @@ class World extends WorldMusic{
     }
 
     executeCollidingThrowableObject(enemy, throwableObject, i, j) {
+        if (throwableObject.x > throwableObject.startPosition + 500 && !throwableObject.isColliding(enemy)) {
+            this.throwableObjects.splice(j, 1);
+        }
         if (throwableObject.isColliding(enemy) && enemy.type === "jellyfish" && !enemy.dead) {
             this.throwableObjects.splice(j, 1);
             enemy.eliminate();
             setTimeout(() => {
                 this.level.enemies.splice(i, 1);
-                console.log("enemy to splice: " + enemy);
             }, 2000);
         }
         let endboss = this.level.enemies[this.level.enemies.length - 1];
-        if (throwableObject.isColliding(enemy) && enemy.type === "endboss" && throwableObject.type === "poison" && this.throwableObjects[j].hasHit === 1) {
-            endboss.energy -= 34;
-            this.throwableObjects[j].hasHit += 1;
-        } else if (throwableObject.isColliding(enemy) && enemy.type === "endboss" && throwableObject.type === "poison") {
-            endboss.status = "hurt";
-        } else {
-            endboss.status = "idle";
+        if (throwableObject.isColliding(enemy) && enemy.type === "endboss" && throwableObject.type === "poison") {
+            if (this.throwableObjects[j].hasHit === 1) {
+                endboss.energy -= 34;
+                this.throwableObjects[j].hasHit += 1;
+            } else if (this.throwableObjects[j].hasHit > 1) {
+                endboss.status = "hurt";
+                this.throwableObjects[j].hasHit += 1;
+                if (this.throwableObjects[j].hasHit > 15) {
+                    endboss.status = "idle";
+                }
+            }
         }
     }
 
     setWorld() {
+        this.ambient_sound = this.level.levelSoundtrack;
+        this.ambient_sound.volume = this.musicVolume;
+        this.ambient_sound.play();
         this.character.world = this;
         this.level.world = this;
         this.bars.forEach((bar) => {

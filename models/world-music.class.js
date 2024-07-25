@@ -3,6 +3,7 @@ class WorldMusic {
     musicVolume = 0.7;
     effectVolume = 0.5;
     ambient_sound;
+    ambientMusic
     coin_sound;
     poison_collect_sound;
     poison_bubbleshot_sound;
@@ -26,11 +27,9 @@ class WorldMusic {
     constructor() {
         this.setSounds();
         this.setEffectVolume();
-        this.ambient_sound.play();
     }
 
     setSounds() {
-        this.ambient_sound = new Audio("audio/ambient.mp3");
         this.coin_sound = new Audio("audio/coin.mp3");
         this.poison_collect_sound = new Audio("audio/poison.mp3");
         this.bubble_shot = new Audio("audio/bubble-shot.mp3");
@@ -52,8 +51,7 @@ class WorldMusic {
     }
 
     setEffectVolume() {
-        this.ambient_sound.volume = this.musicVolume;
-        this.boss_music.volume = this.musicVolume;
+        this.boss_music.volume = this.musicVolume -0.2;
         this.coin_sound.volume = this.effectVolume;
         this.walking_sound.volume = this.effectVolume;
         this.electro_hitsound.volume = this.effectVolume;
@@ -61,7 +59,7 @@ class WorldMusic {
         this.poison_bubbleshot_sound.volume = this.effectVolume;
         this.ouch_sound.volume = this.effectVolume;
         this.electrodeath_sound.volume = this.effectVolume;
-        this.snoring_sound.volume = 0;
+        this.snoring_sound.volume = this.effectVolume;
         this.error_sound.volume = this.effectVolume;
         this.punch_sound.volume = this.effectVolume;
         this.boss_laugh_sound.volume = this.effectVolume;

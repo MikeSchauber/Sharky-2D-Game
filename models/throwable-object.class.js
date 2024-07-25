@@ -8,11 +8,13 @@ class ThrowableObject extends MovableObject {
         "h": -0,
     };
     hasHit = 1;
+    startPosition;
 
     constructor(x, y, direction, path, type) {
         super().loadImage(path);
         this.speed = 4;
         this.type = type
+        this.startPosition = x;
         this.throw(x, y, direction);
     }
 

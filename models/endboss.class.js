@@ -86,6 +86,10 @@ class Endboss extends MovableObject {
                 if (this.status === "wait") {
                     this.y = -500;
                 }
+                if (this.world.character.x >= this.world.level.level_end_x - (this.width / 2) && !this.entered) {
+                    this.entered = true;
+                    this.status = "intro";
+                }
                 if (this.status === "intro") {
                     this.world.ambient_sound.pause();
                     this.world.boss_laugh_sound.play();
@@ -113,6 +117,7 @@ class Endboss extends MovableObject {
                     this.animationPlay(this.IMAGES_HURT);
                 }
                 if (this.entered) {
+                    clearInterval(this.ambientMusic);
                     this.world.boss_music.play();
                 }
             } else {
@@ -125,13 +130,16 @@ class Endboss extends MovableObject {
                 }, 6000);
                 this.status = "dead";
                 this.dead = true;
+                this.y += this.speed;
                 this.transitionAnimation(this.IMAGES_FINAL_DEAD, this.IMAGES_FINAL_DEAD[5]);
                 // this.gameover();
             }
+            console.log(this.status);
         }, 1000 / 8);
     }
 
     interval() {
+        console.log(this.index);
         if (this.index <= 25) {
             this.status = "idle";
         } else if (this.index >= 25) {
