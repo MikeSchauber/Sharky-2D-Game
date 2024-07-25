@@ -37,9 +37,6 @@ canvas {
     display: block;
     transition: all 100ms ease-in-out;
     border-radius: 10px;
-}
-
-canvas:hover {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.288), -10px -10px 10px #ffffff;
 }
 

@@ -61,6 +61,7 @@ class Endboss extends MovableObject {
     chooseStatus = 0;
     hit = false;
     type = "endboss";
+    world;
 
 
     constructor(levelEnding) {
@@ -86,6 +87,8 @@ class Endboss extends MovableObject {
                     this.y = -500;
                 }
                 if (this.status === "intro") {
+                    this.world.ambient_sound.pause();
+                    this.world.boss_laugh_sound.play();
                     this.y = 0;
                     this.offset.y = -200;
                     this.endbossTransitionAnimation(this.IMAGES_INTRO);
@@ -100,18 +103,28 @@ class Endboss extends MovableObject {
                 }
                 if (this.status === "attacking") {
                     this.endbossTransitionAnimation(this.IMAGES_ATTACK);
+                    this.world.bite_sound.play();
                     if (this.x > this.startPoint - 200) {
                         this.x -= 30;
                     }
                 }
                 if (this.status === "hurt" && !this.isDead()) {
+                    this.world.boss_hurt_sound.play();
                     this.animationPlay(this.IMAGES_HURT);
                 }
                 if (this.entered) {
-                    // this.endboss_music.play();
+                    this.world.boss_music.play();
                 }
             } else {
+                this.world.boss_music.pause();
+                if (this.world.musicloop) {
+                    this.world.win_sound.play();
+                }
+                setTimeout(() => {
+                    this.world.musicloop = false;
+                }, 6000);
                 this.status = "dead";
+                this.dead = true;
                 this.transitionAnimation(this.IMAGES_FINAL_DEAD, this.IMAGES_FINAL_DEAD[5]);
                 // this.gameover();
             }

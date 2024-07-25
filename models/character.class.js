@@ -246,6 +246,13 @@ class Character extends CharacterImages {
         if (this.damagedBy === "poison") {
             this.transitionAnimation(this.IMAGES_DEAD_POISON, this.IMAGES_DEAD_POISON[11]);
         }
+        this.world.ambient_sound.pause();
+        if (this.world.musicloop) {
+            this.world.gameover_sound.play();
+        }
+        setTimeout(() => {
+            this.world.musicloop = false;
+        }, 5000);
     }
 
     move() {
