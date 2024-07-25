@@ -41,10 +41,10 @@ class Jellyfish extends MovableObject {
     ];
     GREEN_DEAD = [
         "img/2.Enemy/2 Jelly fish/Dead/green/g1.png",
-        "img/2.Enemy/2 Jelly fish/Dead/Green/g2.png",
-        "img/2.Enemy/2 Jelly fish/Dead/Green/g3.png",
-        "img/2.Enemy/2 Jelly fish/Dead/Green/g4.png",
-    ];
+        "img/2.Enemy/2 Jelly fish/Dead/green/g2.png",
+        "img/2.Enemy/2 Jelly fish/Dead/green/g3.png",
+        "img/2.Enemy/2 Jelly fish/Dead/green/g4.png",
+    ]; 
     PINK_DEAD = [
         "img/2.Enemy/2 Jelly fish/Dead/Pink/P1.png",
         "img/2.Enemy/2 Jelly fish/Dead/Pink/P2.png",

@@ -134,12 +134,10 @@ class Endboss extends MovableObject {
                 this.transitionAnimation(this.IMAGES_FINAL_DEAD, this.IMAGES_FINAL_DEAD[5]);
                 // this.gameover();
             }
-            console.log(this.status);
         }, 1000 / 8);
     }
 
     interval() {
-        console.log(this.index);
         if (this.index <= 25) {
             this.status = "idle";
         } else if (this.index >= 25) {
