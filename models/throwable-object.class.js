@@ -7,6 +7,7 @@ class ThrowableObject extends MovableObject {
         "w": -0,
         "h": -0,
     };
+    hasHit = 1;
 
     constructor(x, y, direction, path, type) {
         super().loadImage(path);

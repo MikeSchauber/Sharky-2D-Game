@@ -56,7 +56,10 @@ class Endboss extends MovableObject {
     };
     status = "wait";
     entered = false;
-    fightInterval;
+    index = 0;
+    chooseStatus = 0;
+    hit = false;
+    
 
     constructor(levelEnding) {
         super().loadImage("img/2.Enemy/3 Final Enemy/2.floating/1.png");
@@ -70,6 +73,7 @@ class Endboss extends MovableObject {
         this.x = levelEnding;
         this.startPoint = this.x;
         this.type = "endboss";
+        this.currentImage = 0;
         this.animate();
     }
 
@@ -81,32 +85,64 @@ class Endboss extends MovableObject {
             if (this.status === "intro") {
                 this.y = 0;
                 this.offset.y = -200;
-                this.intervalAnimation(this.IMAGES_INTRO);
+                this.endbossTransitionAnimation(this.IMAGES_INTRO);
             }
             if (this.status === "idle") {
                 this.animationPlay(this.IMAGES_FLOAT);
                 this.offset.y = 190;
-                this.fightInterval = new Date().getTime();
+                this.chooseAttack();
+                if (this.x < this.startPoint) {
+                    this.x += 20;
+                }
             }
-            if (this.status === "attacking" && this.x > this.startPoint && this.interval()) {
-                this.animationPlay(this.IMAGES_ATTACK);
-                this.x -= 2;
+            if (this.status === "attacking") {
+                this.endbossTransitionAnimation(this.IMAGES_ATTACK);
+                if (this.x > this.startPoint - 200) {
+                    this.x -= 30;
+                }
+            }
+            if (this.status === "hurt") {
+                this.animationPlay(this.IMAGES_HURT);
+            }
+            if (this.energy <= 0) {
+                this.endbossTransitionAnimation(this.IMAGES_DEAD);
+                this.status = "dead";
             }
             if (this.entered) {
                 // this.endboss_music.play();
             }
-            console.log(this.fightInterval);
-            this.interval();
+            if (this.status === "dead") {
+                // this.gameOver();
+            }
         }, 1000 / 8);
     }
 
     interval() {
-        let timepassed = new Date().getTime(); - this.fightInterval;
-        console.log(timepassed);
-        return timepassed < 2000; 
+        console.log(this.index);
+        if (this.index <= 25) {
+            this.status = "idle";
+        } else if (this.index >= 25) {
+            this.status = "attacking";
+        }
+        if (this.index >= 50) {
+            this.index = 0;
+        }
+        this.index++;
     }
 
-    intervalAnimation(arr) {
+    chooseAttack() {
+        this.chooseStatus = Math.random();
+        if (this.chooseStatus > 0.95) {
+            this.status = "attacking";
+        } else {
+            this.status = "idle";
+        }
+    }
+
+    endbossTransitionAnimation(arr) {
+        if ( this.currentImage > arr.length) {
+            this.currentImage = 0;
+        }
         let i = this.currentImage;
         let path = arr[i];
         this.img = this.imageCache[path];
@@ -115,7 +151,6 @@ class Endboss extends MovableObject {
         }
         if (this.currentImage === arr.length) {
             this.status = "idle";
-            this.currentImage = 0;
         }
     }
 }

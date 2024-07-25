@@ -147,9 +147,12 @@ class World {
                 console.log("enemy to splice: " + enemy);
             }, 2000);
         }
-        if (throwableObject.isColliding(enemy) && enemy.type === "endboss" && throwableObject.type === "poison") {
-            
+        let endboss = this.level.enemies[this.level.enemies.length - 1];
+        if (throwableObject.isColliding(enemy) && enemy.type === "endboss" && throwableObject.type === "poison" && this.throwableObjects[j].hasHit === 1) {
+            endboss.energy -= 34;
+            this.throwableObjects[j].hasHit += 1;
         }
+        console.log(endboss.energy, throwableObject.hashit);
     }
 
     setWorld() {
@@ -226,7 +229,7 @@ class World {
             this.rotateUpwards(mo);
         }
         mo.draw(this.ctx, mo);
-        mo.drawBorder(this.ctx);
+        // mo.drawBorder(this.ctx);
         if (mo.leftDirection) {
             this.flipImageBack(mo);
         }
