@@ -9,7 +9,6 @@ class World {
     level = level1;
     coinValue = 0;
     poisonValue = 0;
-    soundtrack;
     ambient_sound;
     coin_sound;
     poison_collect_sound;
@@ -38,7 +37,6 @@ class World {
         this.poisonValue = 100 / this.level.poison.length;
         this.setSounds();
         this.setEffectVolume();
-        // this.soundtrack.play();
         // this.ambient_sound.play();
         this.draw();
         this.setWorld();
@@ -81,15 +79,17 @@ class World {
             this.character.hit();
             this.character.damagedBy = enemy.damage;
             this.character.checkForFlipperDamage(enemy.type);
-        } else if (!this.character.isColliding(enemy)) {
-            this.character.isntHit();
-        }
-        if (this.character.isColliding(enemy) && enemy.type === "pufferfish" && this.character.attacking && this.character.attack === "flipper" && !enemy.dead) {
+        } else if (this.character.isColliding(enemy) && enemy.type === "pufferfish" && this.character.attacking && this.character.attack === "flipper" && !enemy.dead) {
             enemy.dead = true;
             setTimeout(() => {
                 this.level.enemies.splice(i, 1);
             }, 3000);
+        } else if (this.character.isColliding(enemy) && enemy.type === "endboss" && enemy.dead) {
+
+        } else {
+            this.character.isntHit();
         }
+
     }
 
     checkCharacterCoins() {
@@ -153,7 +153,7 @@ class World {
             this.throwableObjects[j].hasHit += 1;
         } else if (throwableObject.isColliding(enemy) && enemy.type === "endboss" && throwableObject.type === "poison") {
             endboss.status = "hurt";
-        } else { 
+        } else {
             endboss.status = "idle";
         }
     }
@@ -165,7 +165,7 @@ class World {
             bar.world = this;
         });
         this.level.enemies.forEach((enemy) => {
-                enemy.world = this;
+            enemy.world = this;
         });
     };
 
@@ -256,7 +256,6 @@ class World {
     }
 
     setSounds() {
-        this.soundtrack = new Audio("audio/Shark game song.mp3");
         this.ambient_sound = new Audio("audio/ambient.mp3");
         this.coin_sound = new Audio("audio/coin.mp3");
         this.poison_collect_sound = new Audio("audio/poison.mp3");
@@ -272,7 +271,6 @@ class World {
     }
 
     setEffectVolume() {
-        this.soundtrack.volume = this.musicVolume;
         this.ambient_sound.volume = this.musicVolume;
         this.coin_sound.volume = this.effectVolume;
         this.walking_sound.volume = this.effectVolume;

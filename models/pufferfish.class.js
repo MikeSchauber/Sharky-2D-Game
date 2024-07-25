@@ -67,8 +67,7 @@ class Pufferfish extends MovableObject {
                     this.transitionAnimation(this.IMAGES_TRANSITION, this.IMAGES_BUBBLE_SWIM);
                     this.offsetPuffered();
                 }
-            }
-            if (this.dead) {
+            } else {
                 this.transitionAnimation(this.IMAGES_DEAD, this.IMAGES_DEAD[2]);
                 this.y += 3;
             }

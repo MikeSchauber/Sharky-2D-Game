@@ -1,5 +1,5 @@
 let level1;
-const level1Soundtrack = "audio/Shark game song.mp3";
+const level1Soundtrack = "audio/ambient.mp3";
 const level1Ending = 3600;
 
 async function initLevel() {
