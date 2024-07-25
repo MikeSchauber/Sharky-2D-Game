@@ -237,7 +237,7 @@ class Character extends CharacterImages {
 
     deadAnimation() {
         if (this.damagedBy === "electric") {
-            this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9], "electric");
+            this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
             this.world.electrodeath_sound.play();
             setTimeout(() => {
                 this.world.electrodeath_sound.volume = 0;

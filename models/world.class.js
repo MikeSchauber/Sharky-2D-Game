@@ -56,7 +56,7 @@ class World {
     checkThrowableObjectsRange() {
         if (this.throwableObjects.length > 0) {
             this.throwableObjects.forEach((object, i) => {
-                if (object.x >= this.level.level_end_x + 350) {
+                if (object.x >= this.level.level_end_x + 750) {
                     this.throwableObjects.splice(i, 1);
                 }
             });
@@ -151,8 +151,11 @@ class World {
         if (throwableObject.isColliding(enemy) && enemy.type === "endboss" && throwableObject.type === "poison" && this.throwableObjects[j].hasHit === 1) {
             endboss.energy -= 34;
             this.throwableObjects[j].hasHit += 1;
+        } else if (throwableObject.isColliding(enemy) && enemy.type === "endboss" && throwableObject.type === "poison") {
+            endboss.status = "hurt";
+        } else { 
+            endboss.status = "idle";
         }
-        console.log(endboss.energy, throwableObject.hashit);
     }
 
     setWorld() {

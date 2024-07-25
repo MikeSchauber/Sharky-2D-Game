@@ -14,6 +14,7 @@ class MovableObject extends DrawableObject {
     damage;
     type;
     dead = false;
+    transitionImage = 0;
 
     applyGraviy() {
         setInterval(() => {
@@ -123,14 +124,17 @@ class MovableObject extends DrawableObject {
     }
 
     transitionAnimation(transition, nextAnimation) {
+        if (this.transitionImage > transition.length) {
+            this.transitionImage = 0;
+        }
         let i = this.transitionImage;
         let path = transition[i];
         this.img = this.imageCache[path];
         if (this.transitionImage < transition.length) {
             this.transitionImage++;
-        } else if (typeof nextAnimation !== "string") {
+        } else if (Array.isArray(nextAnimation) || typeof nextAnimation !== 'string') {
             this.animationPlay(nextAnimation);
-        } else {
+        } else if (typeof nextAnimation === 'string') {
             this.loadImage(nextAnimation);
         }
     }

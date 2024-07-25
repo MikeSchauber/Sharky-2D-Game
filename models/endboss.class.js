@@ -40,7 +40,8 @@ class Endboss extends MovableObject {
         "img/2.Enemy/3 Final Enemy/Hurt/3.png",
         "img/2.Enemy/3 Final Enemy/Hurt/4.png",
     ];
-    IMAGES_DEAD = [
+    IMAGES_FINAL_DEAD = [
+        "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 5.png",
         "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 6.png",
         "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 7.png",
         "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 8.png",
@@ -59,7 +60,7 @@ class Endboss extends MovableObject {
     index = 0;
     chooseStatus = 0;
     hit = false;
-    
+
 
     constructor(levelEnding) {
         super().loadImage("img/2.Enemy/3 Final Enemy/2.floating/1.png");
@@ -67,10 +68,10 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_INTRO);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
-        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_FINAL_DEAD);
         this.height = 400;
         this.width = 400;
-        this.x = levelEnding;
+        this.x = levelEnding - 100;
         this.startPoint = this.x;
         this.type = "endboss";
         this.currentImage = 0;
@@ -79,41 +80,42 @@ class Endboss extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if (this.status === "wait") {
-                this.y = -500;
-            }
-            if (this.status === "intro") {
-                this.y = 0;
-                this.offset.y = -200;
-                this.endbossTransitionAnimation(this.IMAGES_INTRO);
-            }
-            if (this.status === "idle") {
-                this.animationPlay(this.IMAGES_FLOAT);
-                this.offset.y = 190;
-                this.chooseAttack();
-                if (this.x < this.startPoint) {
-                    this.x += 20;
+            if (!this.isDead()) {
+                if (this.status === "wait") {
+                    this.y = -500;
                 }
-            }
-            if (this.status === "attacking") {
-                this.endbossTransitionAnimation(this.IMAGES_ATTACK);
-                if (this.x > this.startPoint - 200) {
-                    this.x -= 30;
+                if (this.status === "intro") {
+                    this.y = 0;
+                    this.offset.y = -200;
+                    this.endbossTransitionAnimation(this.IMAGES_INTRO);
                 }
-            }
-            if (this.status === "hurt") {
-                this.animationPlay(this.IMAGES_HURT);
-            }
-            if (this.energy <= 0) {
-                this.endbossTransitionAnimation(this.IMAGES_DEAD);
+                if (this.status === "idle") {
+                    this.animationPlay(this.IMAGES_FLOAT);
+                    this.offset.y = 190;
+                    this.chooseAttack();
+                    if (this.x < this.startPoint) {
+                        this.x += 20;
+                    }
+                }
+                if (this.status === "attacking") {
+                    this.endbossTransitionAnimation(this.IMAGES_ATTACK);
+                    if (this.x > this.startPoint - 200) {
+                        this.x -= 30;
+                    }
+                }
+                if (this.status === "hurt" && !this.isDead()) {
+                    this.animationPlay(this.IMAGES_HURT);
+                }
+                if (this.entered) {
+                    // this.endboss_music.play();
+                }
+            } else {
                 this.status = "dead";
+                this.transitionAnimation(this.IMAGES_FINAL_DEAD, this.IMAGES_FINAL_DEAD[5]);
+                // this.gameover();
             }
-            if (this.entered) {
-                // this.endboss_music.play();
-            }
-            if (this.status === "dead") {
-                // this.gameOver();
-            }
+
+            console.log(this.status);
         }, 1000 / 8);
     }
 
@@ -140,7 +142,7 @@ class Endboss extends MovableObject {
     }
 
     endbossTransitionAnimation(arr) {
-        if ( this.currentImage > arr.length) {
+        if (this.currentImage > arr.length) {
             this.currentImage = 0;
         }
         let i = this.currentImage;

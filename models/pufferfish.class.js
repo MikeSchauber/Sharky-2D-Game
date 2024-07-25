@@ -30,7 +30,6 @@ class Pufferfish extends MovableObject {
         "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.2.png",
     ];
     offset;
-    transitionImage = 0;
     puffered = false;
     normal = true;
     animationInterval;
