@@ -6,7 +6,7 @@ let info = false;
 let volume = true;
 
 async function init() {
-
+    startTouchEventListener();
 };
 
 async function initGame() {
@@ -126,7 +126,9 @@ document.addEventListener('keyup', (e) => {
     if (e.keyCode === 51) {
         keyboard.THREE = false;
     }
+});
 
+function startTouchEventListener() {
     document.getElementById("btnLeft").addEventListener("touchstart", (e) => {
         e.preventDefault();
         keyboard.LEFT = true;
@@ -151,7 +153,7 @@ document.addEventListener('keyup', (e) => {
         e.preventDefault();
         keyboard.THREE = true;
     });
-
+    
     document.getElementById("btnLeft").addEventListener("touchend", (e) => {
         e.preventDefault();
         keyboard.LEFT = false;
@@ -176,4 +178,5 @@ document.addEventListener('keyup', (e) => {
         e.preventDefault();
         keyboard.THREE = false;
     });
-});
+}
+

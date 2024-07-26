@@ -32,7 +32,7 @@ body {
 
 h1 {
     position: absolute;
-    
+
     background-image: linear-gradient(90deg, #4690a1 0%, #5dbed4 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -206,7 +206,8 @@ button {
     transform: scale(1.2);
 }
 
-#btnLeft, #btnRight {
+#btnLeft,
+#btnRight {
     transform: scale(1.2);
 }
 
@@ -216,11 +217,25 @@ button {
     }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (orientation:landscape) and (max-width: 480px) {
     canvas {
         height: 100vh;
     }
+
+    @media screen and (orientation:portrait) {
+        .rotate-device {
+            display: flex;
+        }
+    }
+    
+    @media screen and (orientation:landscape) {
+        .rotate-device {
+            display: none;
+        }
+    }
 }
+
+
 
 @media (max-width: 680px) {
     #container {
