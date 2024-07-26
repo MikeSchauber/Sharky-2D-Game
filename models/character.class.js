@@ -61,7 +61,7 @@ class Character extends CharacterImages {
         if (this.world.keyboard.THREE && !this.attacking && this.poison > 0) {
             this.setSpecialAttack();
         } else if (this.world.keyboard.THREE && this.poison == 0) {
-            this.world.error_sound.play();
+            this.world.musicSettings.error_sound.play();
         }
     }
 
@@ -69,7 +69,7 @@ class Character extends CharacterImages {
         this.resetIdleTimer();
         this.attacking = true;
         this.attack = "flipper";
-        this.world.punch_sound.play();
+        this.world.musicSettings.punch_sound.play();
     }
 
     checkForFlipperDamage(type) {
@@ -125,7 +125,7 @@ class Character extends CharacterImages {
     bubbleShot(action) {
         if (action === "bubble") {
             this.throwBubble();
-            this.world.bubble_shot.play();
+            this.world.musicSettings.bubble_shot.play();
         }
     }
 
@@ -133,7 +133,7 @@ class Character extends CharacterImages {
         if (action === "special") {
             this.throwSpecial();
             this.checkPoisonDepot();
-            this.world.poison_bubbleshot_sound.play();
+            this.world.musicSettings.poison_bubbleshot_sound.play();
         }
     }
 
@@ -165,10 +165,10 @@ class Character extends CharacterImages {
         if (this.isHit()) {
             if (this.damagedBy === "electric") {
                 this.animationPlay(this.IMAGES_ELECTRIC_DAMAGE);
-                this.world.electro_hitsound.play();
+                this.world.musicSettings.electro_hitsound.play();
             } else if (this.hitAble){
                 this.animationPlay(this.IMAGES_POISON_DAMAGE);
-                this.world.ouch_sound.play();
+                this.world.musicSettings.ouch_sound.play();
             }
             this.resetIdleTimer();
         }
@@ -186,20 +186,20 @@ class Character extends CharacterImages {
 
     walking() {
         this.animationPlay(this.IMAGES_SWIM);
-        this.world.walking_sound.play();
+        this.world.musicSettings.walking_sound.play();
         this.resetIdleTimer();
     }
 
     startLongidle() {
         this.animationPlay(this.IMAGES_IDLE);
-        this.world.walking_sound.pause();
+        this.world.musicSettings.walking_sound.pause();
         if (!this.timeoutStarted) {
             this.startIdleTimer();
         }
     }
 
     floating() {
-        this.world.walking_sound.pause();
+        this.world.musicSettings.walking_sound.pause();
         this.loadImage(this.IMAGES_IDLE[0]);
     }
 
@@ -207,7 +207,7 @@ class Character extends CharacterImages {
         if (!this.isAboveGround() && this.idleTimer) {
             this.transitionAnimation(this.IMAGES_LONG_IDLE, this.IMAGES_SLEEP);
             this.offset.y = 100;
-            this.world.snoring_sound.play();
+            this.world.musicSettings.snoring_sound.play();
         } else {
             this.offset.y = 80;
         }
@@ -229,7 +229,7 @@ class Character extends CharacterImages {
     deadAnimation() {
         if (this.damagedBy === "electric") {
             this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
-            this.world.electrodeath_sound.play();
+            this.world.musicSettings.electrodeath_sound.play();
             setTimeout(() => {
                 this.world.electrodeath_sound.volume = 0;
             }, 1500);
@@ -237,9 +237,9 @@ class Character extends CharacterImages {
         if (this.damagedBy === "poison") {
             this.transitionAnimation(this.IMAGES_DEAD_POISON, this.IMAGES_DEAD_POISON[11]);
         }
-        this.world.ambient_sound.pause();
+        this.world.musicSettings.ambient_sound.pause();
         if (this.world.musicloop) {
-            this.world.gameover_sound.play();
+            this.world.musicSettings.gameover_sound.play();
         }
         setTimeout(() => {
             this.world.musicloop = false;

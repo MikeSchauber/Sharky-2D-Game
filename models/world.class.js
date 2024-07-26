@@ -1,4 +1,4 @@
-class World extends WorldMusic {
+class World {
     bars = [
         new Bar("life", 5),
         new Bar("poison", 0),
@@ -14,9 +14,9 @@ class World extends WorldMusic {
     canvas;
     keyboard;
     camera_x = 0;
+    musicSettings = new WorldMusic(0.7, 0.5);
 
     constructor(canvas, keyboard) {
-        super();
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
@@ -25,6 +25,7 @@ class World extends WorldMusic {
         this.draw();
         this.setWorld();
         this.run();
+        this.musicSettings.playBackgroundMusic();
     }
 
     run() {
@@ -87,7 +88,7 @@ class World extends WorldMusic {
     executeCollectCoin(coin, i) {
         if (!coin.collected) {
             this.character.collectCoin();
-            this.coin_sound.play();
+            this.musicSettings.coin_sound.play();
             coin.collected = true;
             this.bars[2].setPercentage(this.bars[2].IMAGES_COIN, this.character.coins);
             this.level.coins.splice(i, 1);
@@ -105,7 +106,7 @@ class World extends WorldMusic {
     executeCollectPoison(poison, i) {
         if (!poison.collected) {
             this.character.collectPoison();
-            this.poison_collect_sound.play();
+            this.musicSettings.poison_collect_sound.play();
             poison.collected = true;
             this.bars[1].setPercentage(this.bars[1].IMAGES_POISON, this.character.poison);
             this.level.poison.splice(i, 1);
@@ -149,9 +150,6 @@ class World extends WorldMusic {
     }
 
     setWorld() {
-        this.ambient_sound = this.level.levelSoundtrack;
-        this.ambient_sound.volume = this.musicVolume;
-        this.ambient_sound.play();
         this.character.world = this;
         this.level.world = this;
         this.bars.forEach((bar) => {

@@ -91,8 +91,8 @@ class Endboss extends MovableObject {
                     this.status = "intro";
                 }
                 if (this.status === "intro") {
-                    this.world.ambient_sound.pause();
-                    this.world.boss_laugh_sound.play();
+                    this.world.musicSettings.ambient_sound.pause();
+                    this.world.musicSettings.boss_laugh_sound.play();
                     this.y = 0;
                     this.offset.y = -200;
                     this.endbossTransitionAnimation(this.IMAGES_INTRO);
@@ -107,23 +107,23 @@ class Endboss extends MovableObject {
                 }
                 if (this.status === "attacking") {
                     this.endbossTransitionAnimation(this.IMAGES_ATTACK);
-                    this.world.bite_sound.play();
+                    this.world.musicSettings.bite_sound.play();
                     if (this.x > this.startPoint - 200) {
                         this.x -= 30;
                     }
                 }
                 if (this.status === "hurt" && !this.isDead()) {
-                    this.world.boss_hurt_sound.play();
+                    this.world.musicSettings.boss_hurt_sound.play();
                     this.animationPlay(this.IMAGES_HURT);
                 }
                 if (this.entered) {
                     clearInterval(this.ambientMusic);
-                    this.world.boss_music.play();
+                    this.world.musicSettings.boss_music.play();
                 }
             } else {
-                this.world.boss_music.pause();
+                this.world.musicSettings.boss_music.pause();
                 if (this.world.musicloop) {
-                    this.world.win_sound.play();
+                    this.world.musicSettings.win_sound.play();
                 }
                 setTimeout(() => {
                     this.world.musicloop = false;

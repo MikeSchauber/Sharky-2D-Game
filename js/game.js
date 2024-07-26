@@ -14,7 +14,6 @@ async function initGame() {
     canvas = document.getElementById('canvas');
     await initLevel();
     world = new World(canvas, keyboard);
-    world.setWorldMusic(0,0);
     document.getElementById('start').style.display = 'none';
     document.getElementById('hud').style.display = '';
     document.getElementById('sound').style.display = '';
@@ -70,17 +69,13 @@ function toggleVolume() {
 
     if (volume) {
         document.getElementById("sound").src = "img/Menu/sound-off.png"
-        world.musicVolume = 0;
-        world.effectVolume = 0;
+        world.musicSettings.pauseBackgroundMusic();
         volume = false;
     } else if (!volume) {
         document.getElementById("sound").src = "img/Menu/sound-on.png"
-        world.musicVolume = 0.7;
-        world.effectVolume = 0.5;
+        world.musicSettings.playBackgroundMusic();
         volume = true;
     }
-    console.log(world.musicVolume);
-    console.log(volume);
 }
 
 function victory() {

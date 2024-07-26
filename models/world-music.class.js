@@ -1,6 +1,7 @@
 class WorldMusic {
-    musicVolume = 0.7;
-    effectVolume = 0.5;
+    musicVolume;
+    effectVolume;
+    ambient_sound;
     coin_sound;
     poison_collect_sound;
     poison_bubbleshot_sound;
@@ -21,19 +22,30 @@ class WorldMusic {
     gameover_sound;
     musicloop = true;
 
-    constructor() {
+    constructor(m, e) {
+        this.volumeSettings(m, e);
         this.setSounds();
-        if (this.musicVolume >= 0 && this.effectVolume >= 0) {
-            this.setEffectVolume();
-        }
     }
 
-    setWorldMusic(m, e) {
+    volumeSettings(m, e) {
         this.musicVolume = m;
         this.effectVolume = e;
     }
 
+    playBackgroundMusic() {
+        this.ambient_sound.loop = true;
+        this.ambient_sound.play();
+        this.setEffectVolume();
+    }
+
+    pauseBackgroundMusic() {
+        this.ambient_sound.pause();
+        this.ambient_sound.loop = false;
+        this.muteEffectVolume();
+    }
+
     setSounds() {
+        this.ambient_sound = new Audio("audio/ambient.mp3");
         this.coin_sound = new Audio("audio/coin.mp3");
         this.poison_collect_sound = new Audio("audio/poison.mp3");
         this.bubble_shot = new Audio("audio/bubble-shot.mp3");
@@ -55,6 +67,7 @@ class WorldMusic {
     }
 
     setEffectVolume() {
+        this.ambient_sound.volume = this.musicVolume;
         this.boss_music.volume = this.musicVolume;
         this.coin_sound.volume = this.effectVolume;
         this.walking_sound.volume = this.effectVolume;
@@ -73,5 +86,26 @@ class WorldMusic {
         this.boss_death_sound.volume = this.effectVolume;
         this.win_sound.volume = this.musicVolume;
         this.gameover_sound.volume = this.musicVolume;
+    }
+
+    muteEffectVolume() {
+        this.boss_music.volume = 0;
+        this.coin_sound.volume = 0;
+        this.walking_sound.volume = 0;
+        this.electro_hitsound.volume = 0;
+        this.bubble_shot.volume = 0;
+        this.poison_bubbleshot_sound.volume = 0;
+        this.poison_collect_sound.volume = 0;
+        this.ouch_sound.volume = 0;
+        this.electrodeath_sound.volume = 0;
+        this.snoring_sound.volume = 0;
+        this.error_sound.volume = 0;
+        this.punch_sound.volume = 0;
+        this.boss_laugh_sound.volume = 0;
+        this.bite_sound.volume = 0;
+        this.boss_hurt_sound.volume = 0;
+        this.boss_death_sound.volume = 0;
+        this.win_sound.volume = 0;
+        this.gameover_sound.volume = 0;
     }
 }
