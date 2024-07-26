@@ -66,11 +66,7 @@ class Endboss extends MovableObject {
 
     constructor(levelEnding) {
         super().loadImage("img/2.Enemy/3 Final Enemy/2.floating/1.png");
-        this.loadImages(this.IMAGES_FLOAT);
-        this.loadImages(this.IMAGES_INTRO);
-        this.loadImages(this.IMAGES_ATTACK);
-        this.loadImages(this.IMAGES_HURT);
-        this.loadImages(this.IMAGES_FINAL_DEAD);
+        this.loadAllImages();
         this.height = 400;
         this.width = 400;
         this.x = levelEnding - 100;
@@ -80,61 +76,109 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    loadAllImages() {
+        this.loadImages(this.IMAGES_FLOAT);
+        this.loadImages(this.IMAGES_INTRO);
+        this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_FINAL_DEAD);
+    }
+
     animate() {
         setInterval(() => {
             if (!this.isDead()) {
-                if (this.status === "wait") {
-                    this.y = -500;
-                }
-                if (this.world.character.x >= this.world.level.level_end_x - (this.width / 2) && !this.entered) {
-                    this.entered = true;
-                    this.status = "intro";
-                }
-                if (this.status === "intro") {
-                    this.world.musicSettings.ambient_sound.pause();
-                    this.world.musicSettings.boss_laugh_sound.play();
-                    this.y = 0;
-                    this.offset.y = -200;
-                    this.endbossTransitionAnimation(this.IMAGES_INTRO);
-                }
-                if (this.status === "idle") {
-                    this.animationPlay(this.IMAGES_FLOAT);
-                    this.offset.y = 190;
-                    this.chooseAttack();
-                    if (this.x < this.startPoint) {
-                        this.x += 20;
-                    }
-                }
-                if (this.status === "attacking") {
-                    this.endbossTransitionAnimation(this.IMAGES_ATTACK);
-                    this.world.musicSettings.bite_sound.play();
-                    if (this.x > this.startPoint - 200) {
-                        this.x -= 30;
-                    }
-                }
-                if (this.status === "hurt" && !this.isDead()) {
-                    this.world.musicSettings.boss_hurt_sound.play();
-                    this.animationPlay(this.IMAGES_HURT);
-                }
-                if (this.entered) {
-                    clearInterval(this.ambientMusic);
-                    this.world.musicSettings.boss_music.play();
-                }
+                this.animateWhenAlive();
             } else {
-                this.world.musicSettings.boss_music.pause();
-                if (this.world.musicSettings.musicloop) {
-                    this.world.musicSettings.win_sound.play();
-                }
-                this.status = "dead";
-                this.dead = true;
-                this.y += this.speed * 3;
-                this.transitionAnimation(this.IMAGES_FINAL_DEAD, this.IMAGES_FINAL_DEAD[5]);
-                victory();
-                setTimeout(() => {
-                    this.world.musicSettings.musicloop = false;
-                }, 6000);
+                this.animateWhenDead();
             }
         }, 1000 / 8);
+    }
+
+    animateWhenAlive() {
+        this.actingWhenWait();
+        this.prepareForIntro();
+        this.actingIntro();
+        this.actingIdle();
+        this.actingAttack();
+        this.actingHurt();
+        if (this.entered) {
+            clearInterval(this.ambientMusic);
+            this.world.musicSettings.boss_music.play();
+        }
+    }
+
+    actingWhenWait() {
+        if (this.status === "wait") {
+            this.y = -500;
+        }
+    }
+
+    prepareForIntro() {
+        if (this.world.character.x >= this.world.level.level_end_x - (this.width / 2) && !this.entered) {
+            this.entered = true;
+            this.status = "intro";
+        }
+    }
+
+    actingIntro() {
+        if (this.status === "intro") {
+            this.world.musicSettings.ambient_sound.pause();
+            this.world.musicSettings.boss_laugh_sound.play();
+            this.y = 0;
+            this.offset.y = -200;
+            this.endbossTransitionAnimation(this.IMAGES_INTRO);
+        }
+    }
+
+    actingIdle() {
+        if (this.status === "idle") {
+            this.animationPlay(this.IMAGES_FLOAT);
+            this.offset.y = 190;
+            this.chooseAttack();
+            if (this.x < this.startPoint) {
+                this.x += 20;
+            }
+        }
+    }
+
+    actingAttack() {
+        if (this.status === "attacking") {
+            this.endbossTransitionAnimation(this.IMAGES_ATTACK);
+            this.world.musicSettings.bite_sound.play();
+            if (this.x > this.startPoint - 200) {
+                this.x -= 30;
+            }
+        }
+    }
+
+    actingHurt() {
+        if (this.status === "hurt" && !this.isDead()) {
+            this.world.musicSettings.boss_hurt_sound.play();
+            this.animationPlay(this.IMAGES_HURT);
+        }
+    }
+
+    animateWhenDead() {
+        this.playWinningSound();
+        this.actingWhenDead();
+        victory();
+    }
+
+    playWinningSound() {
+        this.world.musicSettings.boss_music.pause();
+        if (this.world.musicSettings.musicloop) {
+            this.world.musicSettings.win_sound.play();
+        }
+        setTimeout(() => {
+            this.world.musicSettings.musicloop = false;
+        }, 6000);
+    }
+
+    actingWhenDead() {
+        this.status = "dead";
+        this.dead = true;
+        this.y += this.speed * 3;
+        this.transitionAnimation(this.IMAGES_FINAL_DEAD, this.IMAGES_FINAL_DEAD[5]);
     }
 
     interval() {

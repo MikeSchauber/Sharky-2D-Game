@@ -1,4 +1,4 @@
-class CharacterImages extends MovableObject {
+class CharacterImages {
     IMAGES_SWIM = [
         "img/1.Sharkie/3.Swim/1.png",
         "img/1.Sharkie/3.Swim/2.png",
@@ -116,18 +116,4 @@ class CharacterImages extends MovableObject {
         "img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png",
         "img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png",
     ];
-
-    constructor() {
-        super();
-        this.loadImages(this.IMAGES_SWIM);
-        this.loadImages(this.IMAGES_IDLE);
-        this.loadImages(this.IMAGES_LONG_IDLE);
-        this.loadImages(this.IMAGES_ELECTRIC_DAMAGE);
-        this.loadImages(this.IMAGES_POISON_DAMAGE);
-        this.loadImages(this.IMAGES_DEAD_ELECTRO);
-        this.loadImages(this.IMAGES_DEAD_POISON);
-        this.loadImages(this.IMAGES_FLIPPER_ATTACK);
-        this.loadImages(this.IMAGES_BUBBLE_ATTACK);
-        this.loadImages(this.IMAGES_SPECIAL_ATTACK);
-    }
 }

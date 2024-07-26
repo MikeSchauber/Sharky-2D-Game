@@ -1,4 +1,4 @@
-class Character extends CharacterImages {
+class Character extends MovableObject {
     x = 100;
     y = 150;
     height = 150;
@@ -9,6 +9,7 @@ class Character extends CharacterImages {
         "w": -74,
         "h": -120,
     };
+    images = new CharacterImages();
     speed = 2;
     cameraRange = 0;
     cameraMovement = false;
@@ -28,8 +29,22 @@ class Character extends CharacterImages {
 
     constructor() {
         super().loadImage("img/1.Sharkie/1.IDLE/1.png");
+        this.loadAllImages();
         this.animate();
         this.applyGraviy();
+    }
+
+    loadAllImages() {
+        this.loadImages(this.images.IMAGES_SWIM);
+        this.loadImages(this.images.IMAGES_IDLE);
+        this.loadImages(this.images.IMAGES_LONG_IDLE);
+        this.loadImages(this.images.IMAGES_ELECTRIC_DAMAGE);
+        this.loadImages(this.images.IMAGES_POISON_DAMAGE);
+        this.loadImages(this.images.IMAGES_DEAD_ELECTRO);
+        this.loadImages(this.images.IMAGES_DEAD_POISON);
+        this.loadImages(this.images.IMAGES_FLIPPER_ATTACK);
+        this.loadImages(this.images.IMAGES_BUBBLE_ATTACK);
+        this.loadImages(this.images.IMAGES_SPECIAL_ATTACK);
     }
 
     animate() {
@@ -39,17 +54,21 @@ class Character extends CharacterImages {
         };
         requestAnimationFrame(this.animationFrame);
         setInterval(() => {
-            if (!this.isDead()) {
-                this.walkingAnimation();
-                this.chooseCorrectAttack();
-                this.startAttackAnimation();
-                this.checkPositionLongidle();
-                this.characterHitAnimation();
-            } else {
-                this.deadAnimation();
-                gameover();
-            }
+            this.ifCharacterIsAlive();
         }, 1000 / 8);
+    }
+
+    ifCharacterIsAlive() {
+        if (!this.isDead()) {
+            this.walkingAnimation();
+            this.chooseCorrectAttack();
+            this.startAttackAnimation();
+            this.checkPositionLongidle();
+            this.characterHitAnimation();
+        } else {
+            this.deadAnimation();
+            gameover();
+        }
     }
 
     chooseCorrectAttack() {
@@ -96,13 +115,13 @@ class Character extends CharacterImages {
     startAttackAnimation() {
         if (this.attacking) {
             if (this.attack === "flipper") {
-                this.attackAnimation(this.IMAGES_FLIPPER_ATTACK);
+                this.attackAnimation(this.images.IMAGES_FLIPPER_ATTACK);
             }
             if (this.attack === "bubble") {
-                this.attackAnimation(this.IMAGES_BUBBLE_ATTACK, "bubble");
+                this.attackAnimation(this.images.IMAGES_BUBBLE_ATTACK, "bubble");
             }
             if (this.attack === "special" && this.poison > 0) {
-                this.attackAnimation(this.IMAGES_SPECIAL_ATTACK, "special");
+                this.attackAnimation(this.images.IMAGES_SPECIAL_ATTACK, "special");
             }
         }
     }
@@ -117,7 +136,7 @@ class Character extends CharacterImages {
         if (this.attackImage === arr.length) {
             this.attacking = false;
             this.attackImage = 0;
-            this.loadImage(this.IMAGES_IDLE[0]);
+            this.loadImage(this.images.IMAGES_IDLE[0]);
             this.bubbleShot(action);
             this.specialShot(action);
         }
@@ -147,6 +166,7 @@ class Character extends CharacterImages {
         }
         this.world.throwableObjects.push(bubble);
     }
+
     throwSpecial() {
         let poisonBubble;
         if (this.leftDirection && !this.isDead()) {
@@ -165,10 +185,10 @@ class Character extends CharacterImages {
     characterHitAnimation() {
         if (this.isHit()) {
             if (this.damagedBy === "electric") {
-                this.animationPlay(this.IMAGES_ELECTRIC_DAMAGE);
+                this.animationPlay(this.images.IMAGES_ELECTRIC_DAMAGE);
                 this.world.musicSettings.electro_hitsound.play();
-            } else if (this.hitAble){
-                this.animationPlay(this.IMAGES_POISON_DAMAGE);
+            } else if (this.hitAble) {
+                this.animationPlay(this.images.IMAGES_POISON_DAMAGE);
                 this.world.musicSettings.ouch_sound.play();
             }
             this.resetIdleTimer();
@@ -186,13 +206,13 @@ class Character extends CharacterImages {
     }
 
     walking() {
-        this.animationPlay(this.IMAGES_SWIM);
+        this.animationPlay(this.images.IMAGES_SWIM);
         this.world.musicSettings.walking_sound.play();
         this.resetIdleTimer();
     }
 
     startLongidle() {
-        this.animationPlay(this.IMAGES_IDLE);
+        this.animationPlay(this.images.IMAGES_IDLE);
         this.world.musicSettings.walking_sound.pause();
         if (!this.timeoutStarted) {
             this.startIdleTimer();
@@ -201,12 +221,12 @@ class Character extends CharacterImages {
 
     floating() {
         this.world.musicSettings.walking_sound.pause();
-        this.loadImage(this.IMAGES_IDLE[0]);
+        this.loadImage(this.images.IMAGES_IDLE[0]);
     }
 
     checkPositionLongidle() {
         if (!this.isAboveGround() && this.idleTimer) {
-            this.transitionAnimation(this.IMAGES_LONG_IDLE, this.IMAGES_SLEEP);
+            this.transitionAnimation(this.images.IMAGES_LONG_IDLE, this.images.IMAGES_SLEEP);
             this.offset.y = 100;
             this.world.musicSettings.snoring_sound.play();
         } else {
@@ -222,22 +242,32 @@ class Character extends CharacterImages {
 
     startIdleTimer() {
         this.timeoutStarted = true;
-        this.timeoutId = setTimeout(() => {
-            this.idleTimer = true;
-        }, 15000);
+        this.timeoutId = setTimeout(() => { this.idleTimer = true; }, 15000);
     }
 
     deadAnimation() {
+        this.deadByJelly();
+        this.deadByPuffer();
+        this.gameOverSound();
+    }
+
+    deadByJelly() {
         if (this.damagedBy === "electric") {
-            this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
+            this.transitionAnimation(this.images.IMAGES_DEAD_ELECTRO, this.images.IMAGES_DEAD_ELECTRO[9]);
             this.world.musicSettings.electrodeath_sound.play();
             setTimeout(() => {
                 this.world.musicSettings.electrodeath_sound.volume = 0;
             }, 1500);
         }
+    }
+
+    deadByPuffer() {
         if (this.damagedBy === "poison") {
-            this.transitionAnimation(this.IMAGES_DEAD_POISON, this.IMAGES_DEAD_POISON[11]);
+            this.transitionAnimation(this.images.IMAGES_DEAD_POISON, this.images.IMAGES_DEAD_POISON[11]);
         }
+    }
+
+    gameOverSound() {
         this.world.musicSettings.ambient_sound.pause();
         if (this.world.musicloop) {
             this.world.musicSettings.gameover_sound.play();

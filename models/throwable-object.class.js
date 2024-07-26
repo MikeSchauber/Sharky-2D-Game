@@ -18,15 +18,23 @@ class ThrowableObject extends MovableObject {
         this.throw(x, y, direction);
     }
 
-        throw(x, y, direction) {
-            if (direction === "right") {
-                this.x = x + 110; 
-                this.y = y + 80;
-                this.moveRight();
-            } else if (direction === "left") {
-                this.x = x; 
-                this.y = y + 80;
-                this.moveLeft();
-            }
+    throw(x, y, direction) {
+        if (direction === "right") {
+            this.throwRightDirection(x, y);
+        } else if (direction === "left") {
+            this.throwLeftDirection(x, y);
         }
+    }
+
+    throwRightDirection(x, y) {
+        this.x = x + 110;
+        this.y = y + 80;
+        this.moveRight();
+    }
+
+    throwLeftDirection(x, y) {
+        this.x = x;
+        this.y = y + 80;
+        this.moveLeft();
+    }
 }

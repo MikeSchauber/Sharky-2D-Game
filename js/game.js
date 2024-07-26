@@ -110,9 +110,11 @@ function toggleVolume() {
 }
 
 function victory() {
-    clearAllIntervals();
     document.getElementById("victory").style.display = "";
     document.getElementById("victory").style.opacity = 1;
+    setTimeout(() => {
+        clearAllIntervals();
+    }, 6000);
 }
 
 function gameover() {

@@ -33,7 +33,7 @@ class MovableObject extends DrawableObject {
     }
 
     drawBorder(ctx) {
-        if (this instanceof Character || this instanceof Jellyfish || this instanceof Pufferfish || this instanceof Endboss || this instanceof Poison || this instanceof Coin || this instanceof ThrowableObject) {
+        if (this.checkForInstances()) {
             if (this.offset) {
                 ctx.beginPath();
                 ctx.lineWidth = '2';
@@ -42,6 +42,9 @@ class MovableObject extends DrawableObject {
                 ctx.stroke();
             }
         }
+    }
+    checkForInstances() {
+        return this instanceof Character || this instanceof Jellyfish || this instanceof Pufferfish || this instanceof Endboss || this instanceof Poison || this instanceof Coin || this instanceof ThrowableObject
     }
 
     isColliding(obj) {
@@ -88,11 +91,15 @@ class MovableObject extends DrawableObject {
 
     isntHit() {
         if (this.energy <= 99.9) {
-            if (this.energy > 0.1) {
-                this.energy += 0.0025;
-            } else {
-                this.energy = 0;
-            }
+            this.recoverEnergy(this.energy);
+        }
+    }
+
+    recoverEnergy(e) {
+        if (e > 0.1) {
+            e += 0.0025;
+        } else {
+            e = 0;
         }
     }
 
@@ -108,34 +115,54 @@ class MovableObject extends DrawableObject {
     animationPlay(IMAGE_ARRAY, speed) {
         if (speed) {
             this.speed = speed;
-            setInterval(() => {
-                let i = this.currentImage % IMAGE_ARRAY.length;
-                let path = IMAGE_ARRAY[i];
-                this.img = this.imageCache[path];
-                this.currentImage++
-            }, 1000 / this.speed);
+            this.playSpecialSpeed(IMAGE_ARRAY);
         } else {
+            this.playClassSpeed(IMAGE_ARRAY);
+        }
+    }
+
+    playSpecialSpeed(IMAGE_ARRAY) {
+        setInterval(() => {
             let i = this.currentImage % IMAGE_ARRAY.length;
             let path = IMAGE_ARRAY[i];
             this.img = this.imageCache[path];
             this.currentImage++
-        }
+        }, 1000 / this.speed);
+    }
+
+    playClassSpeed(IMAGE_ARRAY) {
+        let i = this.currentImage % IMAGE_ARRAY.length;
+        let path = IMAGE_ARRAY[i];
+        this.img = this.imageCache[path];
+        this.currentImage++
     }
 
     transitionAnimation(transition, nextAnimation) {
         if (this.transitionImage > transition.length) {
             this.transitionImage = 0;
         }
+        this.playTransition(transition);
+        this.introduceTransition(transition, nextAnimation);
+    }
+
+    playTransition(transition) {
         let i = this.transitionImage;
         let path = transition[i];
         this.img = this.imageCache[path];
+    }
+
+    introduceTransition(transition, nextAnimation) {
         if (this.transitionImage < transition.length) {
             this.transitionImage++;
-        } else if (Array.isArray(nextAnimation) || typeof nextAnimation !== 'string') {
+        } else if (this.checkNextAnimation(nextAnimation)) {
             this.animationPlay(nextAnimation);
         } else if (typeof nextAnimation === 'string') {
             this.loadImage(nextAnimation);
         }
+    }
+
+    checkNextAnimation(nextAnimation) {
+        return Array.isArray(nextAnimation) || typeof nextAnimation !== 'string'
     }
 
     moveLeft() {
@@ -155,7 +182,6 @@ class MovableObject extends DrawableObject {
             this.y -= this.speed
         }, 1000 / this.fps)
     }
-
 
     moveDown() {
         setInterval(() => {

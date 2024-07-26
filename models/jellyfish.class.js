@@ -44,7 +44,7 @@ class Jellyfish extends MovableObject {
         "img/2.Enemy/2 Jelly fish/Dead/green/g2.png",
         "img/2.Enemy/2 Jelly fish/Dead/green/g3.png",
         "img/2.Enemy/2 Jelly fish/Dead/green/g4.png",
-    ]; 
+    ];
     PINK_DEAD = [
         "img/2.Enemy/2 Jelly fish/Dead/Pink/P1.png",
         "img/2.Enemy/2 Jelly fish/Dead/Pink/P2.png",
@@ -61,14 +61,7 @@ class Jellyfish extends MovableObject {
 
     constructor(x, color) {
         super().loadImage("img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png");
-        this.loadImages(this.JELLY_PURPLE);
-        this.loadImages(this.JELLY_YELLOW);
-        this.loadImages(this.JELLY_GREEN);
-        this.loadImages(this.JELLY_PINK);
-        this.loadImages(this.YELLOW_DEAD);
-        this.loadImages(this.PURPLE_DEAD);
-        this.loadImages(this.GREEN_DEAD);
-        this.loadImages(this.PINK_DEAD);
+        this.loadAllImages();
         this.color = color;
         this.x = x
         this.damage = "electric";
@@ -77,19 +70,46 @@ class Jellyfish extends MovableObject {
         this.setJellyfishColor(color);
     }
 
+    loadAllImages() {
+        this.loadImages(this.JELLY_PURPLE);
+        this.loadImages(this.JELLY_YELLOW);
+        this.loadImages(this.JELLY_GREEN);
+        this.loadImages(this.JELLY_PINK);
+        this.loadImages(this.YELLOW_DEAD);
+        this.loadImages(this.PURPLE_DEAD);
+        this.loadImages(this.GREEN_DEAD);
+        this.loadImages(this.PINK_DEAD);
+    }
+
     setJellyfishColor(color) {
+        this.spawnYellowJellyfish(color);
+        this.spawnPurpleJellyfish(color);
+        this.spawnGreenJellyfish(color);
+        this.spawnPinkJellyfish(color);
+    }
+
+    spawnYellowJellyfish(color) {
         if (color === "yellow") {
             this.animate(this.JELLY_YELLOW);
             this.moveUp();
         }
+    }
+
+    spawnPurpleJellyfish(color) {
         if (color === "lila") {
             this.animate(this.JELLY_PURPLE);
             this.moveUp();
         }
+    }
+
+    spawnGreenJellyfish(color) {
         if (color === "green") {
             this.animate(this.JELLY_GREEN);
             this.moveUp();
         }
+    }
+
+    spawnPinkJellyfish(color) {
         if (color === "pink") {
             this.animate(this.JELLY_PINK);
             this.moveUp();
@@ -98,16 +118,24 @@ class Jellyfish extends MovableObject {
 
     animate(arr) {
         setInterval(() => {
-            if (!this.dead) {
-                this.animationPlay(arr);
-                this.checkLevelEnd();
-            }
-            if (this.dead) {
-                this.speed = 1;
-                this.executeDeadAnimation(); 
-             }
+            this.animateWhenAlive(arr);
+            this.animateWhenDead();
 
         }, 200);
+    }
+
+    animateWhenAlive(arr) {
+        if (!this.dead) {
+            this.animationPlay(arr);
+            this.checkLevelEnd();
+        }
+    }
+
+    animateWhenDead() {
+        if (this.dead) {
+            this.speed = 1;
+            this.executeDeadAnimation();
+        }
     }
 
     executeDeadAnimation() {

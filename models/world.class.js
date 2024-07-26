@@ -67,14 +67,15 @@ class World {
         } else {
             this.character.isntHit();
         }
+        this.characterAttackPufferfish(enemy, i);
+    }
+
+    characterAttackPufferfish(enemy, i) {
         if (this.character.isColliding(enemy) && enemy.type === "pufferfish" && this.character.attacking && this.character.attack === "flipper" && !enemy.dead) {
             enemy.dead = true;
             setTimeout(() => {
                 this.level.enemies.splice(i, 1);
             }, 3000);
-        }
-        if (this.character.isColliding(enemy) && enemy.type === "endboss" && enemy.dead) {
-
         }
     }
 
@@ -125,9 +126,18 @@ class World {
     }
 
     executeCollidingThrowableObject(enemy, throwableObject, i, j) {
+        this.checkThrowableObjectRange(enemy, throwableObject, j);
+        this.eliminateJellyfish(enemy, throwableObject, i, j);
+        this.attackEndboss(enemy, throwableObject, j);
+    }
+
+    checkThrowableObjectRange(enemy, throwableObject, j) {
         if (throwableObject.x > throwableObject.startPosition + 500 && !throwableObject.isColliding(enemy)) {
             this.throwableObjects.splice(j, 1);
         }
+    }
+
+    eliminateJellyfish(enemy, throwableObject, i, j) {
         if (throwableObject.isColliding(enemy) && enemy.type === "jellyfish" && !enemy.dead) {
             this.throwableObjects.splice(j, 1);
             enemy.eliminate();
@@ -135,17 +145,24 @@ class World {
                 this.level.enemies.splice(i, 1);
             }, 2000);
         }
+    }
+
+    attackEndboss(enemy, throwableObject, j) {
         let endboss = this.level.enemies[this.level.enemies.length - 1];
         if (throwableObject.isColliding(enemy) && enemy.type === "endboss" && throwableObject.type === "poison") {
-            if (this.throwableObjects[j].hasHit === 1) {
-                endboss.energy -= 34;
-                this.throwableObjects[j].hasHit += 1;
-            } else if (this.throwableObjects[j].hasHit > 1) {
-                endboss.status = "hurt";
-                this.throwableObjects[j].hasHit += 1;
-                if (this.throwableObjects[j].hasHit > 15) {
-                    endboss.status = "idle";
-                }
+            this.poisonHitOnlyOnce(endboss, j);
+        }
+    }
+
+    poisonHitOnlyOnce(endboss, j) {
+        if (this.throwableObjects[j].hasHit === 1) {
+            endboss.energy -= 34;
+            this.throwableObjects[j].hasHit += 1;
+        } else if (this.throwableObjects[j].hasHit > 1) {
+            endboss.status = "hurt";
+            this.throwableObjects[j].hasHit += 1;
+            if (this.throwableObjects[j].hasHit > 15) {
+                endboss.status = "idle";
             }
         }
     }

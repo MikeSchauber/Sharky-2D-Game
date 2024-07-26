@@ -79,5 +79,4 @@ class Bar extends MovableObject {
             this.x = 180;
         }
     }
-
 }
