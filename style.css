@@ -79,6 +79,60 @@ menu {
     border-radius: 10px;
 }
 
+.victory-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.664);
+    background-image: url("img/6.Botones/Try again/Mesa de trabajo 1.png");
+    background-size: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    border-radius: 10px;
+}
+
+.tryagain {
+    height: 55px;
+    width: auto;
+    position: absolute;
+    top: 320px;
+    left: 240px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.tryagain:hover {
+    box-shadow: 0px 0px 5px 3px rgba(161, 161, 161, 0.589);
+    transform: scale(1.01);
+}
+
+.gameover-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.767);
+    background-size: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    border-radius: 10px;
+}
+
+.gameover-title {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    filter: drop-shadow(0px 0px 2px white);
+}
+
 .start:hover {
     box-shadow: 0px 0px 5px 3px rgba(161, 161, 161, 0.589);
     transform: scale(1.01);

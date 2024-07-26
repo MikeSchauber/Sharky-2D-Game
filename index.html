@@ -29,11 +29,11 @@
 
 <body onload="init()">
 
-<img class="rotate-device" src="" alt="">
+    <img class="rotate-device" src="" alt="">
 
-<div class="mobile-reminder">
+    <div class="mobile-reminder">
 
-</div>
+    </div>
 
     <div id="container">
         <h1>Sharky</h1>
@@ -82,6 +82,13 @@
         </div>
         <div class="loading-screen transition" id="loadingScreen" style="opacity: 0; display: none;">
             <p>Game is loading...</p>
+        </div>
+        <div class="victory-screen transition" id="victory" style="opacity: 0; display: none;">
+            <img cl onclick="initGame()" class="tryagain transition" src="img/6.Botones/Try again/Recurso 17.png" alt="">
+        </div>
+        <div class="gameover-screen transition" id="gameoverScreen" style="opacity: 0; display: none;">
+            <img class="gameover-title" src="img/6.Botones/Tittles/Game Over/Recurso 13.png" alt="">
+            <img onclick="initGame()" class="tryagain transition" src="img/6.Botones/Try again/Recurso 17.png" alt="">
         </div>
     </div>
 </body>

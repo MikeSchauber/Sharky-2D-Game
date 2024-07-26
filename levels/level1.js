@@ -69,6 +69,7 @@ async function initLevel() {
             new Coin(3000, 180),
         ],
         [
+            new Poison(-450, 335),
             new Poison(500, 135),
             new Poison(1250, 300),
             new Poison(1750, 150),
@@ -76,5 +77,5 @@ async function initLevel() {
             new Poison(2750, 250),
         ],
         level1Ending,
-    );    
+    );
 }

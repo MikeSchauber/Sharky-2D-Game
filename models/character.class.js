@@ -47,6 +47,7 @@ class Character extends CharacterImages {
                 this.characterHitAnimation();
             } else {
                 this.deadAnimation();
+                gameover();
             }
         }, 1000 / 8);
     }
@@ -231,7 +232,7 @@ class Character extends CharacterImages {
             this.transitionAnimation(this.IMAGES_DEAD_ELECTRO, this.IMAGES_DEAD_ELECTRO[9]);
             this.world.musicSettings.electrodeath_sound.play();
             setTimeout(() => {
-                this.world.electrodeath_sound.volume = 0;
+                this.world.musicSettings.electrodeath_sound.volume = 0;
             }, 1500);
         }
         if (this.damagedBy === "poison") {

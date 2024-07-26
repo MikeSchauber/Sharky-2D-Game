@@ -40,11 +40,19 @@ function hideMenuButtons() {
     document.getElementById('hud').style.display = '';
     document.getElementById('sound').style.display = '';
     document.querySelector("h1").style.display = 'none';
+    document.getElementById('gameoverScreen').style.opacity = 0;
+    document.getElementById('gameoverScreen').style.display = 'none';
+    document.getElementById('victory').style.opacity = 0;
+    document.getElementById('victory').style.display = 'none';
+
 }
 
 function clearAllIntervals() {
-    for (let i = 1; i < 9999; i++) window.clearInterval(i);
-    for (let i = 1; i < 999999; i++) window.clearTimeout(i);
+    let highestId = window.setInterval(() => {}, 1);
+    for (let i = 0; i <= highestId; i++) {
+        window.clearInterval(i);
+        window.clearTimeout(i);
+    }
 }
 
 function enterFullscreen(element) {
@@ -102,7 +110,17 @@ function toggleVolume() {
 }
 
 function victory() {
-    document.getElementById("container").backgroundImage = "img/6.Botones/Tittles/You win/Mesa de trabajo 1.png"
+    clearAllIntervals();
+    document.getElementById("victory").style.display = "";
+    document.getElementById("victory").style.opacity = 1;
+}
+
+function gameover() {
+    document.getElementById("gameoverScreen").style.display = "";
+    document.getElementById("gameoverScreen").style.opacity = 1;
+    setTimeout(() => {
+        clearAllIntervals();
+    }, 2000);
 }
 
 document.addEventListener('keydown', (e) => {
