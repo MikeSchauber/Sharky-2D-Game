@@ -12,8 +12,14 @@ async function init() {
 
 async function initGame() {
     canvas = document.getElementById('canvas');
+    hideMenuButtons();
+    // startLoadingscreen();
     await initLevel();
     world = new World(canvas, keyboard);
+    // stopLoadingscreen();
+}
+
+function hideMenuButtons() {
     document.getElementById('start').style.display = 'none';
     document.getElementById('hud').style.display = '';
     document.getElementById('sound').style.display = '';
@@ -150,7 +156,7 @@ function startTouchEventListener() {
         e.preventDefault();
         keyboard.THREE = true;
     });
-    
+
     document.getElementById("btnLeft").addEventListener("touchend", (e) => {
         e.preventDefault();
         keyboard.LEFT = false;
