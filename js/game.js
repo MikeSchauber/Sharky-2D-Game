@@ -1,5 +1,6 @@
 let canvas;
 let world;
+let worldMusic;
 let keyboard = new Keyboard();
 let fullscreen = false;
 let info = false;
@@ -13,6 +14,7 @@ async function initGame() {
     canvas = document.getElementById('canvas');
     await initLevel();
     world = new World(canvas, keyboard);
+    world.setWorldMusic(0,0);
     document.getElementById('start').style.display = 'none';
     document.getElementById('hud').style.display = '';
     document.getElementById('sound').style.display = '';

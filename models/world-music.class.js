@@ -1,8 +1,6 @@
 class WorldMusic {
     musicVolume = 0.7;
     effectVolume = 0.5;
-    ambient_sound;
-    ambientMusic
     coin_sound;
     poison_collect_sound;
     poison_bubbleshot_sound;
@@ -25,7 +23,14 @@ class WorldMusic {
 
     constructor() {
         this.setSounds();
-        this.setEffectVolume();
+        if (this.musicVolume >= 0 && this.effectVolume >= 0) {
+            this.setEffectVolume();
+        }
+    }
+
+    setWorldMusic(m, e) {
+        this.musicVolume = m;
+        this.effectVolume = e;
     }
 
     setSounds() {
