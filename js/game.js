@@ -16,6 +16,7 @@ async function initGame() {
     document.getElementById('start').style.display = 'none';
     document.getElementById('hud').style.display = '';
     document.getElementById('sound').style.display = '';
+    document.querySelector("h1").style.display = 'none';
 }
 
 function clearAllIntervals() {
@@ -44,9 +45,11 @@ function toggleFullscreen() {
     let screen = document.getElementById("container");
     if (!fullscreen) {
         enterFullscreen(screen);
+        document.getElementById("fullscreen").src = "img/Menu/fullscreen-exit.png";
         fullscreen = true;
     } else if (fullscreen) {
         exitFullscreen();
+        document.getElementById("fullscreen").src = "img/Menu/fullscreen.png";
         fullscreen = false;
     }
 }
@@ -76,6 +79,10 @@ function toggleVolume() {
     }
     console.log(world.musicVolume);
     console.log(volume);
+}
+
+function victory() {
+    document.getElementById("container").backgroundImage = "img/6.Botones/Tittles/You win/Mesa de trabajo 1.png"
 }
 
 document.addEventListener('keydown', (e) => {

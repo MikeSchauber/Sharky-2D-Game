@@ -32,7 +32,6 @@ class MovableObject extends DrawableObject {
         return this.y < this.downEnd;
     }
 
-
     drawBorder(ctx) {
         if (this instanceof Character || this instanceof Jellyfish || this instanceof Pufferfish || this instanceof Endboss || this instanceof Poison || this instanceof Coin || this instanceof ThrowableObject) {
             if (this.offset) {

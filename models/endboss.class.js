@@ -132,7 +132,7 @@ class Endboss extends MovableObject {
                 this.dead = true;
                 this.y += this.speed;
                 this.transitionAnimation(this.IMAGES_FINAL_DEAD, this.IMAGES_FINAL_DEAD[5]);
-                // this.gameover();
+                victory();
             }
         }, 1000 / 8);
     }
