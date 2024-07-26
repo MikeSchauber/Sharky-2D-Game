@@ -65,6 +65,20 @@ menu {
     margin-right: 10%;
 }
 
+.loading-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    border-radius: 10px;
+}
+
 .start:hover {
     box-shadow: 0px 0px 5px 3px rgba(161, 161, 161, 0.589);
     transform: scale(1.01);
@@ -97,6 +111,7 @@ canvas {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    font-size: 33px;
 }
 
 .info {
@@ -215,37 +230,30 @@ button {
     }
 }
 
-@media only screen and (orientation:landscape) and (max-width: 480px) {
+@media only screen and (max-width: 480px) {
     canvas {
         height: 100vh;
     }
-
-    @media screen and (orientation:portrait) {
-        .rotate-device {
-            display: flex;
-        }
+    .rotate-device {
+        display: none;
     }
-    
-    @media screen and (orientation:landscape) {
-        .rotate-device {
-            display: none;
-        }
+}
+
+@media only screen and (orientation:landscape) and (max-width: 480px) {
+    .rotate-device {
+        display: flex;
     }
 }
 
 
 
 @media (max-width: 680px) {
-    #container {
-        margin-top: 0;
+    #hud {
+        display: flex;
     }
 
     h1 {
         display: none;
-    }
-
-    #hud {
-        display: flex;
     }
 
     #fullscreen {

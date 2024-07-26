@@ -11,12 +11,28 @@ async function init() {
 };
 
 async function initGame() {
+    startLoadingscreen();
     canvas = document.getElementById('canvas');
     hideMenuButtons();
-    // startLoadingscreen();
     await initLevel();
     world = new World(canvas, keyboard);
-    // stopLoadingscreen();
+    setTimeout(function () {
+        stopLoadingscreen()
+        world.musicSettings.playBackgroundMusic();
+    }, 1000);
+}
+
+function startLoadingscreen() {
+    document.getElementById('loadingScreen').style.display = "";
+    document.getElementById('loadingScreen').style.opacity = 1;
+}
+
+function stopLoadingscreen() {
+    document.getElementById('loadingScreen').style.opacity = 0;
+    setTimeout(() => {
+        document.getElementById('loadingScreen').style.display = "none";
+    }, 150);
+
 }
 
 function hideMenuButtons() {
@@ -28,6 +44,7 @@ function hideMenuButtons() {
 
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
+    for (let i = 1; i < 999999; i++) window.clearTimeout(i);
 }
 
 function enterFullscreen(element) {

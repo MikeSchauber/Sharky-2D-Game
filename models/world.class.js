@@ -14,6 +14,7 @@ class World {
     canvas;
     keyboard;
     camera_x = 0;
+    loaded = false;
     musicSettings = new WorldMusic(0.7, 0.5);
 
     constructor(canvas, keyboard) {
@@ -25,7 +26,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        this.musicSettings.playBackgroundMusic();
+        this.loaded = true;
     }
 
     run() {

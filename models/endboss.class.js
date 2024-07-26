@@ -122,15 +122,15 @@ class Endboss extends MovableObject {
                 }
             } else {
                 this.world.musicSettings.boss_music.pause();
-                if (this.world.musicloop) {
+                if (this.world.musicSettings.musicloop) {
                     this.world.musicSettings.win_sound.play();
                 }
                 setTimeout(() => {
-                    this.world.musicloop = false;
+                    this.world.musicSettings.musicloop = false;
                 }, 6000);
                 this.status = "dead";
                 this.dead = true;
-                this.y += this.speed;
+                this.y += this.speed * 3;
                 this.transitionAnimation(this.IMAGES_FINAL_DEAD, this.IMAGES_FINAL_DEAD[5]);
                 victory();
             }

@@ -76,7 +76,7 @@ class MovableObject extends DrawableObject {
 
     hit() {
         if (this.energy > 0) {
-            this.energy -= 1;
+            this.energy -= 2;
         }
         this.lastHit = new Date().getTime();
         world.bars[0].setLifeInStatusbar(world, this.energy);
@@ -89,7 +89,7 @@ class MovableObject extends DrawableObject {
     isntHit() {
         if (this.energy <= 99.9) {
             if (this.energy > 0.1) {
-                this.energy += 0.005;
+                this.energy += 0.0025;
             } else {
                 this.energy = 0;
             }
