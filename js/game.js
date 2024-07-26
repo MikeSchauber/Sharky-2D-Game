@@ -1,15 +1,27 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let intervalIds = [];
+let intervalIndex = 0;
 
 async function init() {
+    await initGame()
+};
+
+async function initGame() {
     canvas = document.getElementById('canvas');
     await initLevel();
     world = new World(canvas, keyboard);
-};
+}
 
-function clearAllIntervals() {
-    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+function pauseGame() {
+    intervalIds.forEach(clearInterval);
+}
+
+
+function setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    intervalIds.push(id);
 }
 
 document.addEventListener('keydown', (e) => {

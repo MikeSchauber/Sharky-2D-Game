@@ -1,7 +1,7 @@
 class WorldMusic {
 
-    musicVolume = 0.7;
-    effectVolume = 0.5;
+    musicVolume = 0.0;
+    effectVolume = 0.0;
     ambient_sound;
     ambientMusic
     coin_sound;
@@ -51,12 +51,13 @@ class WorldMusic {
     }
 
     setEffectVolume() {
-        this.boss_music.volume = this.musicVolume -0.2;
+        this.boss_music.volume = this.musicVolume;
         this.coin_sound.volume = this.effectVolume;
         this.walking_sound.volume = this.effectVolume;
         this.electro_hitsound.volume = this.effectVolume;
         this.bubble_shot.volume = this.effectVolume;
         this.poison_bubbleshot_sound.volume = this.effectVolume;
+        this.poison_collect_sound.volume = this.effectVolume;
         this.ouch_sound.volume = this.effectVolume;
         this.electrodeath_sound.volume = this.effectVolume;
         this.snoring_sound.volume = this.effectVolume;

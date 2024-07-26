@@ -223,7 +223,7 @@ class Character extends CharacterImages {
         this.timeoutStarted = true;
         this.timeoutId = setTimeout(() => {
             this.idleTimer = true;
-        }, 7000);
+        }, 15000);
     }
 
     deadAnimation() {
