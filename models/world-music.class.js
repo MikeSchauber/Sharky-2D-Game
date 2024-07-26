@@ -1,7 +1,6 @@
 class WorldMusic {
-
-    musicVolume = 0.0;
-    effectVolume = 0.0;
+    musicVolume = 0.7;
+    effectVolume = 0.5;
     ambient_sound;
     ambientMusic
     coin_sound;

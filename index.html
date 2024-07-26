@@ -32,39 +32,50 @@
     <h1>Sharky</h1>
 
     <div id="container">
+        <div class="info">
+            <img id="sound" onclick="toggleVolume()" src="img/Menu/sound-on.png" alt="" style="display: none;">
+            <img id="info" onclick="toggleInfo()" src="img/Menu/info.png" alt="">
+            <img id="fullscreen" onclick="toggleFullscreen()" src="img/Menu/fullscreen.png" alt="">
+        </div>
+
+        <div class="help" id="help" style="display: none;" onclick="toggleInfo()">
+            <p>Swim: Left, Right and Space</p>
+            <p>Key 1: Slap</p>
+            <p>Key 2: Bubble</p>
+            <p>Key 3: Special</p>
+        </div>
         <canvas id="canvas" width="720" height="480"></canvas>
+        <menu>
+            <img onclick="initGame()" id="start" class="start transition" src="img/6.Botones/Start/2.png" alt="">
+        </menu>
         <div id="hud" class="hud" style="display: none;">
             <div class="panel">
                 <div class="panel-wrapper-left">
-                    <button id="btnLeft">Left</button>
-                    <button id="btnRight">Right</button>
+                    <button id="btnLeft"><img class="arrow" src="img/Menu/left.png" alt=""></button>
+                    <button id="btnRight"><img class="arrow" src="img/Menu/right.png" alt=""></button>
                 </div>
             </div>
             <div class="panel">
                 <div class="panel-wrapper-right">
                     <div>
-                        <button id="btnOne">Slap</button>
-                        <button id="btnTwo">Bubble</button>
-                        <button id="btnThree">Special</button>
+                        <button id="btnOne">
+                            <img class="fin-slap" src="img/1.Sharkie/4.Attack/Fin slap/5.png" alt="">
+                        </button>
+                        <button id="btnTwo">
+                            <img class="bubble-key" src="img/1.Sharkie/4.Attack/Bubble trap/Bubble.png" alt="">
+                        </button>
+                        <button id="btnThree">
+                            <img class="bubble-key"
+                                src="img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png" alt="">
+                        </button>
                     </div>
                     <div>
-                        <button id="btnUp">Up</button>
+                        <button id="btnUp"><img class="arrow" src="img/Menu/up.png" alt=""></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-
-
-
-    <div class="help">
-        <p>Swim: Left, Right and Space</p>
-        <p>Key 1: Slap</p>
-        <p>Key 2: Bubble</p>
-        <p>Key 3: Special</p>
-    </div>
-
 </body>
 
 </html>

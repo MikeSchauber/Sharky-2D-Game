@@ -1,27 +1,81 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let intervalIds = [];
-let intervalIndex = 0;
+let fullscreen = false;
+let info = false;
+let volume = true;
 
 async function init() {
-    await initGame()
+
 };
 
 async function initGame() {
     canvas = document.getElementById('canvas');
     await initLevel();
     world = new World(canvas, keyboard);
+    document.getElementById('start').style.display = 'none';
+    document.getElementById('hud').style.display = '';
+    document.getElementById('sound').style.display = '';
 }
 
-function pauseGame() {
-    intervalIds.forEach(clearInterval);
+function clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
+function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+        element.msRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {  // iOS Safari
+        element.webkitRequestFullscreen();
+    }
+}
 
-function setStoppableInterval(fn, time) {
-    let id = setInterval(fn, time);
-    intervalIds.push(id);
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
+}
+
+function toggleFullscreen() {
+    let screen = document.getElementById("container");
+    if (!fullscreen) {
+        enterFullscreen(screen);
+        fullscreen = true;
+    } else if (fullscreen) {
+        exitFullscreen();
+        fullscreen = false;
+    }
+}
+
+function toggleInfo() {
+    if (info) {
+        document.getElementById("help").style.display = "none";
+        info = false;
+    } else if (!info) {
+        document.getElementById("help").style.display = "";
+        info = true;
+    }
+}
+
+function toggleVolume() {
+
+    if (volume) {
+        document.getElementById("sound").src = "img/Menu/sound-off.png"
+        world.musicVolume = 0;
+        world.effectVolume = 0;
+        volume = false;
+    } else if (!volume) {
+        document.getElementById("sound").src = "img/Menu/sound-on.png"
+        world.musicVolume = 0.7;
+        world.effectVolume = 0.5;
+        volume = true;
+    }
+    console.log(world.musicVolume);
+    console.log(volume);
 }
 
 document.addEventListener('keydown', (e) => {

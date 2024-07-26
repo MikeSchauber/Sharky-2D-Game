@@ -3,6 +3,14 @@
     src: url("./fonts/LuckiestGuy-Regular.ttf");
 }
 
+.transition {
+    transition: all 150ms ease-in-out;
+}
+
+button {
+    touch-action: manipulation;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -31,6 +39,31 @@ p {
     margin: 0;
 }
 
+menu {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding-inline-start: 0;
+    margin-right: 150px;
+}
+
+.start {
+    height: 55px;
+    width: auto;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-top: 25%;
+    margin-right: 10%;
+}
+
+.start:hover {
+    box-shadow: 0px 0px 5px 3px rgba(161, 161, 161, 0.589);
+    transform: scale(1.01);
+}
+
 .panel {
     display: none;
 }
@@ -54,17 +87,116 @@ canvas {
 }
 
 .help {
-    margin-top: 16px;
     color: rgba(255, 255, 255, 0.781);
-    background: linear-gradient(90deg, #4690a1b0 100%, #5dbed4b0 0%);
+    background: linear-gradient(90deg, #4690a1b0 100%, #5dbed4da 0%);
     border-radius: 10px;
-    padding: 10px;
     transition: all 200ms ease-in-out;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 101;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info {
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    top: 0;
+    gap: 5px;
+    margin-right: 20px;
+    margin-top: 10px;
+    z-index: 100;
+}
+
+.info img {
+    height: 40px;
+    width: 40px;
     cursor: pointer;
 }
 
-.help:hover {
-    box-shadow: 3px 3px 7px #1d246480, -3px -3px 5px #0000001e;
+.fin-slap {
+    height: 70px;
+    width: auto;
+    position: relative;
+    top: -8px;
+    left: -2px;
+}
+
+.bubble-key {
+    height: 35px;
+    width: auto;
+}
+
+.arrow {
+    height: 50px;
+    width: auto;
+    filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.712));
+}
+
+#hud {
+    display: none !important;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.panel {
+    display: flex;
+}
+
+.panel-wrapper-left,
+.panel-wrapper-right div {
+    display: flex;
+    justify-content: center;
+}
+
+.panel-wrapper-right {
+    position: relative;
+    right: -10px;
+}
+
+button {
+    height: 55px;
+    width: 55px;
+    border-radius: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(127, 255, 212, 0.87);
+}
+
+#btnOne {
+    position: relative;
+    top: 40px;
+}
+
+#btnTwo {
+    position: relative;
+    left: -10px;
+    top: -2px;
+}
+
+#btnThree {
+    position: relative;
+    top: -40px;
+    left: -16px;
+}
+
+#btnUp {
+    position: relative;
+    right: -35px;
+    top: -10px;
+    transform: scale(1.2);
 }
 
 @media only screen and (max-width: 720px) {
@@ -73,48 +205,22 @@ canvas {
     }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 680px) {
     canvas {
         height: 100vh;
     }
 }
 
 @media (max-width: 680px) {
-
-    #canvas {
-        display: block;
-        margin: 0 auto;
-        background-color: black;
+    h1 {
+        display: none;
     }
 
     #hud {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        display: flex !important;
     }
 
-    .panel {
-        display: flex;
-    }
-
-    .panel-wrapper-left,
-    .panel-wrapper-right div {
-        display: flex;
-        justify-content: center;
-    }
-
-    button {
-        height: 55px;
-        width: 55px;
-        border-radius: 200px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: rgba(127, 255, 212, 0.87);
+    #fullscreen {
+        display: none;
     }
 }
