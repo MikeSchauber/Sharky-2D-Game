@@ -13,18 +13,19 @@ async function init() {
     startTouchEventListener();
 };
 
-async function initGame() {
+async function initGame(tryagain) {
     hideMenuButtons();
-    startLoadingscreen();
+    startLoadingscreen(tryagain);
     canvas = document.getElementById('canvas');
     await initLevel();
     world = new World(canvas, keyboard);
     stopLoadingscreen()
 }
 
-function startLoadingscreen() {
-    document.getElementById('gameoverScreen').classList.add("d-none");
-    document.getElementById('victory').classList.add("d-none");
+function startLoadingscreen(tryagain) {
+    if (tryagain !== undefined) {
+        document.getElementById(tryagain).classList.add("d-none");
+    }
     document.getElementById('loadingScreen').style.display = "";
     document.getElementById('loadingScreen').style.opacity = 1;
 }
@@ -110,11 +111,10 @@ function victory() {
 }
 
 function gameover() {
-    let clearAllTo = setTimeout(() => {
-        document.getElementById("gameoverScreen").classList.remove("d-none");
+    setTimeout(() => {
+        document.getElementById("gameover").classList.remove("d-none");
         clearAllIntervals();
     }, 1500);
-    timeoutIds.push(clearAllTo);
 }
 
 document.addEventListener('keydown', (e) => {

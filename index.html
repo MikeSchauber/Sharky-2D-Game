@@ -29,10 +29,8 @@
 
 <body onload="init()">
 
-    <img class="rotate-device" src="" alt="">
-
-    <div class="mobile-reminder">
-
+    <div class="rotate-device">
+        <p>Please Rotate your Device</p>
     </div>
 
     <div id="container">
@@ -80,15 +78,18 @@
                 </div>
             </div>
         </div>
+
         <div class="loading-screen transition" id="loadingScreen" style="opacity: 0; display: none;">
             <p>Game is loading...</p>
         </div>
+
         <div class="victory-screen transition d-none" id="victory">
-            <img cl onclick="initGame()" class="tryagain transition" src="img/6.Botones/Try again/Recurso 17.png" alt="">
+            <img cl onclick="initGame('victory')" class="tryagain transition" src="img/6.Botones/Try again/Recurso 17.png" alt="">
         </div>
-        <div class="gameover-screen transition d-none" id="gameoverScreen">
+
+        <div class="gameover-screen transition d-none" id="gameover">
             <img class="gameover-title" src="img/6.Botones/Tittles/Game Over/Recurso 13.png" alt="">
-            <img onclick="initGame()" class="tryagain transition" src="img/6.Botones/Try again/Recurso 17.png" alt="">
+            <img onclick="initGame('gameover')" class="tryagain transition" src="img/6.Botones/Try again/Recurso 17.png" alt="">
         </div>
     </div>
 </body>
