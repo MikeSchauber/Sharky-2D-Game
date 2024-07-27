@@ -3,6 +3,10 @@
     src: url("./fonts/LuckiestGuy-Regular.ttf");
 }
 
+.d-none {
+    display: none !important;
+}
+
 .transition {
     transition: all 150ms ease-in-out;
 }

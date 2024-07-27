@@ -2,6 +2,7 @@ let canvas;
 let world;
 let worldMusic;
 let keyboard = new Keyboard();
+indervalIds = [];
 let fullscreen = false;
 let info = false;
 let volume = true;
@@ -11,28 +12,29 @@ async function init() {
 };
 
 async function initGame() {
-    startLoadingscreen();
     canvas = document.getElementById('canvas');
     hideMenuButtons();
+    startLoadingscreen();
     await initLevel();
     world = new World(canvas, keyboard);
-    setTimeout(function () {
-        stopLoadingscreen()
-        world.musicSettings.playBackgroundMusic();
-    }, 1000);
+    stopLoadingscreen()
 }
 
 function startLoadingscreen() {
+    document.getElementById('gameoverScreen').classList.add("d-none");
+    document.getElementById('victory').classList.add("d-none");
     document.getElementById('loadingScreen').style.display = "";
     document.getElementById('loadingScreen').style.opacity = 1;
 }
 
 function stopLoadingscreen() {
-    document.getElementById('loadingScreen').style.opacity = 0;
-    setTimeout(() => {
-        document.getElementById('loadingScreen').style.display = "none";
-    }, 150);
-
+    setTimeout(function () {
+        document.getElementById('loadingScreen').style.opacity = 0;
+        setTimeout(() => {
+            document.getElementById('loadingScreen').style.display = "none";
+        }, 150);
+        world.musicSettings.playBackgroundMusic();
+    }, 1000);
 }
 
 function hideMenuButtons() {
@@ -40,18 +42,14 @@ function hideMenuButtons() {
     document.getElementById('hud').style.display = '';
     document.getElementById('sound').style.display = '';
     document.querySelector("h1").style.display = 'none';
-    document.getElementById('gameoverScreen').style.opacity = 0;
-    document.getElementById('gameoverScreen').style.display = 'none';
-    document.getElementById('victory').style.opacity = 0;
-    document.getElementById('victory').style.display = 'none';
-
 }
 
 function clearAllIntervals() {
-    let highestId = window.setInterval(() => {}, 1);
+    let highestId = window.setInterval(() => { }, 1);
     for (let i = 0; i <= highestId; i++) {
         window.clearInterval(i);
         window.clearTimeout(i);
+        window.cancelAnimationFrame(i);
     }
 }
 
@@ -110,19 +108,18 @@ function toggleVolume() {
 }
 
 function victory() {
-    document.getElementById("victory").style.display = "";
-    document.getElementById("victory").style.opacity = 1;
     setTimeout(() => {
+        document.getElementById("victory").classList.remove("d-none");
         clearAllIntervals();
-    }, 6000);
+    }, 1500);
 }
 
 function gameover() {
-    document.getElementById("gameoverScreen").style.display = "";
-    document.getElementById("gameoverScreen").style.opacity = 1;
+
     setTimeout(() => {
+        document.getElementById("gameoverScreen").classList.remove("d-none");
         clearAllIntervals();
-    }, 2000);
+    }, 1500);
 }
 
 document.addEventListener('keydown', (e) => {

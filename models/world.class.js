@@ -15,7 +15,7 @@ class World {
     keyboard;
     camera_x = 0;
     loaded = false;
-    musicSettings = new WorldMusic(0.7, 0.5);
+    musicSettings = new WorldMusic(0.5, 0.7);
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -72,10 +72,12 @@ class World {
 
     characterAttackPufferfish(enemy, i) {
         if (this.character.isColliding(enemy) && enemy.type === "pufferfish" && this.character.attacking && this.character.attack === "flipper" && !enemy.dead) {
-            enemy.dead = true;
-            setTimeout(() => {
-                this.level.enemies.splice(i, 1);
-            }, 3000);
+            enemy.eliminate();
+            if (enemy.dead) {
+                setTimeout(() => {
+                    this.level.enemies.splice(i, 1);
+                }, 2000);
+            }
         }
     }
 

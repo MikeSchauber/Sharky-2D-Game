@@ -54,11 +54,11 @@ class Character extends MovableObject {
         };
         requestAnimationFrame(this.animationFrame);
         setInterval(() => {
-            this.ifCharacterIsAlive();
+            this.characterAnimation();
         }, 1000 / 8);
     }
 
-    ifCharacterIsAlive() {
+    characterAnimation() {
         if (!this.isDead()) {
             this.walkingAnimation();
             this.chooseCorrectAttack();
@@ -315,7 +315,7 @@ class Character extends MovableObject {
 
     swimUp() {
         if (this.speedY < 4) {
-            this.speedY += this.accelerationY;
+            this.speedY += this.accelerationY * 2;
         }
         this.upperDirection = true;
     }
