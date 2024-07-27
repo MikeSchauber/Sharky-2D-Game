@@ -59,7 +59,7 @@ class Pufferfish extends MovableObject {
     }
 
     startAnimationLoop(position) {
-        setInterval(() => {
+        let movementInt = setInterval(() => {
             this.checkMovementEnd(position);
         }, 1000 / 4)
         this.animationInterval = setInterval(() => {
@@ -69,6 +69,8 @@ class Pufferfish extends MovableObject {
                 this.deathAnimation();
             }
         }, 1000 / 10);
+        intervalIds.push(movementInt);
+        intervalIds.push(this.animationInterval);
         this.switchAnimationState();
     }
 
@@ -88,14 +90,16 @@ class Pufferfish extends MovableObject {
     }
 
     switchAnimationState() {
-        setTimeout(() => {
+        let transitionTo = setTimeout(() => {
             this.animationState = 'transition';
         }, 10000);
-        setTimeout(() => {
+        let swimTo = setTimeout(() => {
             clearInterval(this.animationInterval);
             this.animationState = 'swim';
             this.startAnimationLoop();
         }, 20000);
+        timeoutIds.push(transitionTo);
+        timeoutIds.push(swimTo);
     }
 
     offsetNormal() {

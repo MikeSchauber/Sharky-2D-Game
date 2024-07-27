@@ -30,10 +30,11 @@ class World {
     }
 
     run() {
-        setInterval(() => {
+        let runInt = setInterval(() => {
             this.checkCollisions();
             this.checkThrowableObjectsRange();
         }, 50);
+        intervalIds.push(runInt);
     }
 
     checkThrowableObjectsRange() {
@@ -74,9 +75,10 @@ class World {
         if (this.character.isColliding(enemy) && enemy.type === "pufferfish" && this.character.attacking && this.character.attack === "flipper" && !enemy.dead) {
             enemy.eliminate();
             if (enemy.dead) {
-                setTimeout(() => {
+                let pufferFishTo = setTimeout(() => {
                     this.level.enemies.splice(i, 1);
                 }, 2000);
+                timeoutIds.push(pufferFishTo);
             }
         }
     }
@@ -143,9 +145,10 @@ class World {
         if (throwableObject.isColliding(enemy) && enemy.type === "jellyfish" && !enemy.dead) {
             this.throwableObjects.splice(j, 1);
             enemy.eliminate();
-            setTimeout(() => {
+            let jellyFishTo = setTimeout(() => {
                 this.level.enemies.splice(i, 1);
             }, 2000);
+            timeoutIds.push(jellyFishTo);
         }
     }
 

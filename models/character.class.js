@@ -52,10 +52,12 @@ class Character extends MovableObject {
             this.move();
             requestAnimationFrame(this.animationFrame);
         };
-        requestAnimationFrame(this.animationFrame);
-        setInterval(() => {
+        let reqFrame = requestAnimationFrame(this.animationFrame);
+        let characterInt = setInterval(() => {
             this.characterAnimation();
         }, 1000 / 8);
+        intervalIds.push(characterInt);
+        animationFrameIds.push(reqFrame);
     }
 
     characterAnimation() {
@@ -243,6 +245,7 @@ class Character extends MovableObject {
     startIdleTimer() {
         this.timeoutStarted = true;
         this.timeoutId = setTimeout(() => { this.idleTimer = true; }, 15000);
+        timeoutIds.push(this.timeoutId);
     }
 
     deadAnimation() {
@@ -255,9 +258,10 @@ class Character extends MovableObject {
         if (this.damagedBy === "electric") {
             this.transitionAnimation(this.images.IMAGES_DEAD_ELECTRO, this.images.IMAGES_DEAD_ELECTRO[9]);
             this.world.musicSettings.electrodeath_sound.play();
-            setTimeout(() => {
+            let musicDeadTo = setTimeout(() => {
                 this.world.musicSettings.electrodeath_sound.volume = 0;
             }, 1500);
+            timeoutIds.push(musicDeadTo);
         }
     }
 
@@ -272,9 +276,10 @@ class Character extends MovableObject {
         if (this.world.musicloop) {
             this.world.musicSettings.gameover_sound.play();
         }
-        setTimeout(() => {
+        let musicloopTo = setTimeout(() => {
             this.world.musicloop = false;
         }, 5000);
+        timeoutIds.push(musicloopTo);
     }
 
     move() {
@@ -315,7 +320,7 @@ class Character extends MovableObject {
 
     swimUp() {
         if (this.speedY < 4) {
-            this.speedY += this.accelerationY * 2;
+            this.speedY += this.accelerationY * 1.2;
         }
         this.upperDirection = true;
     }

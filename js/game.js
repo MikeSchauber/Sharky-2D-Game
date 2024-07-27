@@ -2,7 +2,9 @@ let canvas;
 let world;
 let worldMusic;
 let keyboard = new Keyboard();
-indervalIds = [];
+let intervalIds = [];
+let timeoutIds = [];
+let animationFrameIds = [];
 let fullscreen = false;
 let info = false;
 let volume = true;
@@ -45,12 +47,7 @@ function hideMenuButtons() {
 }
 
 function clearAllIntervals() {
-    let highestId = window.setInterval(() => { }, 1);
-    for (let i = 0; i <= highestId; i++) {
-        window.clearInterval(i);
-        window.clearTimeout(i);
-        window.cancelAnimationFrame(i);
-    }
+    intervalIds.forEach(clearInterval);
 }
 
 function enterFullscreen(element) {
@@ -113,10 +110,11 @@ function victory() {
 }
 
 function gameover() {
-    setTimeout(() => {
+    let clearAllTo = setTimeout(() => {
         document.getElementById("gameoverScreen").classList.remove("d-none");
         clearAllIntervals();
     }, 1500);
+    timeoutIds.push(clearAllTo);
 }
 
 document.addEventListener('keydown', (e) => {

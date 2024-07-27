@@ -85,13 +85,14 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        let enbossInt = setInterval(() => {
             if (!this.isDead()) {
                 this.animateWhenAlive();
             } else {
                 this.animateWhenDead();
             }
         }, 1000 / 8);
+        intervalIds.push(enbossInt);
     }
 
     animateWhenAlive() {
@@ -169,9 +170,10 @@ class Endboss extends MovableObject {
         if (this.world.musicSettings.musicloop) {
             this.world.musicSettings.win_sound.play();
         }
-        setTimeout(() => {
+        let winningSoundTo = setTimeout(() => {
             this.world.musicSettings.musicloop = false;
         }, 6000);
+        intervalIds.push(winningSoundTo);
     }
 
     actingWhenDead() {

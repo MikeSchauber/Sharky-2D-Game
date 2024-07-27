@@ -17,15 +17,16 @@ class MovableObject extends DrawableObject {
     transitionImage = 0;
 
     applyGraviy() {
-        setInterval(() => {
+        let gravityInt = setInterval(() => {
             if ((this.isAboveGround() || this.speedY > 0)) {
                 this.y -= this.speedY;
-                this.speedY -= this.accelerationY;
+                this.speedY -= this.accelerationY / 1.2;
                 if (this.speedY < -2) {
                     this.speedY = -2;
                 }
             }
         }, 1000 / 60)
+        intervalIds.push(gravityInt);
     }
 
     isAboveGround() {
@@ -122,12 +123,13 @@ class MovableObject extends DrawableObject {
     }
 
     playSpecialSpeed(IMAGE_ARRAY) {
-        setInterval(() => {
+        let specialAnimationInt = setInterval(() => {
             let i = this.currentImage % IMAGE_ARRAY.length;
             let path = IMAGE_ARRAY[i];
             this.img = this.imageCache[path];
             this.currentImage++
         }, 1000 / this.speed);
+        intervalIds.push(specialAnimationInt);
     }
 
     playClassSpeed(IMAGE_ARRAY) {
@@ -166,27 +168,31 @@ class MovableObject extends DrawableObject {
     }
 
     moveLeft() {
-        setInterval(() => {
+        let leftInt = setInterval(() => {
             this.x -= this.speed
-        }, 1000 / this.fps)
+        }, 1000 / this.fps);
+        intervalIds.push(leftInt);
     }
 
     moveRight() {
-        setInterval(() => {
+        let rightInt = setInterval(() => {
             this.x += this.speed
-        }, 1000 / this.fps)
+        }, 1000 / this.fps);
+        intervalIds.push(rightInt);
     }
 
     moveUp() {
-        setInterval(() => {
+        let upInt = setInterval(() => {
             this.y -= this.speed
-        }, 1000 / this.fps)
+        }, 1000 / this.fps);
+        intervalIds.push(upInt)
     }
 
     moveDown() {
-        setInterval(() => {
+        let downInt = setInterval(() => {
             this.y += this.speed
-        }, 1000 / this.fps)
+        }, 1000 / this.fps);
+        intervalIds.push(downInt);
     }
 
 }

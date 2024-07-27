@@ -117,11 +117,12 @@ class Jellyfish extends MovableObject {
     }
 
     animate(arr) {
-        setInterval(() => {
+        let jellyInt = setInterval(() => {
             this.animateWhenAlive(arr);
             this.animateWhenDead();
 
         }, 200);
+        intervalIds.push(jellyInt);
     }
 
     animateWhenAlive(arr) {
