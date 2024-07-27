@@ -108,14 +108,11 @@ function toggleVolume() {
 }
 
 function victory() {
-    setTimeout(() => {
-        document.getElementById("victory").classList.remove("d-none");
-        clearAllIntervals();
-    }, 1500);
+    document.getElementById("victory").classList.remove("d-none");
+    clearAllIntervals();
 }
 
 function gameover() {
-
     setTimeout(() => {
         document.getElementById("gameoverScreen").classList.remove("d-none");
         clearAllIntervals();
