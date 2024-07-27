@@ -73,13 +73,11 @@ class World {
 
     characterAttackPufferfish(enemy, i) {
         if (this.character.isColliding(enemy) && enemy.type === "pufferfish" && this.character.attacking && this.character.attack === "flipper" && !enemy.dead) {
-            enemy.eliminate();
-            if (enemy.dead) {
-                let pufferFishTo = setTimeout(() => {
-                    this.level.enemies.splice(i, 1);
-                }, 2000);
-                timeoutIds.push(pufferFishTo);
-            }
+            enemy.dead = true;
+            enemy.startDeadAnimation();
+        }
+        if (enemy.spliceable) {
+            this.level.enemies.splice(i, 1);
         }
     }
 
@@ -144,13 +142,14 @@ class World {
     eliminateJellyfish(enemy, throwableObject, i, j) {
         if (throwableObject.isColliding(enemy) && enemy.type === "jellyfish" && !enemy.dead) {
             this.throwableObjects.splice(j, 1);
-            enemy.eliminate();
-            let jellyFishTo = setTimeout(() => {
-                this.level.enemies.splice(i, 1);
-            }, 2000);
-            timeoutIds.push(jellyFishTo);
+            enemy.dead = true;
+            enemy.startDeadAnimation();
+        }
+        if (enemy.spliceable) {
+            this.level.enemies.splice(i, 1);
         }
     }
+
 
     attackEndboss(enemy, throwableObject, j) {
         let endboss = this.level.enemies[this.level.enemies.length - 1];

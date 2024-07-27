@@ -34,6 +34,7 @@ class Pufferfish extends MovableObject {
     normal = true;
     animationInterval;
     animationState = 'swim';
+    spliceable = false;
 
     constructor(x, y) {
         super().loadImage("img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png");
@@ -137,5 +138,11 @@ class Pufferfish extends MovableObject {
     swimRight() {
         this.speed = 2 * Math.random() + 0.5;
         this.leftDirection = false;
+    }
+
+    startDeadAnimation() {
+        setTimeout(() => {
+            this.spliceable = true;
+        }, 2000);
     }
 }

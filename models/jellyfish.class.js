@@ -58,6 +58,7 @@ class Jellyfish extends MovableObject {
         "h": -30,
         "w": -18,
     }
+    spliceable = false;
 
     constructor(x, color) {
         super().loadImage("img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png");
@@ -158,5 +159,11 @@ class Jellyfish extends MovableObject {
         if (this.y > 370) {
             this.speed = 0.5 + Math.random() * 1;
         }
+    }
+
+    startDeadAnimation() {
+        setTimeout(() => {
+            this.spliceable = true;
+        }, 2000);
     }
 }
