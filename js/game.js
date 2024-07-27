@@ -14,9 +14,9 @@ async function init() {
 };
 
 async function initGame() {
-    canvas = document.getElementById('canvas');
     hideMenuButtons();
     startLoadingscreen();
+    canvas = document.getElementById('canvas');
     await initLevel();
     world = new World(canvas, keyboard);
     stopLoadingscreen()
