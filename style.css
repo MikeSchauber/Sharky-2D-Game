@@ -180,8 +180,8 @@ canvas {
 }
 
 .help {
-    color: rgba(255, 255, 255, 0.781);
-    background-image: linear-gradient(90deg, #085d70be 100%, #6392b1 50%, #ffffff 0%);
+    color: rgb(255, 255, 255);
+    background-image: linear-gradient(90deg, #1d9ac0be 100%, #3284bb 50%, #ffffff 0%);
     background-size: contain;
     border-radius: 10px;
     transition: all 200ms ease-in-out;
