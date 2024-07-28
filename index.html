@@ -41,16 +41,40 @@
             <img id="fullscreen" onclick="toggleFullscreen()" src="img/Menu/fullscreen.png" alt="">
         </div>
 
-        <div class="help" id="help" style="display: none;" onclick="toggleInfo()">
-            <p>Swim: Left, Right and Space</p>
-            <p>Key 1: Slap</p>
-            <p>Key 2: Bubble</p>
-            <p>Key 3: Special</p>
+        <div class="help transition" id="help" style="display: none; opacity: 0;" onclick="toggleInfo()">
+            <div class="help-cont">
+                <table>
+                    <tr>
+                      <td>Arrow Keys:</td>
+                      <td>Swim Left/Right</td>
+                    </tr>
+                    <tr>
+                      <td>Spacebar (hold):</td>
+                      <td>Swim Up</td>
+                    </tr>
+                    <tr>
+                      <td>Key 1:</td>
+                      <td>Kill Pufferfish with a slap</td>
+                    </tr>
+                    <tr>
+                      <td>Key 2:</td>
+                      <td>Bubbletrap Jellyfish (special<br> works like a normal)</td>
+                    </tr>
+                    <tr>
+                      <td>Key 3:</td>
+                      <td>Special bubble for Endboss</td>
+                    </tr>
+                  </table>
+            </div>
         </div>
         <canvas id="canvas" width="720" height="480"></canvas>
         <menu>
             <img onclick="initGame()" id="start" class="start transition" src="img/6.Botones/Start/2.png" alt="">
         </menu>
+        <div id="impress" class="impress">
+            <a class="transition" href="impressum.html">Impress</a>
+            <a class="transition" href="privacy.html">Privacy policy</a>
+        </div>
         <div id="hud" class="hud" style="display: none;">
             <div class="panel">
                 <div class="panel-wrapper-left">
@@ -84,14 +108,17 @@
         </div>
 
         <div class="victory-screen transition d-none" id="victory">
-            <img cl onclick="initGame('victory')" class="tryagain transition" src="img/6.Botones/Try again/Recurso 17.png" alt="">
+            <img cl onclick="initGame('victory')" class="tryagain transition"
+                src="img/6.Botones/Try again/Recurso 17.png" alt="">
         </div>
 
         <div class="gameover-screen transition d-none" id="gameover">
             <img class="gameover-title" src="img/6.Botones/Tittles/Game Over/Recurso 13.png" alt="">
-            <img onclick="initGame('gameover')" class="tryagain transition" src="img/6.Botones/Try again/Recurso 17.png" alt="">
+            <img onclick="initGame('gameover')" class="tryagain transition" src="img/6.Botones/Try again/Recurso 17.png"
+                alt="">
         </div>
     </div>
+    <footer></footer>
 </body>
 
 </html>

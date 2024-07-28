@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 @font-face {
     font-family: "luckiestGuy";
     src: url("./fonts/LuckiestGuy-Regular.ttf");
@@ -8,7 +12,7 @@
 }
 
 .transition {
-    transition: all 150ms ease-in-out;
+    transition: all 125ms ease-in-out;
 }
 
 #container {
@@ -27,9 +31,11 @@ body {
     align-items: center;
     font-family: "luckiestGuy";
     font-size: 22px;
-    background-image: url("img/Menu/background.png");
+    background: url("img/Menu/background.png") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    background-position: center;
     overflow-x: hidden;
     height: 100vh;
 }
@@ -67,6 +73,23 @@ menu {
     border-radius: 15px;
     margin-top: 40%;
     margin-right: 10%;
+}
+
+.impress {
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+}
+
+.impress a {
+    font-size: 24px;
+    color: white;
+    text-decoration: wavy;
+    margin-right: 50px;
+}
+
+.impress a:hover {
+    filter: drop-shadow(-2px 0px 5px white);
 }
 
 .loading-screen {
@@ -158,7 +181,8 @@ canvas {
 
 .help {
     color: rgba(255, 255, 255, 0.781);
-    background: linear-gradient(90deg, #4690a1d3 100%, #5dbed4d2 0%);
+    background-image: linear-gradient(90deg, #085d70be 100%, #6392b1 50%, #ffffff 0%);
+    background-size: contain;
     border-radius: 10px;
     transition: all 200ms ease-in-out;
     position: absolute;
@@ -169,8 +193,26 @@ canvas {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    font-size: 33px;
+    font-size:22px;
+    cursor: zoom-out;
 }
+
+.help-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.help-cont table {
+    filter: drop-shadow( 2px 2px 2px black);
+}
+
+.help-cont table tr td:first-of-type {
+    padding-right: 40px;
+    display: flex;
+    justify-content: flex-start;
+}
+
 
 .info {
     position: absolute;
@@ -286,28 +328,103 @@ button {
     transform: scale(1.2);
 }
 
+.home {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.575);
+    border-radius: 200px;
+}
+
+.home:hover {
+    filter: drop-shadow(0px 0px 5px white);
+}
+
+.impressum {
+    color: rgb(255, 255, 255);
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.2;
+    overflow-y: hidden;
+}
+
+.impressum-h1 {
+    background-image: linear-gradient(90deg, #4690a1 0%, #5dbed4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(3px 0px 3px rgba(0, 0, 0, 0.671));
+    -webkit-text-stroke: 0.1px rgb(255, 255, 255);
+    font-size: 64px;
+    margin: 15px 0px;
+}
+
+.impressum-cont {
+    padding: 20px;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: scroll;
+}
+
+.impressum-cont a {
+    color: inherit;
+}
+
+.datenschutz {
+    max-width: 900px;
+}
+
+.privacy {
+    padding: 20px;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 15px;
+    overflow-y: scroll;
+    height: 100%;
+    max-width: 1000px;
+    width: 100%;
+}
+
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
     }
 }
 
-@media  (max-width: 1000px) and (orientation: landscape) {
+@media (max-width: 1000px) and (orientation: landscape) {
     canvas {
         width: 100%;
     }
+
     .rotate-device {
         display: none;
     }
+
     #fullscreen {
         display: none;
     }
+
     #hud {
         display: flex;
     }
 }
 
-@media only screen and (max-width: 1000px) and (orientation: portrait) {
+@media only screen and (max-width: 720px) and (orientation: portrait) {
     .rotate-device {
         position: absolute;
         top: 0;
@@ -329,7 +446,18 @@ button {
     }
 
     .start {
-        margin-top: 30%;
+        margin-top: 40%;
         height: 40px;
     }
+    .home {
+        position: absolute;
+        top: 70px;
+        left: 20px;
+        height: 50px;
+    }
+
+    .impressum-h1 {
+        font-size: 35px;
+    }
+    
 }

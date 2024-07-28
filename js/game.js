@@ -24,6 +24,7 @@ async function initGame(tryagain) {
 
 function startLoadingscreen(tryagain) {
     if (tryagain !== undefined) {
+        clearAllIntervals();
         document.getElementById(tryagain).classList.add("d-none");
     }
     document.getElementById('loadingScreen').style.display = "";
@@ -41,6 +42,7 @@ function stopLoadingscreen() {
 }
 
 function hideMenuButtons() {
+    document.getElementById("impress").style.display = "none";
     document.getElementById('start').style.display = 'none';
     document.getElementById('hud').style.display = '';
     document.getElementById('sound').style.display = '';
@@ -84,10 +86,19 @@ function toggleFullscreen() {
 
 function toggleInfo() {
     if (info) {
-        document.getElementById("help").style.display = "none";
+        document.getElementById("help").style.opacity = 0;
+        setTimeout(() => {
+            document.getElementById("help").style.display = "none";
+        }, 125);
+
+
         info = false;
     } else if (!info) {
         document.getElementById("help").style.display = "";
+        setTimeout(() => {
+            document.getElementById("help").style.opacity = 1;
+        }, 125);
+
         info = true;
     }
 }
@@ -107,14 +118,10 @@ function toggleVolume() {
 
 function victory() {
     document.getElementById("victory").classList.remove("d-none");
-    clearAllIntervals();
 }
 
 function gameover() {
-    setTimeout(() => {
-        document.getElementById("gameover").classList.remove("d-none");
-        clearAllIntervals();
-    }, 1500);
+    document.getElementById("gameover").classList.remove("d-none");
 }
 
 document.addEventListener('keydown', (e) => {

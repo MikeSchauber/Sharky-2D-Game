@@ -61,13 +61,13 @@ class Character extends MovableObject {
     }
 
     characterAnimation() {
-        if (!this.isDead()) {
+        if (!this.isDead() && !this.isEndbossDead()) {
             this.walkingAnimation();
             this.chooseCorrectAttack();
             this.startAttackAnimation();
             this.checkPositionLongidle();
             this.characterHitAnimation();
-        } else {
+        } else if (this.isDead()) {
             this.deadAnimation();
             gameover();
         }
@@ -283,11 +283,15 @@ class Character extends MovableObject {
     }
 
     move() {
-        if (!this.isDead()) {
+        if (!this.isDead() && !this.isEndbossDead()) {
             this.swimRight();
             this.swimLeft();
             this.upAndDownPositioning();
         }
+    }
+
+    isEndbossDead() {
+        return this.world.level.enemies[this.world.level.enemies.length - 1].dead;
     }
 
     swimRight() {
