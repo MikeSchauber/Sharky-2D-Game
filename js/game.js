@@ -135,13 +135,13 @@ document.addEventListener('keydown', (e) => {
     if (e.keyCode === 32) {
         keyboard.SPACE = true;
     }
-    if (e.keyCode === 49) {
+    if (e.keyCode === 81) {
         keyboard.ONE = true;
     }
-    if (e.keyCode === 50) {
+    if (e.keyCode === 87) {
         keyboard.TWO = true;
     }
-    if (e.keyCode === 51) {
+    if (e.keyCode === 69) {
         keyboard.THREE = true;
     }
 });
@@ -156,13 +156,13 @@ document.addEventListener('keyup', (e) => {
     if (e.keyCode === 32) {
         keyboard.SPACE = false;
     }
-    if (e.keyCode === 49) {
+    if (e.keyCode === 81) {
         keyboard.ONE = false;
     }
-    if (e.keyCode === 50) {
+    if (e.keyCode === 87) {
         keyboard.TWO = false;
     }
-    if (e.keyCode === 51) {
+    if (e.keyCode === 69) {
         keyboard.THREE = false;
     }
 });

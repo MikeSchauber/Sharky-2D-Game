@@ -20,9 +20,9 @@ class MovableObject extends DrawableObject {
         let gravityInt = setInterval(() => {
             if ((this.isAboveGround() || this.speedY > 0)) {
                 this.y -= this.speedY;
-                this.speedY -= this.accelerationY / 1.2;
-                if (this.speedY < -2) {
-                    this.speedY = -2;
+                this.speedY -= this.accelerationY * 0.8;
+                if (this.speedY < -1.2) {
+                    this.speedY = -1.2;
                 }
             }
         }, 1000 / 60)

@@ -323,8 +323,8 @@ class Character extends MovableObject {
     }
 
     swimUp() {
-        if (this.speedY < 4) {
-            this.speedY += this.accelerationY * 1.2;
+        if (this.speedY < 2) {
+            this.speedY += this.accelerationY * 2;
         }
         this.upperDirection = true;
     }
