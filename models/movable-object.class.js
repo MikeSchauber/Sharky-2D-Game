@@ -21,8 +21,8 @@ class MovableObject extends DrawableObject {
             if ((this.isAboveGround() || this.speedY > 0)) {
                 this.y -= this.speedY;
                 this.speedY -= this.accelerationY * 0.8;
-                if (this.speedY < -1.2) {
-                    this.speedY = -1.2;
+                if (this.speedY < -1) {
+                    this.speedY = -1;
                 }
             }
         }, 1000 / 60)
