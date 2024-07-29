@@ -1,3 +1,8 @@
+/**
+ * Manages the background music and sound effects in the game.
+ * 
+ * @class
+ */
 class WorldMusic {
     musicVolume;
     effectVolume;
@@ -22,28 +27,50 @@ class WorldMusic {
     gameover_sound;
     musicloop = true;
 
+    /**
+     * Creates an instance of WorldMusic.
+     * 
+     * @constructor
+     * @param {number} m - The volume level for music.
+     * @param {number} e - The volume level for sound effects.
+     */
     constructor(m, e) {
         this.volumeSettings(m, e);
         this.setSounds();
     }
 
+    /**
+     * Sets the volume levels for music and sound effects.
+     * 
+     * @param {number} m - The volume level for music.
+     * @param {number} e - The volume level for sound effects.
+     */
     volumeSettings(m, e) {
         this.musicVolume = m;
         this.effectVolume = e;
     }
 
+    /**
+     * Plays the background music and sets it to loop.
+     */
     playBackgroundMusic() {
         this.ambient_sound.loop = true;
         this.ambient_sound.play();
         this.setEffectVolume();
     }
 
+    /**
+     * Pauses the background music and stops it from looping.
+     */
     pauseBackgroundMusic() {
         this.ambient_sound.pause();
         this.ambient_sound.loop = false;
         this.muteEffectVolume();
     }
 
+    /**
+     * Initializes and sets up the sounds used in the game.
+     */
     setSounds() {
         this.ambient_sound = new Audio("audio/ambient.mp3");
         this.coin_sound = new Audio("audio/coin.mp3");
@@ -66,6 +93,9 @@ class WorldMusic {
         this.gameover_sound = new Audio("audio/gameover.mp3");
     }
 
+    /**
+     * Sets the volume for all sound effects and music.
+     */
     setEffectVolume() {
         this.ambient_sound.volume = this.musicVolume;
         this.boss_music.volume = this.musicVolume;
@@ -88,6 +118,9 @@ class WorldMusic {
         this.gameover_sound.volume = this.musicVolume;
     }
 
+    /**
+     * Mutes the volume for all sound effects.
+     */
     muteEffectVolume() {
         this.boss_music.volume = 0;
         this.coin_sound.volume = 0;

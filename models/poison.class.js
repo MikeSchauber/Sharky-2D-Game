@@ -1,3 +1,9 @@
+/**
+ * Represents a poison object in the game that can be collected by the player.
+ * 
+ * @class
+ * @extends MovableObject
+ */
 class Poison extends MovableObject {
     height = 70;
     width = 60;
@@ -7,7 +13,7 @@ class Poison extends MovableObject {
         "y": 32,
         "h": -35,
         "w": -25,
-    }
+    };
     IMAGES_POISON = [
         "img/4. Marcadores/Posión/Animada/1.png",
         "img/4. Marcadores/Posión/Animada/2.png",
@@ -19,6 +25,13 @@ class Poison extends MovableObject {
         "img/4. Marcadores/Posión/Animada/8.png",
     ];
 
+    /**
+     * Creates an instance of Poison.
+     * 
+     * @constructor
+     * @param {number} x - The x-coordinate of the poison object.
+     * @param {number} y - The y-coordinate of the poison object.
+     */
     constructor(x, y) {
         super().loadImage("img/4. Marcadores/Posión/Animada/1.png");
         this.loadImages(this.IMAGES_POISON);
@@ -27,6 +40,9 @@ class Poison extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Animates the poison object, cycling through its images.
+     */
     animate() {
         this.animationPlay(this.IMAGES_POISON, 5);
     }

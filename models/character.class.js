@@ -1,3 +1,9 @@
+/**
+ * Represents the main character in the game.
+ * 
+ * @class
+ * @extends MovableObject
+ */
 class Character extends MovableObject {
     x = 100;
     y = 150;
@@ -27,6 +33,11 @@ class Character extends MovableObject {
     damagedBy;
     hitAble = true;
 
+    /**
+     * Creates an instance of Character.
+     * 
+     * @constructor
+     */
     constructor() {
         super().loadImage("img/1.Sharkie/1.IDLE/1.png");
         this.loadAllImages();
@@ -34,6 +45,9 @@ class Character extends MovableObject {
         this.applyGraviy();
     }
 
+    /**
+     * Loads all images for character animations.
+     */
     loadAllImages() {
         this.loadImages(this.images.IMAGES_SWIM);
         this.loadImages(this.images.IMAGES_IDLE);
@@ -47,6 +61,9 @@ class Character extends MovableObject {
         this.loadImages(this.images.IMAGES_SPECIAL_ATTACK);
     }
 
+    /**
+     * Initiates the character animation loop.
+     */
     animate() {
         this.animationFrame = () => {
             this.move();
@@ -60,6 +77,9 @@ class Character extends MovableObject {
         animationFrameIds.push(reqFrame);
     }
 
+    /**
+     * Controls the character's animations based on its state.
+     */
     characterAnimation() {
         if (!this.isDead() && !this.isEndbossDead()) {
             this.walkingAnimation();
@@ -73,6 +93,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Chooses the correct attack based on user input.
+     */
     chooseCorrectAttack() {
         if (this.world.keyboard.ONE && !this.attacking) {
             this.setFlipperAttack();
@@ -87,6 +110,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Sets the flipper attack mode.
+     */
     setFlipperAttack() {
         this.resetIdleTimer();
         this.attacking = true;
@@ -94,6 +120,11 @@ class Character extends MovableObject {
         this.world.musicSettings.punch_sound.play();
     }
 
+    /**
+     * Checks if flipper attack should cause damage.
+     * 
+     * @param {string} type - The type of object to check for damage.
+     */
     checkForFlipperDamage(type) {
         if (type === "pufferfish" && this.attacking) {
             this.hitAble = false;
@@ -102,18 +133,27 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Sets the bubble attack mode.
+     */
     setBubbleAttack() {
         this.resetIdleTimer();
         this.attacking = true;
         this.attack = "bubble";
     }
 
+    /**
+     * Sets the special attack mode.
+     */
     setSpecialAttack() {
         this.resetIdleTimer();
         this.attacking = true;
         this.attack = "special";
     }
 
+    /**
+     * Starts the appropriate attack animation based on the current attack type.
+     */
     startAttackAnimation() {
         if (this.attacking) {
             if (this.attack === "flipper") {
@@ -128,12 +168,18 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Executes the animation sequence for an attack.
+     * 
+     * @param {string[]} arr - Array of image paths for the animation.
+     * @param {string} [action] - Optional action type for special behaviors.
+     */
     attackAnimation(arr, action) {
         let i = this.attackImage;
         let path = arr[i];
         this.img = this.imageCache[path];
         if (this.attackImage < arr.length) {
-            this.attackImage++
+            this.attackImage++;
         }
         if (this.attackImage === arr.length) {
             this.attacking = false;
@@ -144,6 +190,11 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Handles the bubble shot during the bubble attack.
+     * 
+     * @param {string} action - The action type, specifically "bubble" in this case.
+     */
     bubbleShot(action) {
         if (action === "bubble") {
             this.throwBubble();
@@ -151,6 +202,11 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Handles the special shot during the special attack.
+     * 
+     * @param {string} action - The action type, specifically "special" in this case.
+     */
     specialShot(action) {
         if (action === "special") {
             this.throwSpecial();
@@ -159,8 +215,11 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Throws a bubble during the bubble attack.
+     */
     throwBubble() {
-        let bubble
+        let bubble;
         if (this.leftDirection && !this.isDead()) {
             bubble = new ThrowableObject(this.x, this.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png", "bubble");
         } else {
@@ -169,6 +228,9 @@ class Character extends MovableObject {
         this.world.throwableObjects.push(bubble);
     }
 
+    /**
+     * Throws a special (poison) bubble during the special attack.
+     */
     throwSpecial() {
         let poisonBubble;
         if (this.leftDirection && !this.isDead()) {
@@ -179,11 +241,17 @@ class Character extends MovableObject {
         this.world.throwableObjects.push(poisonBubble);
     }
 
+    /**
+     * Reduces the poison level after using the special attack.
+     */
     checkPoisonDepot() {
         this.poison -= this.world.poisonValue;
         this.world.bars[1].setPercentage(this.world.bars[1].IMAGES_POISON, this.poison);
     }
 
+    /**
+     * Executes the character's hit animation based on the damage type.
+     */
     characterHitAnimation() {
         if (this.isHit()) {
             if (this.damagedBy === "electric") {
@@ -197,6 +265,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Executes the walking animation and associated sound effects.
+     */
     walkingAnimation() {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE) {
             this.walking();
@@ -207,12 +278,18 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Plays the walking animation and sound effects.
+     */
     walking() {
         this.animationPlay(this.images.IMAGES_SWIM);
         this.world.musicSettings.walking_sound.play();
         this.resetIdleTimer();
     }
 
+    /**
+     * Starts the long idle animation.
+     */
     startLongidle() {
         this.animationPlay(this.images.IMAGES_IDLE);
         this.world.musicSettings.walking_sound.pause();
@@ -221,11 +298,17 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Plays the floating animation.
+     */
     floating() {
         this.world.musicSettings.walking_sound.pause();
         this.loadImage(this.images.IMAGES_IDLE[0]);
     }
 
+    /**
+     * Checks and sets the position for the long idle animation.
+     */
     checkPositionLongidle() {
         if (!this.isAboveGround() && this.idleTimer) {
             this.transitionAnimation(this.images.IMAGES_LONG_IDLE, this.images.IMAGES_SLEEP);
@@ -236,24 +319,36 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Resets the idle timer.
+     */
     resetIdleTimer() {
         clearTimeout(this.timeoutId);
         this.idleTimer = false;
         this.timeoutStarted = false;
     }
 
+    /**
+     * Starts the idle timer, triggering the long idle animation if no action is taken.
+     */
     startIdleTimer() {
         this.timeoutStarted = true;
         this.timeoutId = setTimeout(() => { this.idleTimer = true; }, 15000);
         timeoutIds.push(this.timeoutId);
     }
 
+    /**
+     * Plays the death animation and triggers the game over sequence.
+     */
     deadAnimation() {
         this.deadByJelly();
         this.deadByPuffer();
         this.gameOverSound();
     }
 
+    /**
+     * Plays the death animation for electric damage.
+     */
     deadByJelly() {
         if (this.damagedBy === "electric") {
             this.transitionAnimation(this.images.IMAGES_DEAD_ELECTRO, this.images.IMAGES_DEAD_ELECTRO[9]);
@@ -265,12 +360,18 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Plays the death animation for poison damage.
+     */
     deadByPuffer() {
         if (this.damagedBy === "poison") {
             this.transitionAnimation(this.images.IMAGES_DEAD_POISON, this.images.IMAGES_DEAD_POISON[11]);
         }
     }
 
+    /**
+     * Plays the game over sound effects.
+     */
     gameOverSound() {
         this.world.musicSettings.ambient_sound.pause();
         if (this.world.musicloop) {
@@ -282,6 +383,9 @@ class Character extends MovableObject {
         timeoutIds.push(musicloopTo);
     }
 
+    /**
+     * Controls the character's movement.
+     */
     move() {
         if (!this.isDead() && !this.isEndbossDead()) {
             this.swimRight();
@@ -290,10 +394,18 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Checks if the end boss is dead.
+     * 
+     * @returns {boolean} - True if the end boss is dead, false otherwise.
+     */
     isEndbossDead() {
         return this.world.level.enemies[this.world.level.enemies.length - 1].dead;
     }
 
+    /**
+     * Moves the character to the right.
+     */
     swimRight() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.x += this.speed;
@@ -302,6 +414,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Moves the character to the left.
+     */
     swimLeft() {
         if (this.world.keyboard.LEFT && this.x > this.leftEnd) {
             this.x -= this.speed;
@@ -310,6 +425,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Adjusts the character's position vertically.
+     */
     upAndDownPositioning() {
         if (this.world.keyboard.SPACE && this.y > this.upperEnd) {
             this.swimUp();
@@ -322,6 +440,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Makes the character swim up.
+     */
     swimUp() {
         if (this.speedY < 2) {
             this.speedY += this.accelerationY * 2;
@@ -329,15 +450,24 @@ class Character extends MovableObject {
         this.upperDirection = true;
     }
 
+    /**
+     * Sets the character's upper limit position.
+     */
     setUpperEnd() {
-        this.y = this.upperEnd
+        this.y = this.upperEnd;
         this.speedY = 0;
     }
 
+    /**
+     * Stops the character's movement on the ground.
+     */
     layOnGround() {
         this.speedY = 0;
     }
 
+    /**
+     * Adjusts the camera range to the right.
+     */
     setRightCameraRange() {
         if (this.cameraRange < 188 && this.cameraRange >= 0) {
             this.cameraRange += this.speed;
@@ -345,6 +475,9 @@ class Character extends MovableObject {
         this.movingCamera();
     }
 
+    /**
+     * Adjusts the camera range to the left.
+     */
     setLeftCameraRange() {
         if (this.cameraRange <= 188 && this.cameraRange > 0) {
             this.cameraRange -= this.speed;
@@ -352,6 +485,9 @@ class Character extends MovableObject {
         this.movingCamera();
     }
 
+    /**
+     * Updates the camera position based on the character's position.
+     */
     movingCamera() {
         if (this.cameraRange === 0) {
             this.world.camera_x = -this.x + 100;
@@ -359,6 +495,5 @@ class Character extends MovableObject {
         if (this.cameraRange === 188) {
             this.world.camera_x = -this.x + 288;
         }
-
     }
 }

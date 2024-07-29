@@ -9,20 +9,33 @@ let fullscreen = false;
 let info = false;
 let volume = true;
 
+/**
+ * Initializes the application.
+ */
 async function init() {
     startTouchEventListener();
-};
+    load();
+}
 
+/**
+ * Initializes the game.
+ * 
+ * @param {string} tryagain - The ID of the element to hide if the game is being retried.
+ */
 async function initGame(tryagain) {
     hideMenuButtons();
-    // loadLocalStorage();
     startLoadingscreen(tryagain);
     canvas = document.getElementById('canvas');
     await initLevel();
     world = new World(canvas, keyboard);
-    stopLoadingscreen()
+    stopLoadingscreen();
 }
 
+/**
+ * Starts the loading screen.
+ * 
+ * @param {string} tryagain - The ID of the element to hide if the game is being retried.
+ */
 function startLoadingscreen(tryagain) {
     if (tryagain !== undefined) {
         clearAllIntervals();
@@ -32,16 +45,22 @@ function startLoadingscreen(tryagain) {
     document.getElementById('loadingScreen').style.opacity = 1;
 }
 
+/**
+ * Stops the loading screen and starts the background music.
+ */
 function stopLoadingscreen() {
     setTimeout(function () {
         document.getElementById('loadingScreen').style.opacity = 0;
         setTimeout(() => {
             document.getElementById('loadingScreen').style.display = "none";
         }, 150);
-        world.musicSettings.playBackgroundMusic();
+        checkLastVolume();
     }, 1000);
 }
 
+/**
+ * Hides menu buttons.
+ */
 function hideMenuButtons() {
     document.getElementById("impress").style.display = "none";
     document.getElementById('start').style.display = 'none';
@@ -50,10 +69,18 @@ function hideMenuButtons() {
     document.querySelector("h1").style.display = 'none';
 }
 
+/**
+ * Clears all intervals.
+ */
 function clearAllIntervals() {
     intervalIds.forEach(clearInterval);
 }
 
+/**
+ * Enters fullscreen mode for a given element.
+ * 
+ * @param {HTMLElement} element - The element to display in fullscreen.
+ */
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
@@ -64,6 +91,9 @@ function enterFullscreen(element) {
     }
 }
 
+/**
+ * Exits fullscreen mode.
+ */
 function exitFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -72,6 +102,9 @@ function exitFullscreen() {
     }
 }
 
+/**
+ * Toggles fullscreen mode.
+ */
 function toggleFullscreen() {
     let screen = document.getElementById("container");
     if (!fullscreen) {
@@ -85,41 +118,71 @@ function toggleFullscreen() {
     }
 }
 
+/**
+ * Toggles the display of the info/help section.
+ */
 function toggleInfo() {
     if (info) {
         document.getElementById("help").style.opacity = 0;
         setTimeout(() => {
             document.getElementById("help").style.display = "none";
         }, 125);
-
-
         info = false;
     } else if (!info) {
         document.getElementById("help").style.display = "";
         setTimeout(() => {
             document.getElementById("help").style.opacity = 1;
         }, 125);
-
         info = true;
     }
 }
 
-function toggleVolume() {
-    if (volume) {
-        document.getElementById("sound").src = "img/Menu/sound-off.png"
+function checkLastVolume() {
+    if (!volume) {
+        document.getElementById("sound").src = "img/Menu/sound-off.png";
         world.musicSettings.pauseBackgroundMusic();
-        volume = false;
-    } else if (!volume) {
-        document.getElementById("sound").src = "img/Menu/sound-on.png"
+    } else if (volume) {
+        document.getElementById("sound").src = "img/Menu/sound-on.png";
         world.musicSettings.playBackgroundMusic();
-        volume = true;
     }
 }
 
+/**
+ * Toggles the volume between on and off.
+ */
+function toggleVolume() {
+    if (volume) {
+        document.getElementById("sound").src = "img/Menu/sound-off.png";
+        world.musicSettings.pauseBackgroundMusic();
+        volume = false;
+    } else if (!volume) {
+        document.getElementById("sound").src = "img/Menu/sound-on.png";
+        world.musicSettings.playBackgroundMusic();
+        volume = true;
+    }
+    save();
+}
+
+function save() {
+    let volumeAsText = JSON.stringify(volume);
+    localStorage.setItem('volume', volumeAsText);
+}
+
+function load() {
+    let volumeAsText = localStorage.getItem('volume');
+    volume = JSON.parse(volumeAsText);
+}
+
+/**
+ * Displays the victory screen.
+ */
 function victory() {
     document.getElementById("victory").classList.remove("d-none");
 }
 
+/**
+ * Displays the game over screen.
+ */
 function gameover() {
     document.getElementById("gameover").classList.remove("d-none");
 }
@@ -167,6 +230,9 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
+/**
+ * Starts the touch event listeners for the on-screen controls.
+ */
 function startTouchEventListener() {
     document.getElementById("btnLeft").addEventListener("touchstart", (e) => {
         e.preventDefault();
@@ -218,4 +284,3 @@ function startTouchEventListener() {
         keyboard.THREE = false;
     });
 }
-

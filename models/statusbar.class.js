@@ -1,3 +1,9 @@
+/**
+ * Represents a status bar in the game, displaying information such as life, coins, or poison levels.
+ * 
+ * @class
+ * @extends MovableObject
+ */
 class Bar extends MovableObject {
     width = 170;
     height = 50;
@@ -28,6 +34,13 @@ class Bar extends MovableObject {
     world;
     percentage = 100;
 
+    /**
+     * Creates an instance of Bar.
+     * 
+     * @constructor
+     * @param {string} bar - The type of the bar, e.g., "coin", "life", or "poison".
+     * @param {number} status - The initial status of the bar.
+     */
     constructor(bar, status) {
         super().getRightBar(bar, status);
         this.loadImages(this.IMAGES_COIN);
@@ -35,16 +48,34 @@ class Bar extends MovableObject {
         this.loadImages(this.IMAGES_POISON);
     }
 
+    /**
+     * Updates the life status bar with the current energy level.
+     * 
+     * @param {Object} world - The game world object.
+     * @param {number} energy - The current energy level of the player.
+     */
     setLifeInStatusbar(world, energy) {
         world.bars[0].setPercentage(world.bars[0].IMAGES_LIFE, energy);
     }
 
+    /**
+     * Sets the image of the bar based on the given percentage.
+     * 
+     * @param {string[]} arr - The array of image paths for the bar.
+     * @param {number} percentage - The percentage value to display.
+     */
     setPercentage(arr, percentage) {
-        this.percentage = percentage; // => 0...5
+        this.percentage = percentage;
         let path = arr[this.mapToRange(percentage)];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * Maps a percentage to an index for the image array.
+     * 
+     * @param {number} percentage - The percentage to map.
+     * @returns {number} The index corresponding to the given percentage.
+     */
     mapToRange(percentage) {
         if (percentage > 100) {
             return 5;
@@ -65,6 +96,12 @@ class Bar extends MovableObject {
         }
     }
 
+    /**
+     * Loads the appropriate image for the bar based on its type and status.
+     * 
+     * @param {string} bar - The type of the bar, e.g., "coin", "life", or "poison".
+     * @param {number} status - The initial status of the bar.
+     */
     getRightBar(bar, status) {
         if (bar === "coin") {
             this.loadImage(this.IMAGES_COIN[status]);

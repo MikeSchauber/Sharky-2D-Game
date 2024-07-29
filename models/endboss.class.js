@@ -1,3 +1,9 @@
+/**
+ * Represents the final boss enemy in the game.
+ * 
+ * @class
+ * @extends MovableObject
+ */
 class Endboss extends MovableObject {
     IMAGES_FLOAT = [
         "img/2.Enemy/3 Final Enemy/2.floating/1.png",
@@ -63,7 +69,12 @@ class Endboss extends MovableObject {
     type = "endboss";
     world;
 
-
+    /**
+     * Creates an instance of Endboss.
+     * 
+     * @constructor
+     * @param {number} levelEnding - The x-coordinate where the level ends.
+     */
     constructor(levelEnding) {
         super().loadImage("img/2.Enemy/3 Final Enemy/2.floating/1.png");
         this.loadAllImages();
@@ -76,6 +87,9 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Loads all necessary images for the boss animations.
+     */
     loadAllImages() {
         this.loadImages(this.IMAGES_FLOAT);
         this.loadImages(this.IMAGES_INTRO);
@@ -84,6 +98,9 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_FINAL_DEAD);
     }
 
+    /**
+     * Handles the boss's animation cycle.
+     */
     animate() {
         let enbossInt = setInterval(() => {
             if (!this.isDead()) {
@@ -95,6 +112,9 @@ class Endboss extends MovableObject {
         intervalIds.push(enbossInt);
     }
 
+    /**
+     * Animates the boss when alive, based on its status.
+     */
     animateWhenAlive() {
         this.actingWhenWait();
         this.prepareForIntro();
@@ -108,12 +128,18 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Sets the boss's position off-screen when waiting.
+     */
     actingWhenWait() {
         if (this.status === "wait") {
             this.y = -500;
         }
     }
 
+    /**
+     * Prepares the boss for the intro animation when the player reaches the end of the level.
+     */
     prepareForIntro() {
         if (this.world.character.x >= this.world.level.level_end_x - (this.width / 2) && !this.entered) {
             this.entered = true;
@@ -121,6 +147,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Animates the boss's intro sequence.
+     */
     actingIntro() {
         if (this.status === "intro") {
             this.world.musicSettings.ambient_sound.pause();
@@ -131,6 +160,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Animates the boss's idle state.
+     */
     actingIdle() {
         if (this.status === "idle") {
             this.animationPlay(this.IMAGES_FLOAT);
@@ -142,6 +174,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Animates the boss's attack state.
+     */
     actingAttack() {
         if (this.status === "attacking") {
             this.endbossTransitionAnimation(this.IMAGES_ATTACK);
@@ -152,6 +187,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Animates the boss's hurt state.
+     */
     actingHurt() {
         if (this.status === "hurt" && !this.isDead()) {
             this.world.musicSettings.boss_hurt_sound.play();
@@ -159,12 +197,18 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Animates the boss's death sequence and triggers the victory sound.
+     */
     animateWhenDead() {
         this.playWinningSound();
         this.actingWhenDead();
         victory();
     }
 
+    /**
+     * Plays the victory sound when the boss is defeated.
+     */
     playWinningSound() {
         this.world.musicSettings.boss_music.pause();
         if (this.world.musicSettings.musicloop) {
@@ -176,6 +220,9 @@ class Endboss extends MovableObject {
         intervalIds.push(winningSoundTo);
     }
 
+    /**
+     * Handles the boss's behavior when dead.
+     */
     actingWhenDead() {
         this.status = "dead";
         this.dead = true;
@@ -183,6 +230,9 @@ class Endboss extends MovableObject {
         this.transitionAnimation(this.IMAGES_FINAL_DEAD, this.IMAGES_FINAL_DEAD[5]);
     }
 
+    /**
+     * Chooses the next action for the boss based on a timer.
+     */
     interval() {
         if (this.index <= 25) {
             this.status = "idle";
@@ -195,6 +245,9 @@ class Endboss extends MovableObject {
         this.index++;
     }
 
+    /**
+     * Randomly chooses whether the boss should attack or idle.
+     */
     chooseAttack() {
         this.chooseStatus = Math.random();
         if (this.chooseStatus > 0.95) {
@@ -204,6 +257,11 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Plays the transition animation for the boss.
+     * 
+     * @param {string[]} arr - An array of image paths for the animation.
+     */
     endbossTransitionAnimation(arr) {
         if (this.currentImage > arr.length) {
             this.currentImage = 0;

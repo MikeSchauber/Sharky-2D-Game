@@ -1,6 +1,9 @@
 let level1;
 const level1Ending = 3600;
 
+/**
+ * Initializes the first level of the game, setting up enemies, background, lights, coins, and poison.
+ */
 async function initLevel() {
     level1 = new Level(
         [

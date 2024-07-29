@@ -1,3 +1,9 @@
+/**
+ * Represents a jellyfish enemy in the game.
+ * 
+ * @class
+ * @extends MovableObject
+ */
 class Jellyfish extends MovableObject {
     width = 80;
     height = 100;
@@ -57,20 +63,30 @@ class Jellyfish extends MovableObject {
         "y": 14,
         "h": -30,
         "w": -18,
-    }
+    };
     spliceable = false;
 
+    /**
+     * Creates an instance of Jellyfish.
+     * 
+     * @constructor
+     * @param {number} x - The x-coordinate of the jellyfish.
+     * @param {string} color - The color of the jellyfish.
+     */
     constructor(x, color) {
         super().loadImage("img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png");
         this.loadAllImages();
         this.color = color;
-        this.x = x
+        this.x = x;
         this.damage = "electric";
         this.type = "jellyfish";
-        this.y = Math.random() * 360
+        this.y = Math.random() * 360;
         this.setJellyfishColor(color);
     }
 
+    /**
+     * Loads all images for the jellyfish animations.
+     */
     loadAllImages() {
         this.loadImages(this.JELLY_PURPLE);
         this.loadImages(this.JELLY_YELLOW);
@@ -82,6 +98,11 @@ class Jellyfish extends MovableObject {
         this.loadImages(this.PINK_DEAD);
     }
 
+    /**
+     * Sets the jellyfish color and animation based on the color.
+     * 
+     * @param {string} color - The color of the jellyfish.
+     */
     setJellyfishColor(color) {
         this.spawnYellowJellyfish(color);
         this.spawnPurpleJellyfish(color);
@@ -89,6 +110,11 @@ class Jellyfish extends MovableObject {
         this.spawnPinkJellyfish(color);
     }
 
+    /**
+     * Animates the yellow jellyfish.
+     * 
+     * @param {string} color - The color of the jellyfish.
+     */
     spawnYellowJellyfish(color) {
         if (color === "yellow") {
             this.animate(this.JELLY_YELLOW);
@@ -96,6 +122,11 @@ class Jellyfish extends MovableObject {
         }
     }
 
+    /**
+     * Animates the purple jellyfish.
+     * 
+     * @param {string} color - The color of the jellyfish.
+     */
     spawnPurpleJellyfish(color) {
         if (color === "lila") {
             this.animate(this.JELLY_PURPLE);
@@ -103,6 +134,11 @@ class Jellyfish extends MovableObject {
         }
     }
 
+    /**
+     * Animates the green jellyfish.
+     * 
+     * @param {string} color - The color of the jellyfish.
+     */
     spawnGreenJellyfish(color) {
         if (color === "green") {
             this.animate(this.JELLY_GREEN);
@@ -110,6 +146,11 @@ class Jellyfish extends MovableObject {
         }
     }
 
+    /**
+     * Animates the pink jellyfish.
+     * 
+     * @param {string} color - The color of the jellyfish.
+     */
     spawnPinkJellyfish(color) {
         if (color === "pink") {
             this.animate(this.JELLY_PINK);
@@ -117,15 +158,24 @@ class Jellyfish extends MovableObject {
         }
     }
 
+    /**
+     * Handles the animation of the jellyfish.
+     * 
+     * @param {string[]} arr - An array of image paths for the animation.
+     */
     animate(arr) {
         let jellyInt = setInterval(() => {
             this.animateWhenAlive(arr);
             this.animateWhenDead();
-
         }, 200);
         intervalIds.push(jellyInt);
     }
 
+    /**
+     * Animates the jellyfish when alive.
+     * 
+     * @param {string[]} arr - An array of image paths for the alive animation.
+     */
     animateWhenAlive(arr) {
         if (!this.dead) {
             this.animationPlay(arr);
@@ -133,6 +183,9 @@ class Jellyfish extends MovableObject {
         }
     }
 
+    /**
+     * Animates the jellyfish when dead.
+     */
     animateWhenDead() {
         if (this.dead) {
             this.speed = 1;
@@ -140,6 +193,9 @@ class Jellyfish extends MovableObject {
         }
     }
 
+    /**
+     * Executes the dead animation based on the jellyfish color.
+     */
     executeDeadAnimation() {
         if (this.color === "yellow") {
             this.animationPlay(this.YELLOW_DEAD);
@@ -152,6 +208,9 @@ class Jellyfish extends MovableObject {
         }
     }
 
+    /**
+     * Checks the position of the jellyfish to adjust movement.
+     */
     checkLevelEnd() {
         if (this.y < 12) {
             this.speed = -1 + Math.random() * 1;
@@ -161,6 +220,9 @@ class Jellyfish extends MovableObject {
         }
     }
 
+    /**
+     * Starts the animation for the jellyfish's death sequence.
+     */
     startDeadAnimation() {
         setTimeout(() => {
             this.spliceable = true;

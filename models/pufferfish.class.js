@@ -1,3 +1,9 @@
+/**
+ * Represents a pufferfish enemy in the game, which can change states and cause poison damage.
+ * 
+ * @class
+ * @extends MovableObject
+ */
 class Pufferfish extends MovableObject {
     height = 70;
     width = 85;
@@ -36,17 +42,27 @@ class Pufferfish extends MovableObject {
     animationState = 'swim';
     spliceable = false;
 
+    /**
+     * Creates an instance of Pufferfish.
+     * 
+     * @constructor
+     * @param {number} x - The x-coordinate of the pufferfish.
+     * @param {number} y - The y-coordinate of the pufferfish.
+     */
     constructor(x, y) {
         super().loadImage("img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png");
         this.loadAllImages();
         this.animate(x);
         this.x = x + Math.random() * this.range + this.range;
         this.y = y;
-        this.speed = 2 * Math.random() + 0.5
+        this.speed = 2 * Math.random() + 0.5;
         this.damage = "poison";
         this.type = "pufferfish";
     }
 
+    /**
+     * Loads all necessary images for the pufferfish animations.
+     */
     loadAllImages() {
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_TRANSITION);
@@ -54,15 +70,25 @@ class Pufferfish extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
     }
 
+    /**
+     * Initiates the animation and movement for the pufferfish.
+     * 
+     * @param {number} position - The initial position of the pufferfish.
+     */
     animate(position) {
         this.startAnimationLoop(position);
         this.moveLeft();
     }
 
+    /**
+     * Starts the animation loop for the pufferfish, cycling through different states.
+     * 
+     * @param {number} position - The initial position of the pufferfish.
+     */
     startAnimationLoop(position) {
         let movementInt = setInterval(() => {
             this.checkMovementEnd(position);
-        }, 1000 / 4)
+        }, 1000 / 4);
         this.animationInterval = setInterval(() => {
             if (!this.dead) {
                 this.executeAnimationState();
@@ -75,6 +101,9 @@ class Pufferfish extends MovableObject {
         this.switchAnimationState();
     }
 
+    /**
+     * Executes the current animation state of the pufferfish.
+     */
     executeAnimationState() {
         if (this.animationState === 'swim') {
             this.animationPlay(this.IMAGES_SWIM);
@@ -85,11 +114,17 @@ class Pufferfish extends MovableObject {
         }
     }
 
+    /**
+     * Plays the death animation for the pufferfish.
+     */
     deathAnimation() {
         this.transitionAnimation(this.IMAGES_DEAD, this.IMAGES_DEAD[2]);
         this.y += 3;
     }
 
+    /**
+     * Switches the animation state of the pufferfish after a set duration.
+     */
     switchAnimationState() {
         let transitionTo = setTimeout(() => {
             this.animationState = 'transition';
@@ -103,24 +138,35 @@ class Pufferfish extends MovableObject {
         timeoutIds.push(swimTo);
     }
 
+    /**
+     * Sets the offset for the normal state of the pufferfish.
+     */
     offsetNormal() {
         this.offset = {
             "x": 2,
             "y": 7,
             "h": -30,
             "w": -20,
-        }
+        };
     }
 
+    /**
+     * Sets the offset for the puffered state of the pufferfish.
+     */
     offsetPuffered() {
         this.offset = {
             "x": 0,
             "y": 0,
             "h": -0,
             "w": -10,
-        }
+        };
     }
 
+    /**
+     * Checks if the pufferfish has reached the end of its movement range.
+     * 
+     * @param {number} position - The initial position to compare with.
+     */
     checkMovementEnd(position) {
         if (this.x < position - this.range) {
             this.swimLeft();
@@ -130,16 +176,25 @@ class Pufferfish extends MovableObject {
         }
     }
 
+    /**
+     * Makes the pufferfish swim to the left.
+     */
     swimLeft() {
         this.speed = -2 * Math.random() + 0.5;
         this.leftDirection = true;
     }
 
+    /**
+     * Makes the pufferfish swim to the right.
+     */
     swimRight() {
         this.speed = 2 * Math.random() + 0.5;
         this.leftDirection = false;
     }
 
+    /**
+     * Starts the dead animation, making the pufferfish sink.
+     */
     startDeadAnimation() {
         setTimeout(() => {
             this.spliceable = true;

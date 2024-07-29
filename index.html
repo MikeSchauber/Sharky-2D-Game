@@ -30,11 +30,9 @@
 </head>
 
 <body onload="init()">
-
     <div class="rotate-device">
         <p>Please Rotate your Device</p>
     </div>
-
     <div id="container">
         <h1>Sharky</h1>
         <div class="info">
@@ -42,7 +40,6 @@
             <img id="info" onclick="toggleInfo()" src="img/Menu/info.png" alt="">
             <img id="fullscreen" onclick="toggleFullscreen()" src="img/Menu/fullscreen.png" alt="">
         </div>
-
         <div class="help transition" id="help" style="display: none; opacity: 0;" onclick="toggleInfo()">
             <div class="help-cont">
                 <table>
@@ -104,16 +101,13 @@
                 </div>
             </div>
         </div>
-
         <div class="loading-screen transition" id="loadingScreen" style="opacity: 0; display: none;">
             <p>Game is loading...</p>
         </div>
-
         <div class="victory-screen transition d-none" id="victory">
             <img cl onclick="initGame('victory')" class="tryagain transition"
                 src="img/6.Botones/Try again/Recurso 17.png" alt="">
         </div>
-
         <div class="gameover-screen transition d-none" id="gameover">
             <img class="gameover-title" src="img/6.Botones/Tittles/Game Over/Recurso 13.png" alt="">
             <img onclick="initGame('gameover')" class="tryagain transition" src="img/6.Botones/Try again/Recurso 17.png"
