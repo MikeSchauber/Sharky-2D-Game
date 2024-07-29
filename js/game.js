@@ -15,6 +15,7 @@ async function init() {
 
 async function initGame(tryagain) {
     hideMenuButtons();
+    // loadLocalStorage();
     startLoadingscreen(tryagain);
     canvas = document.getElementById('canvas');
     await initLevel();
@@ -104,7 +105,6 @@ function toggleInfo() {
 }
 
 function toggleVolume() {
-
     if (volume) {
         document.getElementById("sound").src = "img/Menu/sound-off.png"
         world.musicSettings.pauseBackgroundMusic();
