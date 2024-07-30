@@ -37,8 +37,8 @@ async function initGame(tryagain) {
  * @param {string} tryagain - The ID of the element to hide if the game is being retried.
  */
 function startLoadingscreen(tryagain) {
+    clearAllIntervals();
     if (tryagain !== undefined) {
-        clearAllIntervals();
         document.getElementById(tryagain).classList.add("d-none");
     }
     document.getElementById('loadingScreen').style.display = "";
@@ -73,8 +73,14 @@ function hideMenuButtons() {
  * Clears all intervals.
  */
 function clearAllIntervals() {
-    intervalIds.forEach(clearInterval);
+    intervalIds.forEach(id => clearInterval(id));
+    intervalIds = [];
+    timeoutIds.forEach(id => clearTimeout(id));
+    timeoutIds = [];
+    animationFrameIds.forEach(id => cancelAnimationFrame(id));
+    animationFrameIds = [];
 }
+
 
 /**
  * Enters fullscreen mode for a given element.
@@ -192,6 +198,11 @@ function victory() {
  */
 function gameover() {
     document.getElementById("gameover").classList.remove("d-none");
+    world.musicSettings.gameover_sound.play();
+    let gameoverSoundTo = setTimeout(() => {
+        world.musicSettings.gameover_sound.volume = 0;
+    }, 5000);
+    timeoutIds.push(gameoverSoundTo);
 }
 
 document.addEventListener('keydown', (e) => {

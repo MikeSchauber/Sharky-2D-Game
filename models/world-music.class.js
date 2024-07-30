@@ -90,7 +90,7 @@ class WorldMusic {
         this.boss_hurt_sound = new Audio("audio/boss-hurt.mp3");
         this.boss_death_sound = new Audio("audio/death.mp3");
         this.win_sound = new Audio("audio/win.mp3");
-        this.gameover_sound = new Audio("audio/gameover.wav");
+        this.gameover_sound = new Audio("audio/gameover.mp3");
     }
 
     /**
