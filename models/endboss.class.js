@@ -66,7 +66,6 @@ class Endboss extends MovableObject {
     index = 0;
     chooseStatus = 0;
     hit = false;
-    type = "endboss";
     world;
 
     /**
@@ -83,6 +82,7 @@ class Endboss extends MovableObject {
         this.x = levelEnding - 100;
         this.startPoint = this.x;
         this.type = "endboss";
+        this.damage = "poison";
         this.currentImage = 0;
         this.animate();
     }
@@ -125,6 +125,9 @@ class Endboss extends MovableObject {
         if (this.entered) {
             clearInterval(this.ambientMusic);
             this.world.musicSettings.boss_music.play();
+        }
+        if (this.world.character.energy <= 0) {
+            this.world.musicSettings.boss_music.pause();
         }
     }
 

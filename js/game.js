@@ -84,9 +84,9 @@ function clearAllIntervals() {
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
-    } else if (element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+    } else if (element.msRequestFullscreen) {
         element.msRequestFullscreen();
-    } else if (element.webkitRequestFullscreen) {  // iOS Safari
+    } else if (element.webkitRequestFullscreen) {
         element.webkitRequestFullscreen();
     }
 }
@@ -163,15 +163,22 @@ function toggleVolume() {
     save();
 }
 
+/**
+ * Saves the current volume setting to the local storage.
+ */
 function save() {
     let volumeAsText = JSON.stringify(volume);
     localStorage.setItem('volume', volumeAsText);
 }
 
+/**
+ * Loads the volume setting from the local storage.
+ */
 function load() {
     let volumeAsText = localStorage.getItem('volume');
     volume = JSON.parse(volumeAsText);
 }
+
 
 /**
  * Displays the victory screen.

@@ -175,4 +175,17 @@ class CharacterImages {
         "img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png",
         "img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png",
     ];
+    imagesArray = [
+        this.IMAGES_SWIM,
+        this.IMAGES_IDLE,
+        this.IMAGES_LONG_IDLE,
+        this.IMAGES_SLEEP,
+        this.IMAGES_ELECTRIC_DAMAGE,
+        this.IMAGES_POISON_DAMAGE,
+        this.IMAGES_DEAD_ELECTRO,
+        this.IMAGES_DEAD_POISON,
+        this.IMAGES_FLIPPER_ATTACK,
+        this.IMAGES_BUBBLE_ATTACK,
+        this.IMAGES_SPECIAL_ATTACK,
+    ]
 }

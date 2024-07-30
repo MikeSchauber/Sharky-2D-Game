@@ -1,6 +1,5 @@
 /**
  * Represents the main character in the game.
- * 
  * @class
  * @extends MovableObject
  */
@@ -18,9 +17,7 @@ class Character extends MovableObject {
     images = new CharacterImages();
     speed = 2;
     cameraRange = 0;
-    cameraMovement = false;
     idleTimer = false;
-    transitionImage = 0;
     timeoutId;
     timeoutStarted = false;
     attackImage = 0;
@@ -35,7 +32,6 @@ class Character extends MovableObject {
 
     /**
      * Creates an instance of Character.
-     * 
      * @constructor
      */
     constructor() {
@@ -47,18 +43,11 @@ class Character extends MovableObject {
 
     /**
      * Loads all images for character animations.
-     */
+    */
     loadAllImages() {
-        this.loadImages(this.images.IMAGES_SWIM);
-        this.loadImages(this.images.IMAGES_IDLE);
-        this.loadImages(this.images.IMAGES_LONG_IDLE);
-        this.loadImages(this.images.IMAGES_ELECTRIC_DAMAGE);
-        this.loadImages(this.images.IMAGES_POISON_DAMAGE);
-        this.loadImages(this.images.IMAGES_DEAD_ELECTRO);
-        this.loadImages(this.images.IMAGES_DEAD_POISON);
-        this.loadImages(this.images.IMAGES_FLIPPER_ATTACK);
-        this.loadImages(this.images.IMAGES_BUBBLE_ATTACK);
-        this.loadImages(this.images.IMAGES_SPECIAL_ATTACK);
+        this.images.imagesArray.forEach(e => {
+            this.loadImages(e);
+        });
     }
 
     /**
@@ -122,7 +111,6 @@ class Character extends MovableObject {
 
     /**
      * Checks if flipper attack should cause damage.
-     * 
      * @param {string} type - The type of object to check for damage.
      */
     checkForFlipperDamage(type) {
@@ -170,7 +158,6 @@ class Character extends MovableObject {
 
     /**
      * Executes the animation sequence for an attack.
-     * 
      * @param {string[]} arr - Array of image paths for the animation.
      * @param {string} [action] - Optional action type for special behaviors.
      */
@@ -192,7 +179,6 @@ class Character extends MovableObject {
 
     /**
      * Handles the bubble shot during the bubble attack.
-     * 
      * @param {string} action - The action type, specifically "bubble" in this case.
      */
     bubbleShot(action) {
@@ -204,7 +190,6 @@ class Character extends MovableObject {
 
     /**
      * Handles the special shot during the special attack.
-     * 
      * @param {string} action - The action type, specifically "special" in this case.
      */
     specialShot(action) {
@@ -216,28 +201,20 @@ class Character extends MovableObject {
     }
 
     /**
-     * Throws a bubble during the bubble attack.
+     * Wirft eine Blase während des Blasenangriffs.
      */
     throwBubble() {
-        let bubble;
-        if (this.leftDirection && !this.isDead()) {
-            bubble = new ThrowableObject(this.x, this.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png", "bubble");
-        } else {
-            bubble = new ThrowableObject(this.x, this.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png", "bubble");
-        }
+        let direction = this.leftDirection ? "left" : "right";
+        let bubble = new ThrowableObject(this.x, this.y, direction, "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png", "bubble");
         this.world.throwableObjects.push(bubble);
     }
 
     /**
-     * Throws a special (poison) bubble during the special attack.
+     * Wirft eine spezielle (Gift-) Blase während des Spezialangriffs.
      */
     throwSpecial() {
-        let poisonBubble;
-        if (this.leftDirection && !this.isDead()) {
-            poisonBubble = new ThrowableObject(this.x, this.y, "left", "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png", "poison");
-        } else {
-            poisonBubble = new ThrowableObject(this.x, this.y, "right", "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png", "poison");
-        }
+        let direction = this.leftDirection ? "left" : "right";
+        let poisonBubble = new ThrowableObject(this.x, this.y, direction, "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png", "poison");
         this.world.throwableObjects.push(poisonBubble);
     }
 
@@ -396,7 +373,6 @@ class Character extends MovableObject {
 
     /**
      * Checks if the end boss is dead.
-     * 
      * @returns {boolean} - True if the end boss is dead, false otherwise.
      */
     isEndbossDead() {

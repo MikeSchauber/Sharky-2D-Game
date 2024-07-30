@@ -368,7 +368,6 @@ class World {
             this.rotateUpwards(mo);
         }
         mo.draw(this.ctx, mo);
-        // mo.drawBorder(this.ctx);
         if (mo.leftDirection) {
             this.flipImageBack(mo);
         }

@@ -67,13 +67,15 @@ menu {
 }
 
 .start {
+    position: relative;
+    top: 50%;
     height: 55px;
     width: auto;
     cursor: pointer;
     border-radius: 15px;
-    margin-top: 40%;
     margin-right: 10%;
 }
+
 
 .impress {
     position: absolute;
@@ -160,11 +162,6 @@ menu {
     filter: drop-shadow(0px 0px 2px white);
 }
 
-.start:hover {
-    box-shadow: 0px 0px 5px 3px rgba(161, 161, 161, 0.589);
-    transform: scale(1.01);
-}
-
 .panel {
     display: none;
 }
@@ -193,7 +190,7 @@ canvas {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    font-size:22px;
+    font-size: 22px;
     cursor: zoom-out;
 }
 
@@ -204,7 +201,7 @@ canvas {
 }
 
 .help-cont table {
-    filter: drop-shadow( 2px 2px 2px black);
+    filter: drop-shadow(2px 2px 2px black);
 }
 
 .help-cont table tr td:first-of-type {
@@ -297,6 +294,7 @@ button {
     align-items: center;
     justify-content: center;
     background-color: rgba(127, 255, 212, 0.87);
+    transition: all 125ms ease-in-out;
 }
 
 #btnOne {
@@ -326,6 +324,30 @@ button {
 #btnLeft,
 #btnRight {
     transform: scale(1.2);
+}
+
+#btnThree:active {
+    background-color: rgba(63, 92, 82, 0.87);
+}
+
+#btnOne:active {
+    background-color: rgba(63, 92, 82, 0.87);
+}
+
+#btnTwo:active {
+    background-color: rgba(63, 92, 82, 0.87);
+}
+
+#btnRight:active {
+    background-color: rgba(63, 92, 82, 0.87);
+}
+
+#btnLeft:active {
+    background-color: rgba(63, 92, 82, 0.87);
+}
+
+#btnUp:active {
+    background-color: rgba(63, 92, 82, 0.87);
 }
 
 .home {
@@ -400,16 +422,26 @@ button {
     width: 100%;
 }
 
-@media only screen and (max-width: 720px) {
-    canvas {
-        width: 100%;
-    }
+.rotate-device {
+    position: absolute;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(27, 27, 27);
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 
-@media (max-width: 1200px) and (orientation: landscape) {
+@media (max-width: 950px) and (orientation: landscape) {
+
+    body {
+        overflow: hidden;
+    }
+
     canvas {
         width: 100%;
-        height: 100%;
     }
 
     .rotate-device {
@@ -430,38 +462,19 @@ button {
     }
 
     #container {
-        height: 100%;
         width: 100%;
+        height: 100%;
         margin: 0;
-
     }
 }
 
-@media (max-width: 1200px) and (orientation: portrait) {
+@media (max-width: 950px) and (orientation: portrait) {
     .rotate-device {
-        position: absolute;
-        top: 0;
-        z-index: 999;
         display: flex;
-        width: 100%;
-        height: 100%;
-        background-color: rgb(27, 27, 27);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
     }
 }
 
-@media (max-width: 680px) {
-    h1 {
-        display: none;
-    }
-
-    .start {
-        margin-top: 40%;
-        height: 40px;
-    }
+@media (max-width: 950px) {
     .home {
         height: 35px;
     }
@@ -473,5 +486,4 @@ button {
     #priv-h1 {
         font-size: 28px;
     }
-    
 }
