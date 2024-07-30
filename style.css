@@ -31,7 +31,7 @@ body {
     align-items: center;
     font-family: "luckiestGuy";
     font-size: 22px;
-    background: url("img/Menu/background.png") no-repeat center center fixed;
+    background: url("icons/background.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -375,7 +375,7 @@ button {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .impressum-cont a {
@@ -406,9 +406,10 @@ button {
     }
 }
 
-@media (max-width: 1000px) and (orientation: landscape) {
+@media (max-width: 1200px) and (orientation: landscape) {
     canvas {
         width: 100%;
+        height: 100%;
     }
 
     .rotate-device {
@@ -436,7 +437,7 @@ button {
     }
 }
 
-@media (max-width: 1000px) and (orientation: portrait) {
+@media (max-width: 1200px) and (orientation: portrait) {
     .rotate-device {
         position: absolute;
         top: 0;
@@ -462,14 +463,15 @@ button {
         height: 40px;
     }
     .home {
-        position: absolute;
-        top: 70px;
-        left: 20px;
-        height: 50px;
+        height: 35px;
     }
 
     .impressum-h1 {
         font-size: 35px;
+    }
+
+    #priv-h1 {
+        font-size: 28px;
     }
     
 }
