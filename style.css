@@ -259,10 +259,6 @@ canvas {
     justify-content: space-between;
 }
 
-.rotate-device {
-    display: none;
-}
-
 .panel {
     display: flex;
 }
@@ -423,6 +419,7 @@ button {
 }
 
 .rotate-device {
+    display: none;
     position: absolute;
     top: 0;
     z-index: 999;
@@ -434,28 +431,7 @@ button {
     color: white;
 }
 
-@media (max-width: 950px) and (orientation: landscape) {
-
-    body {
-        overflow: hidden;
-    }
-
-    canvas {
-        width: 100%;
-    }
-
-    .rotate-device {
-        display: none;
-    }
-
-    #fullscreen {
-        display: none;
-    }
-
-    #hud {
-        display: flex;
-    }
-
+@media (max-width: 1370px) and (orientation: landscape) {
     body {
         margin: 0;
         overflow: hidden;
@@ -466,9 +442,31 @@ button {
         height: 100%;
         margin: 0;
     }
+    #hud {
+        display: flex;
+    }
+    canvas {
+        width: 100%;
+    }
+
 }
 
-@media (max-width: 950px) and (orientation: portrait) {
+@media (min-width: 1000px) and (max-width: 1370px) {
+
+    #fullscreen {
+        display: none;
+    }
+
+    .rotate-device {
+        display: none !important;
+    }
+    #hud {
+        display: flex;
+    }
+
+}
+
+@media (max-width: 1370px) and (orientation: portrait) {
     .rotate-device {
         display: flex;
     }
