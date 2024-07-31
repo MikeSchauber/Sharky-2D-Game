@@ -259,10 +259,6 @@ canvas {
     justify-content: space-between;
 }
 
-.rotate-device {
-    display: none;
-}
-
 .panel {
     display: flex;
 }
@@ -423,6 +419,7 @@ button {
 }
 
 .rotate-device {
+    display: none;
     position: absolute;
     top: 0;
     z-index: 999;
@@ -470,6 +467,15 @@ button {
         height: 100%;
         margin: 0;
     }
+}
+
+@media (max-width: 950px) and (orientation: portrait) {
+    .rotate-device {
+        display: flex;
+    }
+}
+
+@media (max-width: 950px) {
     .home {
         height: 35px;
     }
