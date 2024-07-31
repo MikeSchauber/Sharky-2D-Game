@@ -26,6 +26,7 @@ async function initGame(tryagain) {
     hideMenuButtons();
     startLoadingscreen(tryagain);
     canvas = document.getElementById('canvas');
+    clearAllIntervals();
     await initLevel();
     world = new World(canvas, keyboard);
     stopLoadingscreen();
@@ -37,7 +38,6 @@ async function initGame(tryagain) {
  * @param {string} tryagain - The ID of the element to hide if the game is being retried.
  */
 function startLoadingscreen(tryagain) {
-    clearAllIntervals();
     if (tryagain !== undefined) {
         document.getElementById(tryagain).classList.add("d-none");
     }
