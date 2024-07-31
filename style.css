@@ -18,9 +18,10 @@
 #container {
     position: relative;
     display: flex;
-    justify-content: center;
-    max-width: 720px;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
+    max-width: 720px;
     margin-top: 50px;
 }
 
@@ -32,9 +33,6 @@ body {
     font-family: "luckiestGuy";
     font-size: 22px;
     background: url("icons/background.png") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
     overflow-x: hidden;
     height: 100vh;
@@ -167,6 +165,7 @@ menu {
 }
 
 canvas {
+    display: block;
     background-color: black;
     display: block;
     transition: all 100ms ease-in-out;
@@ -174,6 +173,8 @@ canvas {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.288), -10px -10px 10px #1d246480;
     background-image: url("img/3. Background/Mesa de trabajo 1.png");
     background-size: cover;
+
+
 }
 
 .help {
@@ -421,14 +422,13 @@ button {
 .rotate-device {
     display: none;
     position: absolute;
-    top: 0;
     z-index: 999;
     width: 100%;
     height: 100%;
     background-color: rgb(27, 27, 27);
+    color: white;
     justify-content: center;
     align-items: center;
-    color: white;
 }
 
 @media (max-width: 1370px) and (orientation: landscape) {
@@ -439,7 +439,7 @@ button {
 
     #container {
         width: 100%;
-
+        height: 100%;
         margin: 0;
     }
     #hud {
@@ -447,33 +447,36 @@ button {
     }
     canvas {
         width: 100%;
-    }
-}
-
-@media (max-width: 950px) {
-    #container {
         height: 100%;
+    }
+    #fullscreen {
+        display: none;
     }
 }
 
 @media (min-width: 1000px) and (max-width: 1370px) {
-
-    #fullscreen {
-        display: none;
-    }
-
     .rotate-device {
         display: none !important;
     }
     #hud {
         display: flex;
     }
-
+    button {
+        height: 70px;
+        width: 70px;
+    }
 }
 
-@media (max-width: 1370px) and (orientation: portrait) {
+@media (max-width: 1370px) and (orientation: portrait){
     .rotate-device {
-        display: flex;
+        display: flex !important;
+    }
+    body {
+        overflow: hidden;
+    }
+
+    #container {
+        display: none;
     }
 }
 
