@@ -96,27 +96,32 @@ function clearAllIntervals() {
 /**
  * Enters fullscreen mode for a given element.
  * 
- * @param {HTMLElement} element - The element to display in fullscreen.
+ * @param {HTMLElement} screen - The element to display in fullscreen.
  */
-function enterFullscreen(element) {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
-    } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen();
+function enterFullscreen(screen, canvas) {
+    if (screen.requestFullscreen) {
+        screen.requestFullscreen();
+
+    } else if (screen.msRequestFullscreen) {
+        screen.msRequestFullscreen();
+    } else if (screen.webkitRequestFullscreen) {
+        screen.webkitRequestFullscreen();
     }
+    canvas.style.width = "100vw"
+    canvas.style.height = "100vh"
 }
 
 /**
  * Exits fullscreen mode.
  */
-function exitFullscreen() {
+function exitFullscreen(screen, canvas) {
     if (document.exitFullscreen) {
         document.exitFullscreen();
     } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
     }
+    canvas.style.width = ""
+    canvas.style.height = ""
 }
 
 /**
@@ -124,12 +129,13 @@ function exitFullscreen() {
  */
 function toggleFullscreen() {
     let screen = document.getElementById("container");
+    let canvas = document.getElementById("canvas");
     if (!fullscreen) {
-        enterFullscreen(screen);
+        enterFullscreen(screen, canvas);
         document.getElementById("fullscreen").src = "icons/fullscreen-exit.png";
         fullscreen = true;
     } else if (fullscreen) {
-        exitFullscreen();
+        exitFullscreen(screen, canvas);
         document.getElementById("fullscreen").src = "icons/fullscreen.png";
         fullscreen = false;
     }
