@@ -23,13 +23,18 @@ async function init() {
  * @param {string} tryagain - The ID of the element to hide if the game is being retried.
  */
 async function initGame(tryagain) {
-    hideMenuButtons();
     startLoadingscreen(tryagain);
+    hideMenuButtons();
     canvas = document.getElementById('canvas');
     clearAllIntervals();
     await initLevel();
-    world = new World(canvas, keyboard);
+    await startWorld();
+    checkLastVolume();
     stopLoadingscreen();
+}
+
+async function startWorld() {
+    world = new World(canvas, keyboard);
 }
 
 /**
@@ -38,25 +43,31 @@ async function initGame(tryagain) {
  * @param {string} tryagain - The ID of the element to hide if the game is being retried.
  */
 function startLoadingscreen(tryagain) {
-    if (tryagain !== undefined) {
+    if (tryagain == "firststart") {
+        document.getElementById('loadingScreen').style.display = "";
+        document.getElementById('loadingScreen').style.opacity = 1;
+    } else {
         document.getElementById(tryagain).classList.add("d-none");
     }
-    document.getElementById('loadingScreen').style.display = "";
-    document.getElementById('loadingScreen').style.opacity = 1;
+
 }
 
 /**
  * Stops the loading screen and starts the background music.
  */
 function stopLoadingscreen() {
-    setTimeout(function () {
-        document.getElementById('loadingScreen').style.opacity = 0;
-        setTimeout(() => {
-            document.getElementById('loadingScreen').style.display = "none";
-        }, 150);
-        checkLastVolume();
+    setInterval(() => {
+        if (world.loaded) {
+            console.log("hello");
+            document.getElementById('loadingScreen').style.opacity = 0;
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.display = "none";
+            }, 150);
+        }
     }, 1000);
+
 }
+
 
 /**
  * Hides menu buttons.
