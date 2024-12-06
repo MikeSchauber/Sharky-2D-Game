@@ -20,10 +20,10 @@ async function init() {
 /**
  * Initializes the game.
  *
- * @param {string} tryagain - The ID of the element to hide if the game is being retried.
+ * @param {string} screenId - The ID of the element to hide if the game is being retried.
  */
-async function initGame(tryagain) {
-  startLoadingscreen(tryagain);
+async function initGame(screenId) {
+  startLoadingscreen(screenId);
   hideMenuButtons();
   canvas = document.getElementById("canvas");
   clearAllIntervals();
@@ -40,14 +40,14 @@ async function startWorld() {
 /**
  * Starts the loading screen.
  *
- * @param {string} tryagain - The ID of the element to hide if the game is being retried.
+ * @param {string} screenId - The ID of the element to hide if the game is being retried.
  */
-function startLoadingscreen(tryagain) {
-  if (tryagain == "firststart") {
+function startLoadingscreen(screenId) {
+  if (screenId == "firststart") {
     document.getElementById("loadingScreen").style.display = "";
     document.getElementById("loadingScreen").style.opacity = 1;
   } else {
-    document.getElementById(tryagain).classList.add("d-none");
+    document.getElementById(screenId).classList.add("d-none");
   }
 }
 
