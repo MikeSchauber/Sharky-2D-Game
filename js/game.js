@@ -131,10 +131,10 @@ function toggleFullscreen() {
  */
 document.addEventListener("fullscreenchange", function (e) {
   if (document.fullscreenElement) {
-    document.getElementById("fullscreen").src = "icons/fullscreen-exit.png";
+    document.getElementById("fullscreen").src = "img/icons/fullscreen-exit.png";
     fullscreen = true;
   } else {
-    document.getElementById("fullscreen").src = "icons/fullscreen.png";
+    document.getElementById("fullscreen").src = "img/icons/fullscreen.png";
     fullscreen = false;
   }
 });
@@ -160,10 +160,10 @@ function toggleInfo() {
 
 function checkLastVolume() {
   if (!volume) {
-    document.getElementById("sound").src = "icons/sound-off.png";
+    document.getElementById("sound").src = "img/icons/sound-off.png";
     world.musicSettings.pauseBackgroundMusic();
   } else if (volume) {
-    document.getElementById("sound").src = "icons/sound-on.png";
+    document.getElementById("sound").src = "img/icons/sound-on.png";
     world.musicSettings.playBackgroundMusic();
   }
 }
@@ -173,11 +173,11 @@ function checkLastVolume() {
  */
 function toggleVolume() {
   if (volume) {
-    document.getElementById("sound").src = "icons/sound-off.png";
+    document.getElementById("sound").src = "img/icons/sound-off.png";
     world.musicSettings.pauseBackgroundMusic();
     volume = false;
   } else if (!volume) {
-    document.getElementById("sound").src = "icons/sound-on.png";
+    document.getElementById("sound").src = "img/icons/sound-on.png";
     world.musicSettings.playBackgroundMusic();
     volume = true;
   }

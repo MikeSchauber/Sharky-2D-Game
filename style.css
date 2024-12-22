@@ -32,7 +32,7 @@ body {
   align-items: center;
   font-family: "luckiestGuy";
   font-size: 22px;
-  background: url("icons/background.png") no-repeat center center fixed;
+  background: url("img/icons/background.png") no-repeat center center fixed;
   background-size: cover;
   overflow-x: hidden;
   height: 100vh;
